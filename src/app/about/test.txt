@@ -1,0 +1,735 @@
+const About = () => {
+  const [activeForm, setActiveForm] = useState(null);
+  const [formProgress, setFormProgress] = useState(0);
+  
+  const openForm = (formType) => {
+    setActiveForm(formType);
+    setFormProgress(0);
+  };
+  
+  const closeForm = () => {
+    setActiveForm(null);
+    setFormProgress(0);
+  };
+  
+  const updateProgress = (step) => {
+    setFormProgress(step);
+  };
+  
+  // Form components for each service
+  const renderForm = () => {
+    const forms = {
+      "Start Fundraiser": <FundraiserForm progress={formProgress} updateProgress={updateProgress} closeForm={closeForm} />,
+      "View Partners": <PartnersForm progress={formProgress} updateProgress={updateProgress} closeForm={closeForm} />,
+      "Donate": <DonateForm progress={formProgress} updateProgress={updateProgress} closeForm={closeForm} />,
+      "Verify Now": <VerificationForm progress={formProgress} updateProgress={updateProgress} closeForm={closeForm} />,
+      "Top Up Wallet": <TopUpForm progress={formProgress} updateProgress={updateProgress} closeForm={closeForm} />,
+      "Become Partner": <PartnershipForm progress={formProgress} updateProgress={updateProgress} closeForm={closeForm} />
+    };
+    
+    return forms[activeForm];
+  };
+
+  const services = [
+    {
+      name: "Medical Crowdfunding",
+      need: "Raise funds for urgent medical treatments through our secure crowdfunding platform.",
+      image: "/ri_funds-fill.svg",
+      button: "Start Fundraiser",
+    },
+    {
+      name: "Trusted Healthcare Network",
+      need: "Get connected with verified doctors, hospitals, and pharmacies to receive quality treatment.",
+      image: "/ri_funds-fill.svg",
+      button: "View Partners",
+    },
+    {
+      name: "Secure & Transparent Donations",
+      need: "Support patients in need with confidence—every campaign is verified before going live.",
+      image: "/ri_funds-fill.svg",
+      button: "Donate",
+    },
+    {
+      name: "Medical Report Verification",
+      need: "Easily verify the authenticity of a medical report before contributing.",
+      image: "/ri_funds-fill.svg",
+      button: "Verify Now",
+    },
+    {
+      name: "Top-Up Wallet for Medical Expenses",
+      need: "Fund your Prescribeng account to make quick donations or pay for medical services.",
+      image: "/ri_funds-fill.svg",
+      button: "Top Up Wallet",
+    },
+    {
+      name: "Healthcare Partnership & Training",
+      need: "Doctors, pharmacies, and hospitals can join our platform to offer services or access professional training programs.",
+      image: "/ri_funds-fill.svg",
+      button: "Become Partner",
+    },
+  ];
+
+  return (
+    <div className="relative mt-20">
+      {/* Background Image */}
+      <div className="relative w-full h-[433px] overflow-hidden">
+        <Image
+          className="w-full h-full object-cover"
+          src="/services.svg"
+          alt="Background"
+          width={1920}
+          height={1080}
+          priority
+        />
+        {/* Page title */}
+        <div className="absolute inset-0 flex items-center px-6 xl:px-[130px]">
+          <h1 className="text-[32px] font-montserrat font-extrabold leading-[50px] text-[#002A40]">
+            Services
+          </h1>
+        </div>
+      </div>
+
+      {/* Page content */}
+      <div className="px-6 xl:px-[130px] py-12">
+        {/* Services grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 justify-between w-full gap-4 md:gap-8 lg:gap-12 mt-8">
+          {services.map((card, i) => (
+            <div
+              key={i}
+              className="group w-[350px] md:w-[350px] bg-white rounded-[5px] p-5 space-y-4 hover:bg-[#0077B6] hover:text-white hover:scale-105 transition-transform duration-300 ease-in-out"
+            >
+              <div className="w-[86px] h-[77px] p-4 space-y-4 bg-[#D9EBF4] rounded-[20px] flex items-center justify-center">
+                <Image
+                  className="w-[50px] h-[50px] object-cover rounded-t-[5px]"
+                  src={card.image}
+                  alt={`Image of ${card.name}`}
+                  width={50}
+                  height={50}
+                />
+              </div>
+              <div className="space-y-2">
+                <p className="font-montserrat text-[16px] font-bold">
+                  {card.name}
+                </p>
+                <p className="text-[16px] w-[304px]">{card.need}</p>
+              </div>
+
+              <button 
+                className="flex border border-[#0077B6] group-hover:border-white group-hover:text-white py-2 px-4 rounded-[10px] text-[#0077B6] text-[16px]"
+                onClick={() => openForm(card.button)}
+              >
+                {card.button}
+                <Image
+                  className="w-[24px] h-[24px] ml-2 group-hover:filter group-hover:brightness-0 group-hover:invert"
+                  src="/arrow-up-right.svg"
+                  alt="Arrow"
+                  width={24}
+                  height={24}
+                />
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Questions section */}
+      <div className="bg-[#FFF1E8] px-6 xl:px-[130px] py-12 space-y-4">
+        <div className="flex flex-col items-center space-y-3">
+          <h1 className="text-[32px] font-montserrat font-bold leading-[50px] text-[#002A40]">
+            Have any questions?
+          </h1>
+          <p className="text-[16px]">
+            Don't hesitate to reach out to us
+          </p>
+        </div>
+        <div className="flex justify-center">
+          <button className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] text-[16px]">
+            Contact Us
+          </button>
+        </div>
+      </div>
+
+      {/* Modal for forms */}
+      {activeForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg w-full max-w-2xl mx-4 relative">
+            <button 
+              onClick={closeForm}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+            
+            <h2 className="text-xl font-bold mb-4">{activeForm}</h2>
+            
+            {renderForm()}
+            
+            {/* Progress indicator */}
+            <div className="mt-6">
+              <div className="w-full bg-gray-200 h-2 rounded-full">
+                <div 
+                  className="bg-[#0077B6] h-2 rounded-full transition-all duration-300"
+                  style={{ width: `${formProgress}%` }}
+                ></div>
+              </div>
+              <div className="flex justify-between mt-2 text-sm text-gray-500">
+                <span>Start</span>
+                <span>Complete</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Form components for different services
+const FundraiserForm = ({ progress, updateProgress, closeForm }) => {
+  const [step, setStep] = useState(1);
+  const totalSteps = 4;
+
+  const nextStep = () => {
+    if (step < totalSteps) {
+      setStep(step + 1);
+      updateProgress((step / totalSteps) * 100);
+    } else {
+      // Form submission logic here
+      alert("Fundraiser form submitted successfully!");
+      closeForm();
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      {step === 1 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 1: Personal Information</h3>
+          <div className="space-y-2">
+            <label className="block text-sm">Full Name</label>
+            <input type="text" className="w-full p-2 border rounded" />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Email Address</label>
+            <input type="email" className="w-full p-2 border rounded" />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Phone Number</label>
+            <input type="tel" className="w-full p-2 border rounded" />
+          </div>
+        </div>
+      )}
+      
+      {step === 2 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 2: Fundraiser Details</h3>
+          <div className="space-y-2">
+            <label className="block text-sm">Campaign Title</label>
+            <input type="text" className="w-full p-2 border rounded" />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Target Amount</label>
+            <input type="number" className="w-full p-2 border rounded" />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Campaign Description</label>
+            <textarea className="w-full p-2 border rounded h-24" />
+          </div>
+        </div>
+      )}
+      
+      {step === 3 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 3: Medical Information</h3>
+          <div className="space-y-2">
+            <label className="block text-sm">Medical Condition</label>
+            <input type="text" className="w-full p-2 border rounded" />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Hospital/Doctor Name</label>
+            <input type="text" className="w-full p-2 border rounded" />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Upload Medical Documents</label>
+            <input type="file" className="w-full p-2 border rounded" />
+          </div>
+        </div>
+      )}
+      
+      {step === 4 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 4: Review & Submit</h3>
+          <div className="bg-gray-50 p-4 rounded">
+            <p className="text-sm">Please review all the information you've provided before submitting your fundraiser request. Our team will verify your details and medical documents before the campaign goes live.</p>
+            <div className="flex items-center mt-4">
+              <input type="checkbox" id="terms" className="mr-2" />
+              <label htmlFor="terms" className="text-sm">I confirm that all information provided is accurate and true.</label>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      <div className="flex justify-end gap-2 mt-4">
+        {step > 1 && (
+          <button 
+            onClick={() => {
+              setStep(step - 1);
+              updateProgress(((step - 2) / totalSteps) * 100);
+            }}
+            className="px-4 py-2 border border-gray-300 rounded"
+          >
+            Back
+          </button>
+        )}
+        <button 
+          onClick={nextStep}
+          className="px-4 py-2 bg-[#0077B6] text-white rounded"
+        >
+          {step === totalSteps ? "Submit" : "Next"}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// Define similar forms for other services
+const PartnersForm = ({ progress, updateProgress, closeForm }) => {
+  const [step, setStep] = useState(1);
+  const totalSteps = 2;
+
+  const nextStep = () => {
+    if (step < totalSteps) {
+      setStep(step + 1);
+      updateProgress((step / totalSteps) * 100);
+    } else {
+      alert("Partners form submitted!");
+      closeForm();
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      {step === 1 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 1: Search Partners</h3>
+          <div className="space-y-2">
+            <label className="block text-sm">Healthcare Provider Type</label>
+            <select className="w-full p-2 border rounded">
+              <option>Doctors</option>
+              <option>Hospitals</option>
+              <option>Pharmacies</option>
+            </select>
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Location</label>
+            <input type="text" className="w-full p-2 border rounded" placeholder="City, State or Zip" />
+          </div>
+        </div>
+      )}
+      
+      {step === 2 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 2: Filter Results</h3>
+          <div className="space-y-2">
+            <label className="block text-sm">Specialization</label>
+            <select className="w-full p-2 border rounded">
+              <option>All</option>
+              <option>Cardiology</option>
+              <option>Neurology</option>
+              <option>Oncology</option>
+            </select>
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Rating</label>
+            <select className="w-full p-2 border rounded">
+              <option>Any</option>
+              <option>4+ Stars</option>
+              <option>5 Stars</option>
+            </select>
+          </div>
+        </div>
+      )}
+      
+      <div className="flex justify-end gap-2 mt-4">
+        {step > 1 && (
+          <button 
+            onClick={() => {
+              setStep(step - 1);
+              updateProgress(((step - 2) / totalSteps) * 100);
+            }}
+            className="px-4 py-2 border border-gray-300 rounded"
+          >
+            Back
+          </button>
+        )}
+        <button 
+          onClick={nextStep}
+          className="px-4 py-2 bg-[#0077B6] text-white rounded"
+        >
+          {step === totalSteps ? "Search" : "Next"}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const DonateForm = ({ progress, updateProgress, closeForm }) => {
+  const [step, setStep] = useState(1);
+  const totalSteps = 3;
+
+  const nextStep = () => {
+    if (step < totalSteps) {
+      setStep(step + 1);
+      updateProgress((step / totalSteps) * 100);
+    } else {
+      alert("Donation successful!");
+      closeForm();
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      {step === 1 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 1: Select Campaign</h3>
+          <div className="space-y-2">
+            <label className="block text-sm">Campaign ID or Name</label>
+            <input type="text" className="w-full p-2 border rounded" placeholder="Enter campaign ID or search by name" />
+          </div>
+          <div className="mt-4 p-4 border rounded">
+            <p className="font-medium">Campaign Preview</p>
+            <p className="text-sm text-gray-500">Campaign details will appear here</p>
+          </div>
+        </div>
+      )}
+      
+      {step === 2 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 2: Donation Amount</h3>
+          <div className="space-y-2">
+            <label className="block text-sm">Amount to Donate</label>
+            <input type="number" className="w-full p-2 border rounded" placeholder="Enter amount" />
+          </div>
+          <div className="flex gap-2">
+            <button className="px-4 py-2 border rounded">$10</button>
+            <button className="px-4 py-2 border rounded">$25</button>
+            <button className="px-4 py-2 border rounded">$50</button>
+            <button className="px-4 py-2 border rounded">$100</button>
+          </div>
+          <div className="space-y-2 mt-4">
+            <label className="block text-sm">Add a Message (Optional)</label>
+            <textarea className="w-full p-2 border rounded h-20" placeholder="Your words of encouragement" />
+          </div>
+        </div>
+      )}
+      
+      {step === 3 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 3: Payment Information</h3>
+          <div className="space-y-2">
+            <label className="block text-sm">Payment Method</label>
+            <select className="w-full p-2 border rounded">
+              <option>Credit/Debit Card</option>
+              <option>PayPal</option>
+              <option>Use Wallet Balance</option>
+            </select>
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Card Number</label>
+            <input type="text" className="w-full p-2 border rounded" placeholder="XXXX XXXX XXXX XXXX" />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="block text-sm">Expiry Date</label>
+              <input type="text" className="w-full p-2 border rounded" placeholder="MM/YY" />
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm">CVV</label>
+              <input type="text" className="w-full p-2 border rounded" placeholder="XXX" />
+            </div>
+          </div>
+        </div>
+      )}
+      
+      <div className="flex justify-end gap-2 mt-4">
+        {step > 1 && (
+          <button 
+            onClick={() => {
+              setStep(step - 1);
+              updateProgress(((step - 2) / totalSteps) * 100);
+            }}
+            className="px-4 py-2 border border-gray-300 rounded"
+          >
+            Back
+          </button>
+        )}
+        <button 
+          onClick={nextStep}
+          className="px-4 py-2 bg-[#0077B6] text-white rounded"
+        >
+          {step === totalSteps ? "Donate Now" : "Next"}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const VerificationForm = ({ progress, updateProgress, closeForm }) => {
+  const [step, setStep] = useState(1);
+  const totalSteps = 2;
+
+  const nextStep = () => {
+    if (step < totalSteps) {
+      setStep(step + 1);
+      updateProgress((step / totalSteps) * 100);
+    } else {
+      alert("Verification complete!");
+      closeForm();
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      {step === 1 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 1: Upload Medical Report</h3>
+          <div className="space-y-2">
+            <label className="block text-sm">Medical Report File</label>
+            <input type="file" className="w-full p-2 border rounded" />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Report ID (if available)</label>
+            <input type="text" className="w-full p-2 border rounded" />
+          </div>
+        </div>
+      )}
+      
+      {step === 2 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 2: Verification Results</h3>
+          <div className="bg-green-50 p-4 rounded border border-green-200">
+            <p className="text-green-700 font-medium">Verification in Progress</p>
+            <p className="text-sm text-green-600 mt-1">Our system is analyzing the document. This may take a few moments.</p>
+            <div className="mt-4 w-full bg-gray-200 h-2 rounded-full">
+              <div className="bg-green-500 h-2 rounded-full w-3/4 animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      <div className="flex justify-end gap-2 mt-4">
+        {step > 1 && (
+          <button 
+            onClick={() => {
+              setStep(step - 1);
+              updateProgress(((step - 2) / totalSteps) * 100);
+            }}
+            className="px-4 py-2 border border-gray-300 rounded"
+          >
+            Back
+          </button>
+        )}
+        <button 
+          onClick={nextStep}
+          className="px-4 py-2 bg-[#0077B6] text-white rounded"
+        >
+          {step === totalSteps ? "Complete" : "Next"}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const TopUpForm = ({ progress, updateProgress, closeForm }) => {
+  const [step, setStep] = useState(1);
+  const totalSteps = 3;
+
+  const nextStep = () => {
+    if (step < totalSteps) {
+      setStep(step + 1);
+      updateProgress((step / totalSteps) * 100);
+    } else {
+      alert("Wallet topped up successfully!");
+      closeForm();
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      {step === 1 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 1: Account Information</h3>
+          <div className="space-y-2">
+            <label className="block text-sm">Email or Account ID</label>
+            <input type="text" className="w-full p-2 border rounded" />
+          </div>
+          <div className="bg-blue-50 p-4 rounded border border-blue-100">
+            <p className="text-sm text-blue-700">Your current wallet balance will appear here after account verification</p>
+          </div>
+        </div>
+      )}
+      
+      {step === 2 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 2: Top-Up Amount</h3>
+          <div className="space-y-2">
+            <label className="block text-sm">Amount to Add ($)</label>
+            <input type="number" className="w-full p-2 border rounded" placeholder="Enter amount" />
+          </div>
+          <div className="flex gap-2">
+            <button className="px-4 py-2 border rounded">$50</button>
+            <button className="px-4 py-2 border rounded">$100</button>
+            <button className="px-4 py-2 border rounded">$200</button>
+            <button className="px-4 py-2 border rounded">$500</button>
+          </div>
+        </div>
+      )}
+      
+      {step === 3 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 3: Payment Method</h3>
+          <div className="space-y-2">
+            <label className="block text-sm">Select Payment Method</label>
+            <div className="grid grid-cols-3 gap-2">
+              <button className="p-4 border rounded flex flex-col items-center">
+                <span className="text-xl">💳</span>
+                <span className="text-sm mt-1">Card</span>
+              </button>
+              <button className="p-4 border rounded flex flex-col items-center">
+                <span className="text-xl">🏦</span>
+                <span className="text-sm mt-1">Bank</span>
+              </button>
+              <button className="p-4 border rounded flex flex-col items-center">
+                <span className="text-xl">📱</span>
+                <span className="text-sm mt-1">Mobile</span>
+              </button>
+            </div>
+          </div>
+          <div className="space-y-2 mt-4">
+            <label className="block text-sm">Card Details</label>
+            <input type="text" className="w-full p-2 border rounded" placeholder="Card Number" />
+            <div className="grid grid-cols-2 gap-2">
+              <input type="text" className="p-2 border rounded" placeholder="MM/YY" />
+              <input type="text" className="p-2 border rounded" placeholder="CVV" />
+            </div>
+          </div>
+        </div>
+      )}
+      
+      <div className="flex justify-end gap-2 mt-4">
+        {step > 1 && (
+          <button 
+            onClick={() => {
+              setStep(step - 1);
+              updateProgress(((step - 2) / totalSteps) * 100);
+            }}
+            className="px-4 py-2 border border-gray-300 rounded"
+          >
+            Back
+          </button>
+        )}
+        <button 
+          onClick={nextStep}
+          className="px-4 py-2 bg-[#0077B6] text-white rounded"
+        >
+          {step === totalSteps ? "Top Up Now" : "Next"}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const PartnershipForm = ({ progress, updateProgress, closeForm }) => {
+  const [step, setStep] = useState(1);
+  const totalSteps = 3;
+
+  const nextStep = () => {
+    if (step < totalSteps) {
+      setStep(step + 1);
+      updateProgress((step / totalSteps) * 100);
+    } else {
+      alert("Partnership application submitted!");
+      closeForm();
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      {step === 1 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 1: Organization Details</h3>
+          <div className="space-y-2">
+            <label className="block text-sm">Organization Type</label>
+            <select className="w-full p-2 border rounded">
+              <option>Hospital</option>
+              <option>Clinic</option>
+              <option>Pharmacy</option>
+              <option>Individual Doctor</option>
+            </select>
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Organization Name</label>
+            <input type="text" className="w-full p-2 border rounded" />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Registration/License Number</label>
+            <input type="text" className="w-full p-2 border rounded" />
+          </div>
+        </div>
+      )}
+      
+      {step === 2 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 2: Contact Information</h3>
+          <div className="space-y-2">
+            <label className="block text-sm">Contact Person Name</label>
+            <input type="text" className="w-full p-2 border rounded" />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Email Address</label>
+            <input type="email" className="w-full p-2 border rounded" />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Phone Number</label>
+            <input type="tel" className="w-full p-2 border rounded" />
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Address</label>
+            <textarea className="w-full p-2 border rounded" />
+          </div>
+        </div>
+      )}
+      
+      {step === 3 && (
+        <div className="space-y-4">
+          <h3 className="font-medium">Step 3: Partnership Details</h3>
+          <div className="space-y-2">
+            <label className="block text-sm">Services Offered</label>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="flex items-center">
+                <input type="checkbox" id="service1" className="mr-2" />
+                <label htmlFor="service1" className="text-sm">Medical Treatment</label>
+              </div>
+              <div className="flex items-center">
+                <input type="checkbox" id="service2" className="mr-2" />
+                <label htmlFor="service2" className="text-sm">Pharmacy</label>
+              </div>
+              <div className="flex items-center">
+                <input type="checkbox" id="service3" className="mr-2" />
+                <label htmlFor="service3" className="text-sm">Diagnostics</label>
+              </div>
+              <div className="flex items-center">
+                <input type="checkbox" id="service4" className="mr-2" />
+                <label htmlFor="service4" className="text-sm">Training</label>
+              </div>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Upload Documents</label>
+            <input type="file" className="w-full p-2 border rounded" />
+            <p className="text-xs text-gray-500">Upload license, certificates, and other relevant documents</p>
+          </div>
+          <div className="space-y-2">
+            <label className="block text-sm">Additional Notes</label>
