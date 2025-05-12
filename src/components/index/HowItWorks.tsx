@@ -13,19 +13,19 @@ const Header = () => {
             <div className="flex gap-4">
             <div className="flex-shrink-0 w-[25px] h-[25px] border-[5px] border-[#FE6F15] rounded-full" />
             <p>
-                Register as a patient, donor, or healthcare professional. Patients upload a verified medical report, while healthcare providers submit credentials.
+                Register as a patient, donor, or healthcare professional or a healthcare services provider. Every player on the platform must undergo reliable identification, verification and vetting process appropriate for their category before they can be allow to render services on or use services on the platform
               </p>
             </div>
             <div className="flex gap-4">
             <div className="flex-shrink-0 w-[25px] h-[25px] border-[5px] border-[#FE6F15] rounded-full" />
             <p>
-                Patients create fundraising requests, and donors browse verified cases to contribute securely. Every donation goes directly to medical expenses.
+                Every category of users/services providers are provided with all the software requirements they need to access services or render services on the platform. 
               </p>
             </div>
             <div className="flex gap-4">
             <div className="flex-shrink-0 w-[25px] h-[25px] border-[5px] border-[#FE6F15] rounded-full" />
             <p>
-                Patients receive funds for treatment, while registered healthcare professionals offer their services to those in need.
+                We also provide continuous guidance and education on how our processes work, plus a dedicated 24 hour technical support waiting to sort out any challenges you may encounter.
               </p>
             </div>
           </div>

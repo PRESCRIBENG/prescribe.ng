@@ -102,11 +102,16 @@ const About = () => {
             Welcome to <span className="text-[#FE6F15]">prescribeng</span>
           </h1>
           <p className="text-[16px]">
-            At Prescribeng, we believe that everyone deserves access to quality
-            healthcare, regardless of their financial situation. Our platform is
-            designed to connect patients in need with compassionate donors and
-            trusted healthcare professionals, making life-saving treatment more
-            accessible.
+          PrescribeNg LTD is a healthcare technology company that provides digital health solutions, particularly in prescription management, patients records management and safe and secure patient data migration as required by patient and providing integrated healthcare platform where licensed and verified healthcare services providers can connect with patients in need of their services.
+            At PrescribeNg, we treamline the prescription process, clinicial appointments and medical referral processes, enhancing patient care, and improving healthcare outcomes through technology. <br/><br/>
+
+            Some potential features and benefits of PrescribeNg LTD's solutions include:<br/>
+
+            * Electronic Prescriptions: Simplifying prescription management and reducing errors.<br/>
+            * Medication Management: Helping patients adhere to medication regimens.<br/>
+            * Clinical Decision Support: Providing healthcare professionals with informed decision-making tools.<br/>
+            * Patient Engagement: Enhancing patient-doctor communication and education.<br/>
+            * We also assist patients who are unable to afford their healthcare cost in raising funds strictly for the purposes of accessing healthcare services.<br/>
           </p>
         </div>
 
@@ -139,18 +144,9 @@ const About = () => {
                   />
                 </div>
                 <p className=" text-[14px] sm:text-[16px]">
-                  At Prescribeng, our mission is to bridge the gap between
-                  medical needs and financial support, ensuring that no one is
-                  denied healthcare due to a lack of funds. We strive to create
-                  a transparent, secure, and impactful platform where
-                  individuals facing life-threatening medical conditions can
-                  access the financial help they need through crowdfunding.
-                  Beyond raising funds, we aim to connect patients with trusted
-                  healthcare providers, including doctors, pharmacies, and
-                  hospitals, to ensure they receive the right treatment at the
-                  right time. Our verification process guarantees that every
-                  campaign is genuine, giving donors confidence that their
-                  contributions are truly saving lives.
+                  At Prescribeng, our mission is to bridge the gaps in healthcare services using home grown technologies tailore to the Nigerian environment.
+
+                  Our platform is built on trust and connections, and we ensure tranparency in all our processes.
                 </p>
               </div>
             </div>

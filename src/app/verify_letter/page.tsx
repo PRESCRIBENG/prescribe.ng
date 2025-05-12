@@ -73,11 +73,11 @@ const VerifyLetter = () => {
           <div className="flex flex-col items-center space-y-8">
             <div className="space-y-[16px] text-[#002A40]">
               <h1 className="text-[32px] font-montserrat font-extrabold text-center leading-[50px]">
-                Verify Medical Report
+                Verify Medical Letters
               </h1>
               <p className="text-[16px] text-center">
-                Enter the reference ID below to confirm if a report was issued
-                by a verified healthcare provider.
+                Enter the reference ID below to verify sick notes/exemption letter/medical reports/discharge summaries issued
+                by any or our partner healthcare services providers.
               </p>
             </div>
 
@@ -221,7 +221,7 @@ const DonationFooter = () => {
     <div className="bg-[#FFF1E8] px-6 xl:px-[130px] py-12 space-y-4">
       <div className="flex flex-col items-center space-y-3">
         <h1 className="text-[32px] font-montserrat font-bold leading-[50px] text-[#002A40]">
-          Your Donation Can Save a Life!
+          World-Class Healthcare. Built on Trust. Powered by Connection.
         </h1>
         <p className="text-[16px]">
           Every contribution, big or small, brings hope to those in need. Join

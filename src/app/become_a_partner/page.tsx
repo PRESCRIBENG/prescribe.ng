@@ -147,18 +147,25 @@ const BecomeAPartner = () => {
                 <div className="flex-shrink-0 w-[25px] h-[25px] border-[5px] border-[#FE6F15] rounded-full" />
                 <p>
                   <span className="text-[#002A40] font-bold">
-                    Sign Up & Verify Credentials –
+                    Indicate Interest –
                   </span>{" "}
-                  We provide a tool to authenticate medical reports, reducing
-                  fraud and ensuring trust within the system.
+                  Indicate interest by contacting our us at info@prescribe.ng, telling us bits about your organisation as well as attaching relevant registrations and licenses.
                 </p>
               </div>
               <div className="flex gap-4 items-start">
                 <div className="flex-shrink-0 w-[25px] h-[25px] border-[5px] border-[#FE6F15] rounded-full" />
                 <p>
                   <span className="text-[#002A40] font-bold">
-									Get Approved –
-                  </span>{" "} Our team reviews and verifies your information.
+									Get Verified –
+                  </span>{" "} Our team reviews and verifies your information.. this involves reaching out to the authorities for a thorough verification and relevant regulatory bodies.
+                </p>
+              </div>
+              <div className="flex gap-4 items-start">
+                <div className="flex-shrink-0 w-[25px] h-[25px] border-[5px] border-[#FE6F15] rounded-full" />
+                <p>
+                  <span className="text-[#002A40] font-bold">
+									Get Onboarded –
+                  </span>{" "} Upon successful verification, we would send our recruitment team to your stated address to carry out further physical verifications and to ensure your organisation meets our standard, following which your organisation will be onboarded on our platform
                 </p>
               </div>
               <div className="flex gap-4 items-start">
@@ -166,15 +173,7 @@ const BecomeAPartner = () => {
                 <p>
                   <span className="text-[#002A40] font-bold">
 									Connect with Patients –
-                  </span>{" "}Access a pool of funded patients who need your services.
-                </p>
-              </div>
-              <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-[25px] h-[25px] border-[5px] border-[#FE6F15] rounded-full" />
-                <p>
-                  <span className="text-[#002A40] font-bold">
-									Receive Payments Securely –
-                  </span>{" "}Get paid directly for treatments and services provided.
+                  </span>{" "}Access a pool of patients who need your services, as well as a guarantee of payments for services rendered.
                 </p>
               </div>
             </div>
