@@ -134,19 +134,14 @@ const TopUp = () => {
   return (
     <div className="overflow-hidden bg-[#F5F5F5] mt-50 mb-16 text-[16px] px-4 md:px-[130px]">
       <div className="md:flex md:flex-col items-center space-y-8">
-        <div className="space-y-[16px] text-[#002A40] py-12">
-          <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
-            Top Up Your Prescribeng Account
-          </h1>
-          <p className="text-[16px] text-center">
-            Easily add funds for yourself or a loved one to access medical care when needed.
-          </p>
-        </div>
         <div className="bg-white space-y-6">
           <div className="space-y-[16px] text-[#002A40]">
-            <h1 className="text-[32px] font-extrabold px-8 py-6 text-center leading-[50px]">
-              Top Up Details
-            </h1>
+          <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
+            Patient Top up
+            </h1>*
+            <p className="text-[16px] text-center">
+            Easily add funds for yourself or a loved one to access medical care when needed.
+          </p>
           </div>
 
           {submitted ? (
