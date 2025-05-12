@@ -36,7 +36,7 @@ const Header = () => {
             PrescribeNg LTD is a healthcare technology company that provides digital health solutions, particularly in prescription management, patients records management and safe and secure patient data migration as required by patient and providing integrated healthcare platform where licensed and verified healthcare services providers can connect with patients in need of their services.
             At PrescribeNg, we treamline the prescription process, clinicial appointments and medical referral processes, enhancing patient care, and improving healthcare outcomes through technology. <br/><br/>
 
-            Some potential features and benefits of PrescribeNg LTD's solutions include:<br/>
+            Some potential features and benefits of PrescribeNg LTD solutions include:<br/>
 
             * Electronic Prescriptions: Simplifying prescription management and reducing errors.<br/>
             * Medication Management: Helping patients adhere to medication regimens.<br/>

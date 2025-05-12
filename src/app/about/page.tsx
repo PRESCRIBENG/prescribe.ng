@@ -102,10 +102,10 @@ const About = () => {
             Welcome to <span className="text-[#FE6F15]">prescribeng</span>
           </h1>
           <p className="text-[16px]">
-          PrescribeNg LTD is a healthcare technology company that provides digital health solutions, particularly in prescription management, patients records management and safe and secure patient data migration as required by patient and providing integrated healthcare platform where licensed and verified healthcare services providers can connect with patients in need of their services.
+            PrescribeNg LTD is a healthcare technology company that provides digital health solutions, particularly in prescription management, patients records management and safe and secure patient data migration as required by patient and providing integrated healthcare platform where licensed and verified healthcare services providers can connect with patients in need of their services.
             At PrescribeNg, we treamline the prescription process, clinicial appointments and medical referral processes, enhancing patient care, and improving healthcare outcomes through technology. <br/><br/>
 
-            Some potential features and benefits of PrescribeNg LTD's solutions include:<br/>
+            Some potential features and benefits of PrescribeNg LTD solutions include:<br/>
 
             * Electronic Prescriptions: Simplifying prescription management and reducing errors.<br/>
             * Medication Management: Helping patients adhere to medication regimens.<br/>
@@ -146,7 +146,7 @@ const About = () => {
                 <p className=" text-[14px] sm:text-[16px]">
                   At Prescribeng, our mission is to bridge the gaps in healthcare services using home grown technologies tailore to the Nigerian environment.
 
-                  Our platform is built on trust and connections, and we ensure tranparency in all our processes.
+                  Our platform is built on trust and connections, and we ensure transparency in all our processes.
                 </p>
               </div>
             </div>
