@@ -148,9 +148,11 @@ const HMOPartners = () => {
 													<p className="font-montserrat text-[20px] font-bold">
 														{partner.organisation}
 													</p>
-													<p className="italic text-gray-600">
+													{/* <p className="italic text-gray-600">
 														"{partner.motto}"
-													</p>
+													</p> */}
+													<p className="italic text-gray-600">&quot;{partner.motto}&quot;</p>
+
 													<p className="flex items-center gap-1">
 														<span className="font-bold">Rating: </span>
 														<Image
@@ -226,9 +228,11 @@ const HMOPartners = () => {
 										<p className="font-montserrat text-[16px] font-bold">
 											{selectedHMO.organisation}
 										</p>
-										<p className="italic text-gray-600">
+										{/* <p className="italic text-gray-600">
 											"{selectedHMO.motto}"
-										</p>
+										</p> */}
+										<p className="italic text-gray-600">&quot;{selectedHMO.motto}&quot;</p>
+
 										<p className="text-[16px]">
 											<span className="font-bold">Rating: </span>
 											<Image

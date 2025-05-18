@@ -1,7 +1,7 @@
-import { request } from 'http';
-import { NextRequest, NextResponse } from 'next/server';
+// import { request } from 'http';
+import { NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
     try {
         // const body = await request.json()
 
