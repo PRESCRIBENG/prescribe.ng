@@ -118,8 +118,7 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Bottom info section - Now overlapping the image with negative margin and z-index */}
-        <div className="w-full bg-[#0077B6] grid grid-cols-1 md:grid-cols-3 gap-6 p-4 sm:p-[32px] rounded-[5px] mt-[2px] relative z-10">
+        <div className="w-full bg-[#0077B6] grid grid-cols-1 md:grid-cols-3 gap-4 p-4 sm:p-[32px] rounded-[5px] mt-[2px] relative z-10">
           <div className="flex items-center gap-3">
             <div className="w-[48px] h-[108px] bg-[#ffffff] rounded flex items-center justify-center">
               <Image
@@ -131,13 +130,12 @@ const Header = () => {
                 priority
               />
             </div>
-            <div className="w-full md:w-[272px] justify-center text-[#FFFFFF]">
+            <div className="w-full md:w-[300px] justify-center text-[#FFFFFF]">
               <p className="text-[16px] font-semibold">
-                24/7 Access to Healthcare
-              </p>
+                Seamless Healthcare Connections  
+            </p>
               <p className="text-[14px] font-regular">
-                Round-the-clock support for patients and healthcare
-                professionals. Get help or offer care anytime, anywhere
+                Instant access to licensed providers and secure health services. Patients get care, professionals grow their practice—all on one trusted platform.
               </p>
             </div>
           </div>
