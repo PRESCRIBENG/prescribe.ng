@@ -3,6 +3,7 @@
 import Image from "next/image";
 import ECGLine from "@/components/ECGLine";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -51,9 +52,14 @@ const Header = () => {
             </div>
 
             <div className="flex space-x-4 mt-[50px] text-[16px] flex-wrap">
-              <button className="w-[119px] h-[57px] bg-[#0077B6] p-2 text-[#ffffff] rounded mb-2 sm:mb-0">
-                Get Help
-              </button>
+              <Link
+                href="../self_signup"
+              >
+                <button className="w-[119px] h-[57px] bg-[#0077B6] p-2 text-[#ffffff] rounded mb-2 sm:mb-0">
+                  Sign Up
+                </button>
+              </Link>
+
               <button className="w-[213px] h-[57px] p-2 border border-[#0077B6] text-primaryLight rounded">
                 Become a Partner
               </button>
