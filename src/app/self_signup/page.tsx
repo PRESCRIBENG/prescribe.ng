@@ -158,13 +158,13 @@ const SelfSignup = () => {
               reference: data.metaPayload.ppn,    //We use the same ppn generated as our payment reference, so that we can track transaction status in real time at any stage
               metadata: data.metaPayload,
               callback: (response: { reference: string }) => {
-                setFormData((prev) => ({
-                  ...prev,
-                  reference: response.reference,
-                  routeTo: 'verification',        //the 'useEffect' function that manages screens also makes a post request to backend whenever there is a change, in order to get the latest status of the signup process
-                }));
+                //setFormData((prev) => ({
+                  //...prev,
+                  //reference: response.reference,
+                  //routeTo: 'verification',        //the 'useEffect' function that manages screens also makes a post request to backend whenever there is a change, in order to get the latest status of the signup process
+                //}));
                 console.log("Payment complete:", response);
-                alert("Payment successful!");
+                setRefresh(prev=>!prev);  // Trigger a rerendering of the the screenManager to go to backEnd and retrieve signup data.
               },
               onClose: () => {
                 alert("Transaction cancelled.");
