@@ -11,8 +11,10 @@ const SelfSignup = () => {
     lastName: "",
     firstName: "",
     middleName: "",
+    dob: "",
     gender: "",
     email: "",
+    mobile: "",
     idNumber: "",
     vnin: "",
     emc1: "",
@@ -33,24 +35,38 @@ const SelfSignup = () => {
     token: "",
     otpEmail: "",
     otpMobile: "",
+    fileAttachment: {},
   });
-  //const [isLoading, setIsLoading] = useState(false);
-  const backendUrl = 'https://gelataskia.prescribe.ng/web';
-  //const backendUrl = 'http://127.0.0.1:5002/web';
+  const [refresh, setRefresh] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  //const backendUrl = 'https://gelataskia.prescribe.ng/web';
+  const backendUrl = 'http://127.0.0.1:5002/web';
 
 
-  const handleChange = (
+  const handleChange = async (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (e.target.name === 'fileAttachment' && e.target instanceof HTMLInputElement && e.target.files?.[0]) {
+      const file = e.target.files[0];
+  
+      // Convert file to base64
+      const base64 = await convertFileToBase64(file);
+  
+      setFormData({ ...formData, fileAttachment: base64 });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
-
+  
+  
+  
 
 
   useEffect(() => {
     const screenManager = async () => {
       //Makes a 'POST' call to the backend to retrieve latest state of user and to manage screen accordingly
       try {
+        setIsLoading(true);
         const statusDataResponse = await fetch(`${backendUrl}/pre_signup`, {
           method: 'POST',
            headers: {
@@ -76,11 +92,13 @@ const SelfSignup = () => {
       } catch (error) {
       console.error("Status and Screen Update error:", error);
       //alert("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
     };
   
     screenManager();
-  }, [formData.routeTo]);
+  }, [formData.routeTo, refresh]);
   
 
   // Load Paystack SDK
@@ -99,6 +117,7 @@ const SelfSignup = () => {
   const handlePreEnrollment = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const preEnrolmentResponse = await fetch(`${backendUrl}/pre_signup`, {
         method: 'POST',
          headers: {
@@ -149,6 +168,7 @@ const SelfSignup = () => {
               },
               onClose: () => {
                 alert("Transaction cancelled.");
+                setRefresh(prev=>!prev);
               },
             });
       
@@ -167,52 +187,69 @@ const SelfSignup = () => {
     } catch (error) {
       console.error("Payment error:", error);
       alert("An error occurred. Please try again.");
+    } finally{
+      setIsLoading(false);
     }
   };
 
 
 
 
-  //This function sends formData to backend when called where it is modified and returned based on user's registration status. The returned data is then used to manage screen visibility
+  //This function sends formData to backend where user data is extracted and user records updated accordingly
   const handleOTPVerification = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
+      const updatedFormData = { ...formData };  // Clone formData
+  
+      // Convert fileAttachment to base64
+      if (formData.fileAttachment instanceof File) {
+        const file = formData.fileAttachment;
+        const base64 = await convertFileToBase64(file);
+        updatedFormData.fileAttachment = base64;  // Replace file with base64 string
+      }
+  
       const otpResponse = await fetch(`${backendUrl}/self_signup_verification`, {
         method: 'POST',
-         headers: {
-           'Content-Type': 'application/json',
-         },
-         body: JSON.stringify(formData),
-       })
-   
-       if(otpResponse.ok){
-          const data = await otpResponse.json();
-
-          console.log(data) // Silence Eslint errors until data assignment is used
-
-        //Object.keys(data).forEach((key) => {
-          //setFormData((prev) => ({
-            //...prev,
-            //[key]: data[key], // Use bracket notation for dynamic key
-          //}));
-        //}); 
-
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedFormData),
+      });
+  
+      if (otpResponse.ok) {
+        const data = await otpResponse.json();
+        console.log(data);
         setCurrentPage('success');
-      }  else{
+      } else {
         const err = await otpResponse.json();
         alert(err.message);
       }
-       
     } catch (error) {
       console.error("Payment error:", error);
       alert("An error occurred. Please try again.");
+    } finally{
+      setIsLoading(false);
     }
+  };
+  
+  
+  // Utility function to convert a File object to base64
+  const convertFileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+    });
   };
 
   
 
   return (
-    <div className="overflow-hidden bg-[#F5F5F5] mt-50 mb-16 text-[16px] px-4 md:px-[130px]">
+    <div //className="overflow-hidden bg-[#F5F5F5] mt-50 mb-16 text-[16px] px-4 md:px-[130px]"
+    className={`overflow-hidden bg-[#F5F5F5] mt-50 mb-16 text-[16px] px-4 md:px-[130px] ${isLoading ? 'cursor-wait' : 'cursor-default'}`}
+    >
       <div className="md:flex md:flex-col items-center space-y-8">
       
         {CurrentPage==='' && (<div className="bg-white space-y-6">
@@ -367,6 +404,40 @@ const SelfSignup = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-[#002A40] mb-1">
+                    Gender
+                  </label>
+                  <select
+                    name="gender"
+                    required
+                    value={formData.gender}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                  >
+                    <option value="" disabled>
+                      Select Gender
+                    </option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-[#002A40] mb-1">
+                    Date of Birth
+                  </label>
+                  <input
+                    type="date"
+                    name="dob"
+                    //placeholder="Enter your full name"
+                    required
+                    value={formData.dob}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-[#002A40] mb-1">
                     Email
                   </label>
                   <input
@@ -375,6 +446,21 @@ const SelfSignup = () => {
                     placeholder="Enter your email"
                     required
                     value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-[#002A40] mb-1">
+                    Mobile Number (Must be same number associated with your NIN)
+                  </label>
+                  <input
+                    type="text"
+                    name="mobile"
+                    placeholder="Enter mobile number"
+                    required
+                    value={formData.mobile}
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
                   />
@@ -504,6 +590,21 @@ const SelfSignup = () => {
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
                   />
                 </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-[#002A40] mb-1">
+                    Attach Government-issued ID Document (JPG, JPEG, PNG)
+                  </label>
+                  <input
+                    type="file"
+                    name="fileAttachment"
+                    onChange={handleChange}
+                    accept=".jpg,.jpeg,.png"  // Optional: limit to specific file types
+                    required
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                  />
+                </div>
+
 
                 <button
                   type="submit"
