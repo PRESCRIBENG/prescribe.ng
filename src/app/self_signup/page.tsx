@@ -39,8 +39,8 @@ const SelfSignup = () => {
   });
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  //const backendUrl = 'https://gelataskia.prescribe.ng/web';
-  const backendUrl = 'http://127.0.0.1:5002/web';
+  const backendUrl = 'https://gelataskia.prescribe.ng/web';
+  //const backendUrl = 'http://127.0.0.1:5002/web';
 
 
   const handleChange = async (
