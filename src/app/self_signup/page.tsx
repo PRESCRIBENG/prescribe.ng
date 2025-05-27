@@ -68,8 +68,12 @@ const SelfSignup = () => {
   useEffect(() => {
     const screenManager = async () => {
       //Makes a 'POST' call to the backend to retrieve latest state of user and to manage screen accordingly
+      if(CurrentPage==='success'){
+        return;
+      }
       try {
         setIsLoading(true);
+        //alert("Screen Manager called!!!")
         const statusDataResponse = await fetch(`${backendUrl}/pre_signup`, {
           method: 'POST',
            headers: {
@@ -88,9 +92,13 @@ const SelfSignup = () => {
             }));
           });
 
-          if(statusData.routeTo!==CurrentPage){
-            setCurrentPage(statusData.routeTo);   //We let the backend determine what screen is visible at every given time
+          if(statusData.routeTo==='paygate'){
+            setCurrentPage('');   //We let the backend determine what screen is visible at every given time
+          } else {
+            setCurrentPage(statusData.routeTo);
           }
+         } else {
+          setCurrentPage('');
          }
       } catch (error) {
       console.error("Status and Screen Update error:", error);
@@ -101,7 +109,7 @@ const SelfSignup = () => {
     };
   
     screenManager();
-  }, [formData.routeTo, refresh]);
+  }, [refresh,]);
   
 
   // Load Paystack SDK
@@ -161,17 +169,16 @@ const SelfSignup = () => {
               reference: data.metaPayload.ppn,    //We use the same ppn generated as our payment reference, so that we can track transaction status in real time at any stage
               metadata: data.metaPayload,
               callback: (response: { reference: string }) => {
+                setRefresh(prev=>!prev);
                 //setFormData((prev) => ({
                   //...prev,
                   //reference: response.reference,
-                  //routeTo: 'verification',        //the 'useEffect' function that manages screens also makes a post request to backend whenever there is a change, in order to get the latest status of the signup process
+                  //routeTo: 'verification',        //This does not necessarily set current page to 'verification'... instead it triggers a useEffect screenManager function which determines what screen to displat after checking with the backend.
                 //}));
                 console.log("Payment complete:", response);
-                setRefresh(prev=>!prev);  // Trigger a rerendering of the the screenManager to go to backEnd and retrieve signup data.
               },
               onClose: () => {
                 alert("Transaction cancelled.");
-                setRefresh(prev=>!prev);
               },
             });
       
@@ -179,7 +186,7 @@ const SelfSignup = () => {
           } catch (error) {
             console.error("Payment error:", error);
             alert("An error occurred. Please try again.");
-          }
+          } 
         }
        } else {
         const err = await preEnrolmentResponse.json();
@@ -703,22 +710,6 @@ const SelfSignup = () => {
           </div>)}
 
         </div>)}
-
-
-        
-        {CurrentPage==='paygate' && (<div className="bg-white space-y-6">
-          
-          <div className="space-y-[16px] text-[#002A40]">
-          <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
-            Paygate
-            </h1>*
-            <p className="text-[16px] text-center text-green-600">
-            Easily add funds for yourself or a loved one to access medical care when needed.
-          </p>
-          </div>
-          
-        </div>)}
-
 
         {CurrentPage==='verification' && (<div className="bg-white space-y-6">
           
