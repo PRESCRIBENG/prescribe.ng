@@ -40,6 +40,7 @@ const SelfSignup = () => {
     otpMobile: "",
     fileAttachment: {},
   });
+  
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const backendUrl = 'https://gelataskia.prescribe.ng/web';
@@ -91,15 +92,9 @@ const SelfSignup = () => {
               [key]: statusData[key], // Use bracket notation for dynamic key
             }));
           });
-
-          if(statusData.routeTo==='paygate'){
-            setCurrentPage('');   //We let the backend determine what screen is visible at every given time
-          } else {
-            setCurrentPage(statusData.routeTo);
-          }
-         } else {
-          setCurrentPage('');
-         }
+          setCurrentPage(statusData.routeTo);
+        }
+          
       } catch (error) {
       console.error("Status and Screen Update error:", error);
       //alert("An error occurred. Please try again.");
@@ -147,34 +142,51 @@ const SelfSignup = () => {
           }));
         });
 
-        if(data.routeTo==='paygate'){   //take user to paystack page if backend indicates user needs to pay
+        setCurrentPage(data.routeTo);
+       
+      }
+      else {
+        const err = await preEnrolmentResponse.json();
+        alert(err.message);
+       }
+    }   
+     catch (error) {
+      console.error("Payment error:", error);
+      alert("An error occurred. Please try again.");
+    } finally{
+      setIsLoading(false);
+    }
+  };
+
+
+
+  //This function sends formData to backend when called where it is modified and returned based on user's registration status. The returned data is then used to manage screen visibility
+  const handlePaystackPayment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      setIsLoading(true);
           try {
             if (!window.PaystackPop) {
               alert("Payment gateway not loaded. Please refresh the page.");
               return;
             }
       
-            if (!data?.paystackPublicKey || !data?.amount || !data?.metaPayload.idNumber || !data?.metaPayload.ppn ) {
+            if (!formData?.paystackPublicKey || !formData?.amount || !formData?.metaPayload ) {
               alert("Incomplete payment data. Please try again.");
               return;
             }
       
-            const paystackAmount = parseInt(data.amount) //Already converted to kobo from backend;
+            const paystackAmount = parseInt(formData.amount) //Already converted to kobo from backend;
       
             const handler = window.PaystackPop.setup({
-              key: data.paystackPublicKey,
-              email: data.email,
+              key: formData.paystackPublicKey,
+              email: formData.email,
               amount: paystackAmount,
               currency: "NGN",
-              reference: data.metaPayload.ppn,    //We use the same ppn generated as our payment reference, so that we can track transaction status in real time at any stage
-              metadata: data.metaPayload,
+              reference: formData.ppn,    //We use the same ppn generated as our payment reference, so that we can track transaction status in real time at any stage
+              metadata: formData.metaPayload,
               callback: (response: { reference: string }) => {
                 setRefresh(prev=>!prev);
-                //setFormData((prev) => ({
-                  //...prev,
-                  //reference: response.reference,
-                  //routeTo: 'verification',        //This does not necessarily set current page to 'verification'... instead it triggers a useEffect screenManager function which determines what screen to displat after checking with the backend.
-                //}));
                 console.log("Payment complete:", response);
               },
               onClose: () => {
@@ -188,16 +200,7 @@ const SelfSignup = () => {
             alert("An error occurred. Please try again.");
           } 
         }
-       } else {
-        const err = await preEnrolmentResponse.json();
-        alert(err.message);
-       }
-       
-       
-    } catch (error) {
-      console.error("Payment error:", error);
-      alert("An error occurred. Please try again.");
-    } finally{
+       finally{
       setIsLoading(false);
     }
   };
@@ -710,6 +713,27 @@ const SelfSignup = () => {
           </div>)}
 
         </div>)}
+
+        {CurrentPage==='paygate' && (<div className="bg-white space-y-6">
+          
+          <div className="space-y-[16px] text-[#002A40]">
+          <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
+            PAYGATE
+            </h1>*
+            <p className="text-[16px] text-center">
+            You will be taken to our payment page to pay ₦{parseInt(formData.amount)/100}. Click OK to continue.
+          </p>
+          </div>
+            <form onSubmit={handlePaystackPayment} className="w-full md:w-[790px] px-8 py-8 space-y-8">
+              <button
+                type="submit"
+                className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
+              >
+                OK
+              </button>
+            </form>
+        </div>)}
+
 
         {CurrentPage==='verification' && (<div className="bg-white space-y-6">
           
