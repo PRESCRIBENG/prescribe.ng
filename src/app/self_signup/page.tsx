@@ -104,7 +104,7 @@ const SelfSignup = () => {
     };
   
     screenManager();
-  }, [refresh,]);
+}, [refresh, CurrentPage, formData]);
   
 
   // Load Paystack SDK
