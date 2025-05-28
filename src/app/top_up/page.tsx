@@ -226,7 +226,7 @@ const TopUp = () => {
 
               <button
                 type="submit"
-                className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
+                className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4] transition"
               >
                 Proceed to Payment
               </button>

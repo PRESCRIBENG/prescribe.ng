@@ -75,7 +75,7 @@ const Navbar = () => {
 
         {/* Desktop Button */}
         <Link href="/login" className="">
-          <button className="hidden lg:block w-[154px] h-[41px] bg-[#0077B6] text-white rounded">
+          <button className="hidden lg:block w-[154px] h-[41px] bg-[#0077B6] hover:bg-[#006BA4] text-white rounded-[10px]">
             Clinician Portal
           </button>
         </Link>
@@ -144,7 +144,7 @@ const Navbar = () => {
           </div>
 
           <Link href="/login" className="mt-6" onClick={handleItemClick}>
-            <button className="w-[154px] h-[41px] bg-[#0077B6] text-white rounded">
+            <button className="w-[154px] h-[41px] bg-[#0077B6] text-white rounded-[10px] hover:bg-[#006BA4]">
               Clinician Portal
             </button>
           </Link>

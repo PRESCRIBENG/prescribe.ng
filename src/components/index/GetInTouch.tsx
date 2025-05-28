@@ -139,7 +139,7 @@ const GetInTouch = () => {
 
               <button
                 type="submit"
-                className="w-full md:w-[154px] bg-[#0077B6] text-white py-3 rounded-md hover:bg-[#0066a1] transition"
+                className="w-full md:w-[154px] bg-[#0077B6] text-white py-3 rounded-[10px] hover:bg-[#006BA4] transition"
               >
                 Submit
               </button>

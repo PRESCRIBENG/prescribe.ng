@@ -117,7 +117,7 @@ const HealthCareProviders = () => {
       </div> */}
 
       <div className="flex justify-center mt-8">
-        <button className="w-[194px] h-[42px] bg-[#0077B6] p-2 text-white rounded">
+        <button className="w-[194px] h-[42px] bg-[#0077B6] p-2 text-white rounded-[10px] hover:bg-[#006BA4]">
           Join Us
         </button>
       </div>

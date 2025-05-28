@@ -55,7 +55,7 @@ const Header = () => {
               <Link
                 href="../self_signup"
               >
-                <button className="w-[119px] h-[57px] bg-[#0077B6] p-2 text-[#ffffff] rounded mb-2 sm:mb-0">
+                <button className="w-[119px] h-[57px] bg-[#0077B6] p-2 text-[#ffffff] rounded-[10px] hover:bg-[#006BA4] mb-2 sm:mb-0">
                   Sign Up
                 </button>
               </Link>

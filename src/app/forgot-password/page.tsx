@@ -191,14 +191,14 @@ const ForgotPassword = () => {
               <div className="flex justify-between items-center">
                 <Link
                   href="/login"
-                  className="text-[#0077B6] hover:underline"
+                  className="hover:text-[#0077B6]"
                 >
                   Back to Login
                 </Link>
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-md hover:bg-[#005d8f] transition disabled:bg-gray-400"
+                  className="w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-[10px] hover:bg-[#006BA4] transition disabled:bg-gray-400"
                 >
                   {isLoading ? "Sending..." : "Submit"}
                 </button>
@@ -258,14 +258,14 @@ const ForgotPassword = () => {
                 <button
                   type="button"
                   onClick={() => setStep("email-request")}
-                  className="text-[#0077B6] hover:underline"
+                  className="hover:text-[#0077B6]"
                 >
                   Back
                 </button>
                 <button
                   type="submit"
                   disabled={isLoading || formData.code.join("").length !== 6}
-                  className="w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-md hover:bg-[#005d8f] transition disabled:bg-gray-400"
+                  className="w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-[10px] hover:bg-[#006BA4] transition disabled:bg-gray-400"
                 >
                   {isLoading ? "Verifying..." : "Verify"}
                 </button>
@@ -340,14 +340,14 @@ const ForgotPassword = () => {
                 <button
                   type="button"
                   onClick={() => setStep("code-verification")}
-                  className="text-[#0077B6] hover:underline"
+                  className="text-[#0077B6] rounded-[10px] hover:bg-[#006BA4]"
                 >
                   Back
                 </button>
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-md hover:bg-[#005d8f] transition disabled:bg-gray-400"
+                  className="w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-[10px] hover:bg-[#006BA4] transition disabled:bg-gray-400"
                 >
                   {isLoading ? "Updating..." : "Update Password"}
                 </button>
@@ -381,7 +381,7 @@ const ForgotPassword = () => {
             </div>
             <button
               onClick={() => router.push('/login')}
-              className="inline-block w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-md hover:bg-[#005d8f] transition text-center"
+              className="inline-block w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-[10px] hover:bg-[#006BA4] transition text-center"
             >
               Back to Login
             </button>

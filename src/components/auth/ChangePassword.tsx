@@ -167,14 +167,14 @@ const ChangePassword = () => {
             <div className="flex justify-between items-center">
               <Link
                 href="/dashboard"
-                className="text-[#0077B6] hover:underline"
+                className="hover:text-[#0077B6]"
               >
                 Back to Dashboard
               </Link>
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-md hover:bg-[#005d8f] transition disabled:bg-gray-400"
+                className="w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-[10px] hover:bg-[#006BA4] transition disabled:bg-gray-400"
               >
                 {isLoading ? "Updating..." : "Update Password"}
               </button>

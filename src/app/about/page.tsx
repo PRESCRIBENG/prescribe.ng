@@ -297,10 +297,10 @@ const About = () => {
           </p>
         </div>
         <div className="flex justify-center gap-4">
-          <button className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] text-[16px]">
+          <button className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] text-[16px] hover:bg-[#006BA4]">
             I need help
           </button>
-          <button className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] text-[16px]">
+          <button className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] text-[16px] hover:bg-[#006BA4]">
             I want to help
           </button>
         </div>

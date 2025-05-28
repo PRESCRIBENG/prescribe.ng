@@ -24,12 +24,12 @@ const Footer = () => {
 								<input
 									type="email"
 									placeholder="Enter your email"
-									className="w-full px-4 py-3 pr-12 rounded-md text-[#FFFFFF] border border-[#E6F1F8]"
+									className="w-full px-4 py-3 pr-12 h-[64px] rounded-md text-[#FFFFFF] border border-[#E6F1F8]"
 									required
 								/>
 								<button
 									type="submit"
-									className="absolute right-1 top-1/2 transform -translate-y-1/2 bg-[#0077B6] p-2 rounded-full"
+									className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-[#ffffff] px-4 py-2 rounded-[10px]"
 									aria-label="Submit"
 								>
 									<Image
@@ -48,42 +48,42 @@ const Footer = () => {
 						<h3 className="text-lg font-semibold mb-4">Quick Links</h3>
 						<ul className="space-y-2">
 							<li>
-								<Link href="#" className="hover:underline">
+								<Link href="/" className="hover:text-[#006BA4]">
 									Home
 								</Link>
 							</li>
 							<li>
-								<Link href="#" className="hover:underline">
+								<Link href="/about" className="hover:text-[#006BA4]">
 									About
 								</Link>
 							</li>
 							<li>
-								<Link href="#" className="hover:underline">
+								<Link href="/services" className="hover:text-[#006BA4]">
 									Services
 								</Link>
 							</li>
 							<li>
-								<Link href="#" className="hover:underline">
+								<Link href="/become_a_partner" className="hover:text-[#006BA4]">
 									Become a Partner
 								</Link>
 							</li>
 							<li>
-								<Link href="#" className="hover:underline">
+								<Link href="/top_up" className="hover:text-[#006BA4]">
 									Top Up
 								</Link>
 							</li>
 							<li>
-								<Link href="#" className="hover:underline">
+								<Link href="save_a_life" className="hover:text-[#006BA4]">
 									Save a Life
 								</Link>
 							</li>
 							<li>
-								<Link href="#" className="hover:underline">
+								<Link href="verify_letter" className="hover:text-[#006BA4]">
 									Verify Letter
 								</Link>
 							</li>
 							<li>
-								<Link href="#" className="hover:underline">
+								<Link href="/#faqs" className="hover:text-[#006BA4]">
 									FAQs
 								</Link>
 							</li>
@@ -95,37 +95,37 @@ const Footer = () => {
 						<h3 className="text-lg font-semibold mb-4">Our Services</h3>
 						<ul className="space-y-2">
 							<li>
-								<Link href="#" className="hover:underline">
+								<Link href="#" className="hover:text-[#006BA4]">
 									Neurology
 								</Link>
 							</li>
 							<li>
-								<Link href="#" className="hover:underline">
+								<Link href="#" className="hover:text-[#006BA4]">
 									Cardiology
 								</Link>
 							</li>
 							<li>
-								<Link href="#" className="hover:underline">
+								<Link href="#" className="hover:text-[#006BA4]">
 									Crowdfunding
 								</Link>
 							</li>
 							<li>
-								<Link href="#" className="hover:underline">
+								<Link href="#" className="hover:text-[#006BA4]">
 									Dermatology
 								</Link>
 							</li>
 							<li>
-								<Link href="#" className="hover:underline">
+								<Link href="#" className="hover:text-[#006BA4]">
 									Dentistry
 								</Link>
 							</li>
 							<li>
-								<Link href="#" className="hover:underline">
+								<Link href="#" className="hover:text-[#006BA4]">
 									Partnerships
 								</Link>
 							</li>
 							<li>
-								<Link href="/hmo" className="hover:underline">
+								<Link href="/hmo" className="hover:text-[#006BA4]">
 									HMO Partnerships
 								</Link>
 							</li>
@@ -228,24 +228,6 @@ const Footer = () => {
 					</div>
 				</div>
 
-				{/* Copyright */}
-				{/* <div className="mt-12 text-center border-t border-blue-400 pt-8">
-          <p>
-            &copy; {new Date().getFullYear()} HealthConnect. All rights
-            reserved.
-          </p>
-          <div className="mt-4 flex flex-wrap justify-center gap-4 md:gap-6">
-            <Link href="#" className="hover:underline text-sm">
-              Privacy Policy
-            </Link>
-            <Link href="#" className="hover:underline text-sm">
-              Terms of Service
-            </Link>
-            <Link href="#" className="hover:underline text-sm">
-              Cookie Policy
-            </Link>
-          </div> */}
-				{/* </div> */}
 			</div>
 		</footer>
 	);

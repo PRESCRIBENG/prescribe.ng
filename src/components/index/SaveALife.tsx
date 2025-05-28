@@ -40,7 +40,7 @@ const SaveALife = () => {
           make a real difference for someone fighting for their health.
           Together, we can save lives.
         </p>
-        <button className="w-full bg-[#0077B6] p-2 text-white rounded">
+        <button className="w-full bg-[#0077B6] p-2 text-white rounded-[10px] hover:bg-[#006BA4]">
           View More Cases
         </button>
       </div>
@@ -154,7 +154,7 @@ const SaveALife = () => {
             your support can make a real difference for someone fighting for
             their health. Together, we can save lives.
           </p>
-          <button className="w-[194px] h-[42px] bg-[#0077B6] p-2 text-white rounded">
+          <button className="w-[194px] h-[42px] bg-[#0077B6] p-2 text-white rounded-[10px] hover:bg-[#006BA4]">
             View More Cases
           </button>
         </div>

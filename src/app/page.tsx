@@ -19,9 +19,10 @@ export default function Home() {
         <Discover />
         <SaveALife />
         <HealthCareProviders />
-        <FAQs />
+        <div id="faqs">
+          <FAQs />
+        </div>
         <GetInTouch />
-
       </main>
     </>
   );

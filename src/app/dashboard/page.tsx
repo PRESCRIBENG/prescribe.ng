@@ -142,7 +142,7 @@ const Dashboard = () => {
         </div>
         <button
           onClick={() => router.push("/login")}
-          className="bg-[#0077B6] text-white py-2 px-4 rounded-md"
+          className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4]"
         >
           Back to Login
         </button>
@@ -156,7 +156,7 @@ const Dashboard = () => {
         <p>No user data found. Please log in again.</p>
         <button
           onClick={() => router.push("/login")}
-          className="mt-4 bg-[#0077B6] text-white py-2 px-4 rounded-md"
+          className="mt-4 bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4]"
         >
           Go to Login
         </button>
@@ -267,7 +267,7 @@ const Dashboard = () => {
                   ))}
                   <button
                     onClick={changePassword}
-                    className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#F20D0D]"
+                    className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4]"
                   >
                     Change Password
                   </button>

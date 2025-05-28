@@ -192,7 +192,7 @@ const HMOPartners = () => {
 							<div className="md:hidden mb-4">
 								<button
 									onClick={handleBackToList}
-									className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] text-[16px]"
+									className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4] text-[16px]"
 								>
 									Back to HMO Partners
 								</button>
@@ -354,7 +354,7 @@ const HMOPartners = () => {
 					</p>
 				</div>
 				<div className="flex justify-center">
-					<button className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] text-[16px]">
+					<button className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4] text-[16px]">
 						Contact Us
 					</button>
 				</div>

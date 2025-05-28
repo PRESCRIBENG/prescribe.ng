@@ -61,7 +61,7 @@ const VerifyLetter = () => {
 
               <button
                 type="submit"
-                className="w-[] bg-[#0077B6] flex justify-end text-white py-2 px-2 rounded-md hover:bg-[#e35c00] transition"
+                className="w-[] bg-[#0077B6] flex justify-end text-white py-2 px-2 rounded-[10px] hover:bg-[#006BA4] transition"
               >
                 Proceed to Payment
               </button>
@@ -83,7 +83,7 @@ const VerifyLetter = () => {
           </p>
         </div>
         <div className="flex justify-center">
-          <button className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] text-[16px]">
+          <button className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4] text-[16px]">
             Contact Us
           </button>
         </div>

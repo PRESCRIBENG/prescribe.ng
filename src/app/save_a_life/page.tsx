@@ -285,7 +285,7 @@ const SaveALife = () => {
             />
             <button
               onClick={handleFetchPatientsInNeed}
-              className="w-[149px] bg-[#0077B6] text-white py-2 px-4 rounded-[10px] text-[16px]"
+              className="w-[149px] bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4] text-[16px]"
             >
               Find case
             </button>
@@ -362,7 +362,7 @@ const SaveALife = () => {
             {submitted ? (
               <div className="text-center space-y-4">
                 <p className="text-green-600">Thank you! We&apos;ll get back to you soon.</p>
-                <button onClick={resetAndReturnHome} className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition">
+                <button onClick={resetAndReturnHome} className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4] transition">
                   Close
                 </button>
               </div>
@@ -394,7 +394,7 @@ const SaveALife = () => {
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md"
                 />
-                <button type="submit" className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition">
+                <button type="submit" className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4] transition">
                   Donate
                 </button>
                 <button type="button" onClick={resetAndReturnHome} className="bg-gray-300 text-black py-2 px-4 rounded-md hover:bg-gray-400 transition">

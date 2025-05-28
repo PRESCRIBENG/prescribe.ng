@@ -221,13 +221,13 @@ const Login = () => {
                 </div>
               )}
               <div className="flex justify-between items-center">
-                <Link href="/forgot-password" className="text-[#0077B6] hover:underline">
+                <Link href="/forgot-password" className="hover:text-[#0077B6]">
                   Forgot Password?
                 </Link>
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-md hover:bg-[#005d8f] transition disabled:bg-gray-400"
+                  className="w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-md rounded-[10px] hover:bg-[#006BA4] transition disabled:bg-gray-400"
                 >
                   {isLoading ? "Loading..." : "Log In"}
                 </button>
@@ -281,14 +281,14 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={() => setStep("login")}
-                  className="text-[#0077B6] hover:underline"
+                  className="text-[#0077B6] rounded-[10px] hover:bg-[#006BA4]"
                 >
                   Back to Login
                 </button>
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-md hover:bg-[#005d8f] transition disabled:bg-gray-400"
+                  className="w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-[10px] hover:bg-[#006BA4] transition disabled:bg-gray-400"
                 >
                   {isLoading ? "Verifying..." : "Verify"}
                 </button>

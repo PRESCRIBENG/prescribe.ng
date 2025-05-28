@@ -328,7 +328,7 @@ const SelfSignup = () => {
 
                 <button
                   type="submit"
-                  className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
+                  className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4] transition"
                   onClick={()=>setSignupFormSubpage('signupForm')}
                 >
                   Accept Terms and Conditions
@@ -705,7 +705,7 @@ const SelfSignup = () => {
 
                 <button
                   type="submit"
-                  className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
+                  className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4] transition"
                 >
                   Submit
                 </button>
@@ -727,7 +727,7 @@ const SelfSignup = () => {
             <form onSubmit={handlePaystackPayment} className="w-full md:w-[790px] px-8 py-8 space-y-8">
               <button
                 type="submit"
-                className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
+                className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4] transition"
               >
                 OK
               </button>
@@ -778,7 +778,7 @@ const SelfSignup = () => {
 
               <button
                 type="submit"
-                className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
+                className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4] transition"
               >
                 Verify
               </button>

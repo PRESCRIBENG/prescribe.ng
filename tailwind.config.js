@@ -29,6 +29,7 @@ module.exports = {
       },
       colors: {
         foundationBlueNormal: '#0077B6',
+        foundationBlueHover: '#006BA4',
         foundationBlueDarker: '#002A40',
         foundationBlueLight: '#0099E6',
         primaryLight: '#FFFFFF',

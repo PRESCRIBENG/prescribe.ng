@@ -133,7 +133,7 @@ const openModal = (formType: string) => {
           </div>
           <div className="flex justify-center">
             <button 
-              className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] text-[16px]"
+              className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4] text-[16px]"
               onClick={() => openModal("contact")}
             >
               Contact Us

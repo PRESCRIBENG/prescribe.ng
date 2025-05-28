@@ -111,7 +111,7 @@ const VerifyLetter = () => {
                   <button
                     type="submit"
                     disabled={isVerifying}
-                    className={`bg-[#0077B6] text-white py-2 px-6 rounded-md hover:bg-[#00669e] transition ${
+                    className={`bg-[#0077B6] text-white py-2 px-6 rounded-[10px] hover:bg-[#006BA4] transition ${
                       isVerifying ? "opacity-70 cursor-not-allowed" : ""
                     }`}
                   >
@@ -229,7 +229,7 @@ const DonationFooter = () => {
         </p>
       </div>
       <div className="flex justify-center">
-        <button className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] text-[16px]">
+        <button className="bg-[#0077B6] text-white py-2 px-4 rounded-[10px] hover:bg-[#006BA4] text-[16px]">
           Contact Us
         </button>
       </div>

@@ -29,7 +29,7 @@ const Header = () => {
               </p>
             </div>
           </div>
-          <button className="w-[119px] h-[42px] bg-[#0077B6] p-2 mb-4 text-white rounded">
+          <button className="w-[119px] h-[42px] bg-[#0077B6] p-2 mb-4 text-white rounded-[10px] hover:bg-[#006BA4]">
             Get Started
           </button>
         </div>

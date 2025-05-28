@@ -18,7 +18,7 @@ export async function GET() {
       { status: response.status }
     );
   } catch (error) {
-    console.error('Error generating password reset link:', error);
+    console.error('Error fetching hmo partners:', error);
     return NextResponse.json(
       { message: "An error occurred while processing your request" },
       { status: 500 }
