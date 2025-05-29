@@ -43,8 +43,8 @@ const SelfSignup = () => {
   
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const backendUrl = 'https://gelataskia.prescribe.ng/web';
-  //const backendUrl = 'http://127.0.0.1:5002/web';
+  //const backendUrl = 'https://gelataskia.prescribe.ng/web';
+  const backendUrl = 'http://127.0.0.1:5002/web';
 
 
   const handleChange = async (
@@ -119,21 +119,33 @@ const SelfSignup = () => {
   }, []);
 
 
+  
+
+
   //This function sends formData to backend when called where it is modified and returned based on user's registration status. The returned data is then used to manage screen visibility
   const handlePreEnrollment = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const preEnrolmentResponse = await fetch(`${backendUrl}/pre_signup`, {
+      const preEnrolmentResponse = await fetch('/api/web/pre_signup', {
         method: 'POST',
          headers: {
            'Content-Type': 'application/json',
          },
          body: JSON.stringify(formData),
        })
+
+       // Check if response is JSON
+      //const contentType = preEnrolmentResponse.headers.get("content-type");
+      //if (!contentType || !contentType.includes("application/json")) {
+        //throw new Error("Server returned non-JSON response. Please try again later.");
+      //}
+
+      const data = await preEnrolmentResponse.json();
    
-       if(preEnrolmentResponse.ok){
-          const data = await preEnrolmentResponse.json();
+       if(!preEnrolmentResponse.ok){
+        throw new Error(data.message || 'pre signup failed');
+       }
 
         Object.keys(data).forEach((key) => {
           setFormData((prev) => ({
@@ -144,16 +156,13 @@ const SelfSignup = () => {
 
         setCurrentPage(data.routeTo);
        
+  
+    }  
+    catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("Login error:", err);
       }
-      else {
-        const err = await preEnrolmentResponse.json();
-        alert(err.message);
-       }
-    }   
-     catch (error) {
-      console.error("Payment error:", error);
-      alert("An error occurred. Please try again.");
-    } finally{
+    }finally {
       setIsLoading(false);
     }
   };
@@ -164,8 +173,7 @@ const SelfSignup = () => {
   const handlePaystackPayment = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      setIsLoading(true);
-          try {
+            setIsLoading(true);
             if (!window.PaystackPop) {
               alert("Payment gateway not loaded. Please refresh the page.");
               return;
@@ -198,12 +206,10 @@ const SelfSignup = () => {
           } catch (error) {
             console.error("Payment error:", error);
             alert("An error occurred. Please try again.");
-          } 
-        }
-       finally{
-      setIsLoading(false);
-    }
-  };
+          } finally{
+            setIsLoading(false);
+          }
+    };
 
 
 
@@ -417,124 +423,6 @@ const SelfSignup = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Gender
-                  </label>
-                  <select
-                    name="gender"
-                    required
-                    value={formData.gender}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  >
-                    <option value="" disabled>
-                      Select Gender
-                    </option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Date of Birth
-                  </label>
-                  <input
-                    type="date"
-                    name="dob"
-                    //placeholder="Enter your full name"
-                    required
-                    value={formData.dob}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Address
-                  </label>
-                  <input
-                    type="text"
-                    name="address"
-                    placeholder="Enter your address"
-                    required
-                    value={formData.address}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    City/Town
-                  </label>
-                  <input
-                    type="text"
-                    name="locality"
-                    placeholder="Enter your City/Town"
-                    required
-                    value={formData.locality}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    State of residence
-                  </label>
-                  <select
-                    name="state"
-                    required
-                    value={formData.state}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  >
-                    <option value="" disabled>
-                      Select State
-                    </option>
-                    <option value="Federal Capital Territory">Federal Capital Territory</option>
-                    <option value="Abia">Abia</option>
-                    <option value="Adamawa">Adamawa</option>
-                    <option value="Akwa Ibom">Akwa Ibom</option>
-                    <option value="Anambra">Anambra</option>
-                    <option value="Bauchi">Bauchi</option>
-                    <option value="Bayelsa">Bayelsa</option>
-                    <option value="Benue">Benue</option>
-                    <option value="Borno">Borno</option>
-                    <option value="Cross River">Cross River</option>
-                    <option value="Delta">Delta</option>
-                    <option value="Ebonyi">Ebonyi</option>
-                    <option value="Edo">Edo</option>
-                    <option value="Ekiti">Ekiti</option>
-                    <option value="Enugu">Enugu</option>
-                    <option value="Gombe">Gombe</option>
-                    <option value="Imo">Imo</option>
-                    <option value="Jigawa">Jigawa</option>
-                    <option value="Kaduna">Kaduna</option>
-                    <option value="Kano">Kano</option>
-                    <option value="Katsina">Katsina</option>
-                    <option value="Kebbi">Kebbi</option>
-                    <option value="Kogi">Kogi</option>
-                    <option value="Kwara">Kwara</option>
-                    <option value="Lagos">Lagos</option>
-                    <option value="Nasarawa">Nasarawa</option>
-                    <option value="Niger">Niger</option>
-                    <option value="Ogun">Ogun</option>
-                    <option value="Ondo">Ondo</option>
-                    <option value="Osun">Osun</option>
-                    <option value="Oyo">Oyo</option>
-                    <option value="Plateau">Plateau</option>
-                    <option value="Rivers">Rivers</option>
-                    <option value="Sokoto">Sokoto</option>
-                    <option value="Taraba">Taraba</option>
-                    <option value="Yobe">Yobe</option>
-                    <option value="Zamfara">Zamfara</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
                     Email
                   </label>
                   <input
@@ -550,21 +438,6 @@ const SelfSignup = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Mobile Number (Must be same number associated with your NIN)
-                  </label>
-                  <input
-                    type="text"
-                    name="mobile"
-                    placeholder="Enter mobile number"
-                    required
-                    value={formData.mobile}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
                     NIN
                   </label>
                   <input
@@ -573,21 +446,6 @@ const SelfSignup = () => {
                     placeholder="Enter your idNumber"
                     required
                     value={formData.idNumber}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Virtual NIN
-                  </label>
-                  <input
-                    type="text"
-                    name="vnin"
-                    placeholder="Enter your virtual idNumber generated from NIMC app or NIMC website"
-                    required
-                    value={formData.vnin}
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
                   />
