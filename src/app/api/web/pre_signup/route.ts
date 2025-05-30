@@ -1,5 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// 🔥 This is the magic: Increase the body size limit for this specific API route
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '5mb', // Or higher if needed
+    },
+  },
+};
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
