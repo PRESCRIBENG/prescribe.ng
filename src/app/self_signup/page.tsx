@@ -91,7 +91,7 @@ const SelfSignup = () => {
         const data = await statusDataResponse.json();
      
          if(!statusDataResponse.ok){
-          throw new Error(data.message || 'pre signup failed');
+          throw new Error('pre signup failed');
          }
   
           Object.keys(data).forEach((key) => {
@@ -295,8 +295,7 @@ const SelfSignup = () => {
                 <label className="block text-sm font-medium text-[#002A40] mb-1">
                   <b>Requirements:</b> <br/>
                   * PrescribeNg services is currently open to only Nigerians and Nigerian residents with NIN <br/>
-                  * User must first generate a virtual NIN from the NIMC app or from the registered mobile number before proceeding with the vendor ID - &apos;715461&apos; <br/>
-                    DIAL *346*3*YOUR_NIN*715461# <br/>
+                  * User must have access to the mobile phone number linked to their NIN
                   * Intending users must have access to the Nigerian mobile number linked to their NIN <br/>
                 </label>
               </div>
@@ -336,7 +335,7 @@ const SelfSignup = () => {
               <div>
                 <label className="block text-sm font-medium text-[#002A40] mb-1">
                   <b>Warning:</b> <br/>
-                  * We do charge a token of ₦1,500 at signup... this is to cover the cost of verification of the data provided to us, before approving users on our platform <br/>
+                  * We do charge a token of ₦1,500 at signup... this is to cover the cost of verification of the data provided to us, before approving users on our platform. Providing a valid promo code from any of our promoters would reduce this fee to ₦500 <br/>
                   * Providing an invalid/incorrect details would lead to the failure of the authentication processes, in which case we would not be able to issue a refund.<br/>
                   * Where a user has failed to supply us with the correct OTPs after 3 attempts, such signup attempt is invalidated and user would have to start afresh.<br/>
                   * Only procede to the next page if you accept our terms and conditions.
