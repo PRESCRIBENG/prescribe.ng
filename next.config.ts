@@ -18,6 +18,13 @@ const nextConfig = {
     domains: ['pikaso.cdnpk.net', 's3.af-south-1.amazonaws.com'], // Add any other external image domains as needed
   },
 
+  // ✅ Set body size limit for Pages API routes (does NOT affect App Router)
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+  },
+
   async rewrites() {
     return [
       {
