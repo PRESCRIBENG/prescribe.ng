@@ -44,7 +44,7 @@ const SelfSignup = () => {
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   //const backendUrl = 'https://gelataskia.prescribe.ng/web';
-  const backendUrl = 'http://127.0.0.1:5002/web';
+  //const backendUrl = 'http://127.0.0.1:5002/web';
 
 
   const handleChange = async (
@@ -74,33 +74,44 @@ const SelfSignup = () => {
       }
       try {
         setIsLoading(true);
-        //alert("Screen Manager called!!!")
-        const statusDataResponse = await fetch(`${backendUrl}/pre_signup`, {
+        const statusDataResponse = await fetch('/api/web/pre_signup', {
           method: 'POST',
            headers: {
              'Content-Type': 'application/json',
            },
            body: JSON.stringify(formData),
          })
-        
-         if (statusDataResponse.ok){
-          const statusData = await statusDataResponse.json();
-
-          Object.keys(statusData).forEach((key) => {
+  
+         // Check if response is JSON
+        //const contentType = statusDataResponse.headers.get("content-type");
+        //if (!contentType || !contentType.includes("application/json")) {
+          //throw new Error("Server returned non-JSON response. Please try again later.");
+        //}
+  
+        const data = await statusDataResponse.json();
+     
+         if(!statusDataResponse.ok){
+          throw new Error(data.message || 'pre signup failed');
+         }
+  
+          Object.keys(data).forEach((key) => {
             setFormData((prev) => ({
               ...prev,
-              [key]: statusData[key], // Use bracket notation for dynamic key
+              [key]: data[key], // Use bracket notation for dynamic key
             }));
           });
-          setCurrentPage(statusData.routeTo);
+  
+          setCurrentPage(data.routeTo);
+         
+    
+      }  
+      catch (err: unknown) {
+        if (err instanceof Error) {
+          console.error("Login error:", err);
         }
-          
-      } catch (error) {
-      console.error("Status and Screen Update error:", error);
-      //alert("An error occurred. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+      }finally {
+        setIsLoading(false);
+      }
     };
   
     screenManager();
@@ -228,7 +239,7 @@ const SelfSignup = () => {
         updatedFormData.fileAttachment = base64;  // Replace file with base64 string
       }
   
-      const otpResponse = await fetch(`${backendUrl}/self_signup_verification`, {
+      const otpResponse = await fetch('/api/web/self_signup_verification', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
