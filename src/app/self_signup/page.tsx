@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 
 const SelfSignup = () => {
-  const [CurrentPage, setCurrentPage] = useState('');
-  const [SignupFormSubpage, setSignupFormSubpage] = useState('instructions');  //shows the terms and conditions as well as instructions on how to signup
-  const [formData, setFormData] = useState({    //formData will be passed back and forth to the backend to make modifications on it, while screen visibility is determined by what changes the backend has made
+  const [error, setError] = useState("");
+  const [CurrentPage, setCurrentPage] = useState("");
+  const [SignupFormSubpage, setSignupFormSubpage] = useState("instructions"); //shows the terms and conditions as well as instructions on how to signup
+  const [formData, setFormData] = useState({
+    //formData will be passed back and forth to the backend to make modifications on it, while screen visibility is determined by what changes the backend has made
     ppn: "",
     title: "",
     lastName: "",
@@ -39,84 +41,82 @@ const SelfSignup = () => {
     otpEmail: "",
     otpMobile: "",
     fileAttachment: {},
+    warning: "",
   });
-  
+
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   //const backendUrl = 'https://gelataskia.prescribe.ng/web';
   //const backendUrl = 'http://127.0.0.1:5002/web';
 
-
   const handleChange = async (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
-    if (e.target.name === 'fileAttachment' && e.target instanceof HTMLInputElement && e.target.files?.[0]) {
+    if (
+      e.target.name === "fileAttachment" &&
+      e.target instanceof HTMLInputElement &&
+      e.target.files?.[0]
+    ) {
       const file = e.target.files[0];
-  
+
       // Convert file to base64
       const base64 = await convertFileToBase64(file);
-  
+
       setFormData({ ...formData, fileAttachment: base64 });
     } else {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
   };
-  
-  
-  
-
 
   useEffect(() => {
     const screenManager = async () => {
       //Makes a 'POST' call to the backend to retrieve latest state of user and to manage screen accordingly
-      if(CurrentPage==='success'){
+      if (CurrentPage === "success") {
         return;
       }
       try {
         setIsLoading(true);
-        const statusDataResponse = await fetch('/api/web/pre_signup', {
-          method: 'POST',
-           headers: {
-             'Content-Type': 'application/json',
-           },
-           body: JSON.stringify(formData),
-         })
-  
-         // Check if response is JSON
+        const statusDataResponse = await fetch("/api/web/pre_signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        // Check if response is JSON
         //const contentType = statusDataResponse.headers.get("content-type");
         //if (!contentType || !contentType.includes("application/json")) {
-          //throw new Error("Server returned non-JSON response. Please try again later.");
+        //throw new Error("Server returned non-JSON response. Please try again later.");
         //}
-  
+
         const data = await statusDataResponse.json();
-     
-         if(!statusDataResponse.ok){
-          throw new Error('pre signup failed');
-         }
-  
-          Object.keys(data).forEach((key) => {
-            setFormData((prev) => ({
-              ...prev,
-              [key]: data[key], // Use bracket notation for dynamic key
-            }));
-          });
-  
-          setCurrentPage(data.routeTo);
-         
-    
-      }  
-      catch (err: unknown) {
-        if (err instanceof Error) {
-          console.error("Login error:", err);
+
+        if (!statusDataResponse.ok) {
+          throw new Error("pre signup failed");
         }
-      }finally {
+
+        Object.keys(data).forEach((key) => {
+          setFormData((prev) => ({
+            ...prev,
+            [key]: data[key], // Use bracket notation for dynamic key
+          }));
+        });
+
+        setCurrentPage(data.routeTo);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.error("Screen manager error:", err);
+        }
+      } finally {
         setIsLoading(false);
       }
     };
-  
+
     screenManager();
-  }, [refresh,]);
-  
+  }, [refresh]);
 
   // Load Paystack SDK
   useEffect(() => {
@@ -129,141 +129,136 @@ const SelfSignup = () => {
     };
   }, []);
 
-
-  
-
-
   //This function sends formData to backend when called where it is modified and returned based on user's registration status. The returned data is then used to manage screen visibility
   const handlePreEnrollment = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const preEnrolmentResponse = await fetch('/api/web/pre_signup', {
-        method: 'POST',
-         headers: {
-           'Content-Type': 'application/json',
-         },
-         body: JSON.stringify(formData),
-       })
+      const preEnrolmentResponse = await fetch("/api/web/pre_signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-       // Check if response is JSON
+      // Check if response is JSON
       //const contentType = preEnrolmentResponse.headers.get("content-type");
       //if (!contentType || !contentType.includes("application/json")) {
-        //throw new Error("Server returned non-JSON response. Please try again later.");
+      //throw new Error("Server returned non-JSON response. Please try again later.");
       //}
 
       const data = await preEnrolmentResponse.json();
-   
-       if(!preEnrolmentResponse.ok){
-        throw new Error(data.message || 'pre signup failed');
-       }
 
-        Object.keys(data).forEach((key) => {
-          setFormData((prev) => ({
-            ...prev,
-            [key]: data[key], // Use bracket notation for dynamic key
-          }));
-        });
-
-        setCurrentPage(data.routeTo);
-       
-  
-    }  
-    catch (err: unknown) {
-      if (err instanceof Error) {
-        console.error("Login error:", err);
+      if (!preEnrolmentResponse.ok) {
+        throw new Error(data.message || "pre signup failed");
       }
-    }finally {
+
+      Object.keys(data).forEach((key) => {
+        setFormData((prev) => ({
+          ...prev,
+          [key]: data[key], // Use bracket notation for dynamic key
+        }));
+      });
+
+      setCurrentPage(data.routeTo);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+        console.error("Enrollment error:", err);
+      }
+    } finally {
       setIsLoading(false);
     }
   };
-
-
 
   //This function sends formData to backend when called where it is modified and returned based on user's registration status. The returned data is then used to manage screen visibility
   const handlePaystackPayment = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-            setIsLoading(true);
-            if (!window.PaystackPop) {
-              alert("Payment gateway not loaded. Please refresh the page.");
-              return;
-            }
-      
-            if (!formData?.paystackPublicKey || !formData?.amount || !formData?.metaPayload ) {
-              alert("Incomplete payment data. Please try again.");
-              return;
-            }
-      
-            const paystackAmount = parseInt(formData.amount) //Already converted to kobo from backend;
-      
-            const handler = window.PaystackPop.setup({
-              key: formData.paystackPublicKey,
-              email: formData.email,
-              amount: paystackAmount,
-              currency: "NGN",
-              reference: formData.ppn,    //We use the same ppn generated as our payment reference, so that we can track transaction status in real time at any stage
-              metadata: formData.metaPayload,
-              callback: (response: { reference: string }) => {
-                setRefresh(prev=>!prev);
-                console.log("Payment complete:", response);
-              },
-              onClose: () => {
-                alert("Transaction cancelled.");
-              },
-            });
-      
-            handler.openIframe();
-          } catch (error) {
-            console.error("Payment error:", error);
-            alert("An error occurred. Please try again.");
-          } finally{
-            setIsLoading(false);
-          }
-    };
+      setIsLoading(true);
+      if (!window.PaystackPop) {
+        alert("Payment gateway not loaded. Please refresh the page.");
+        return;
+      }
 
+      if (
+        !formData?.paystackPublicKey ||
+        !formData?.amount ||
+        !formData?.metaPayload
+      ) {
+        alert("Incomplete payment data. Please try again.");
+        return;
+      }
 
+      const paystackAmount = parseInt(formData.amount); //Already converted to kobo from backend;
 
+      const handler = window.PaystackPop.setup({
+        key: formData.paystackPublicKey,
+        email: formData.email,
+        amount: paystackAmount,
+        currency: "NGN",
+        reference: formData.ppn, //We use the same ppn generated as our payment reference, so that we can track transaction status in real time at any stage
+        metadata: formData.metaPayload,
+        callback: (response: { reference: string }) => {
+          setRefresh((prev) => !prev);
+          console.log("Payment complete:", response);
+        },
+        onClose: () => {
+          alert("Transaction cancelled.");
+        },
+      });
+
+      handler.openIframe();
+    } catch (err: unknown) {
+      if (err instanceof Error) setError(err.message);
+
+      console.error("Payment error:", err);
+      // alert("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   //This function sends formData to backend where user data is extracted and user records updated accordingly
   const handleOTPVerification = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const updatedFormData = { ...formData };  // Clone formData
-  
+      const updatedFormData = { ...formData }; // Clone formData
+
       // Convert fileAttachment to base64
       if (formData.fileAttachment instanceof File) {
         const file = formData.fileAttachment;
         const base64 = await convertFileToBase64(file);
-        updatedFormData.fileAttachment = base64;  // Replace file with base64 string
+        updatedFormData.fileAttachment = base64; // Replace file with base64 string
       }
-  
-      const otpResponse = await fetch('/api/web/self_signup_verification', {
-        method: 'POST',
+
+      const otpResponse = await fetch("/api/web/self_signup_verification", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(updatedFormData),
       });
-  
+
       if (otpResponse.ok) {
         const data = await otpResponse.json();
         console.log(data);
-        setCurrentPage('success');
+        setCurrentPage("success");
       } else {
         const err = await otpResponse.json();
         alert(err.message);
       }
-    } catch (error) {
-      console.error("Payment error:", error);
-      alert("An error occurred. Please try again.");
-    } finally{
+    } catch (err: unknown) {
+      if (err instanceof Error) setError(err.message);
+
+      console.error("Otp verification error:", err);
+    } finally {
       setIsLoading(false);
     }
   };
-  
-  
+
   // Utility function to convert a File object to base64
   const convertFileToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -274,325 +269,408 @@ const SelfSignup = () => {
     });
   };
 
-  
-
   return (
     <div //className="overflow-hidden bg-[#F5F5F5] mt-50 mb-16 text-[16px] px-4 md:px-[130px]"
-    className={`overflow-hidden bg-[#F5F5F5] mt-50 mb-16 text-[16px] px-4 md:px-[130px] ${isLoading ? 'cursor-wait' : 'cursor-default'}`}
+      className={`overflow-hidden bg-[#F5F5F5] mt-50 mb-16 text-[16px] px-4 md:px-[130px] ${
+        isLoading ? "cursor-wait" : "cursor-default"
+      }`}
     >
       <div className="md:flex md:flex-col items-center space-y-8">
-      
-        {CurrentPage==='' && (<div className="bg-white space-y-6">
-
-          {SignupFormSubpage==='instructions' && (<div>
-            <div className="space-y-[16px] text-[#002A40]">
-              <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
-                TERMS AND  CONDITIONS (read carefully).
-                </h1>
-            </div>
-            <div className="w-full md:w-[790px] px-8 py-8 space-y-8 text-[#002A40]">
+        {CurrentPage === "" && (
+          <div className="bg-white space-y-6">
+            {SignupFormSubpage === "instructions" && (
               <div>
-                <label className="block text-sm font-medium text-[#002A40] mb-1">
-                  <b>Requirements:</b> <br/>
-                  * PrescribeNg services is currently open to only Nigerians and Nigerian residents with NIN <br/>
-                  * User must have access to the mobile phone number linked to their NIN
-                  * Intending users must have access to the Nigerian mobile number linked to their NIN <br/>
-                </label>
-              </div>
+                {error && (
+                  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                    {error}
+                    <button
+                      onClick={() => setError("")}
+                      className="float-right font-bold"
+                    >
+                      ×
+                    </button>
+                  </div>
+                )}
 
+                <div className="space-y-[16px] text-[#002A40]">
+                  <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
+                    TERMS AND CONDITIONS (read carefully).
+                  </h1>
+                </div>
+                <div className="w-full md:w-[790px] px-8 py-8 space-y-8 text-[#002A40]">
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      <b>Requirements:</b> <br />
+                      * PrescribeNg services is currently open to only Nigerians
+                      and Nigerian residents with NIN <br />
+                      * User must have access to the mobile phone number linked
+                      to their NIN * Intending users must have access to the
+                      Nigerian mobile number linked to their NIN <br />
+                    </label>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      <b>How we use your data:</b> <br />
+                      * PrescribeNg is an e-commerce-styled healthcare platform
+                      where qualified, licensed and thoroughly vetted healthcare
+                      services providers/personnels meet healthcare services
+                      users <br />
+                      * Data access and visibility is strictly consent based. We
+                      restrict the viewing of your data to only the heathcare
+                      services providers you have authorized, and only to the
+                      right personnels. <br />
+                      * Users can authorize access at their own <br />
+                    </label>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      <b>Safety Precautions:</b> <br />
+                      * At PrescribeNG our aim is to put you in control of your
+                      healthcare data, and to keep you safe as you navigate
+                      through the journey of seeking healthcare in Nigeria,
+                      ensuring you would only ever come across licensed and
+                      thoroughly vetted healthcare services providers and
+                      personnels through our vigorous and multi-layered vetting
+                      and verification procedures <br />
+                    </label>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      <b>Fraud Prevention:</b> <br />
+                      * PrescribeNg Healthcare platform frowns at any attempts
+                      at impersonations and has taken all necessary measures to
+                      discourage impersonation. <br />
+                      * Where it has been determined that an impersonation
+                      attempt has occured, PrescribeNG LTD WILL pursue a
+                      criminal prosecution against perpetrators <br />*
+                      Occasionally we do assist patients who required urgent
+                      life-saving medical treatments but are not able to afford
+                      it... on such occasions, we carry out detailed background
+                      checks and verification of claims provided by such
+                      patients. Only upon successful verification of such claims
+                      do we grant approval for such fund raisers through our{" "}
+                      <b>SAVE A LIFE</b> initiative. <br />* Funds raised under
+                      the save a life initiative are neither transferrable or
+                      withdrawable to any bank account, but can only be directly
+                      used in settling cost of healthcare services at point of
+                      care.
+                    </label>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      <b>Warning:</b> <br />
+                      * We do charge a token of ₦1,500 at signup... this is to
+                      cover the cost of verification of the data provided to us,
+                      before approving users on our platform. Providing a valid
+                      promo code from any of our promoters would reduce this fee
+                      to ₦500 <br />
+                      * Providing an invalid/incorrect details would lead to the
+                      failure of the authentication processes, in which case we
+                      would not be able to issue a refund.
+                      <br />
+                      * Where a user has failed to supply us with the correct
+                      OTPs after 3 attempts, such signup attempt is invalidated
+                      and user would have to start afresh.
+                      <br />* Only procede to the next page if you accept our
+                      terms and conditions.
+                    </label>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
+                    onClick={() => setSignupFormSubpage("signupForm")}
+                  >
+                    Accept Terms and Conditions
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {SignupFormSubpage === "signupForm" && (
               <div>
-                <label className="block text-sm font-medium text-[#002A40] mb-1">
-                  <b>How we use your data:</b> <br/>
-                  * PrescribeNg is an e-commerce-styled healthcare platform where qualified, licensed and thoroughly vetted healthcare services providers/personnels meet healthcare services users <br/>
-                  * Data access and visibility is strictly consent based. We restrict the viewing of
-                    your data to only the heathcare services providers you have authorized, and only to the right personnels. <br/>
-                  * Users can authorize access at their own <br/>
-                </label>
-              </div>
+                {error && (
+                  <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                    {error}
+                    <button
+                      onClick={() => setError("")}
+                      className="float-right font-bold"
+                    >
+                      ×
+                    </button>
+                  </div>
+                )}
 
-              <div>
-                <label className="block text-sm font-medium text-[#002A40] mb-1">
-                  <b>Safety Precautions:</b> <br/>
-                  * At PrescribeNG our aim is to put you in control of your healthcare data, and to keep you safe as you navigate through the journey of seeking healthcare in Nigeria, 
-                    ensuring you would only ever come across licensed and thoroughly vetted healthcare services providers and personnels 
-                    through our vigorous and multi-layered vetting and verification procedures <br/>
-                </label>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-[#002A40] mb-1">
-                  <b>Fraud Prevention:</b> <br/>
-                  * PrescribeNg Healthcare platform frowns at any attempts at impersonations and has taken all necessary measures to discourage impersonation. <br/>
-                  * Where it has been determined that an impersonation attempt has occured, PrescribeNG LTD WILL pursue a criminal prosecution against perpetrators <br/>
-                  * Occasionally we do assist patients who required urgent life-saving medical treatments but are not able to afford it... on such occasions,
-                   we carry out detailed background checks and verification of claims provided by such patients. Only upon successful verification of such claims
-                    do we grant approval for such fund raisers through our <b>SAVE A LIFE</b> initiative. <br/>
-                  * Funds raised under the save a life initiative are neither transferrable or withdrawable to any bank account, but can only be directly used in settling
-                    cost of healthcare services at point of care.
-                </label>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-[#002A40] mb-1">
-                  <b>Warning:</b> <br/>
-                  * We do charge a token of ₦1,500 at signup... this is to cover the cost of verification of the data provided to us, before approving users on our platform. Providing a valid promo code from any of our promoters would reduce this fee to ₦500 <br/>
-                  * Providing an invalid/incorrect details would lead to the failure of the authentication processes, in which case we would not be able to issue a refund.<br/>
-                  * Where a user has failed to supply us with the correct OTPs after 3 attempts, such signup attempt is invalidated and user would have to start afresh.<br/>
-                  * Only procede to the next page if you accept our terms and conditions.
-                </label>
-              </div>
-
-                <button
-                  type="submit"
-                  className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
-                  onClick={()=>setSignupFormSubpage('signupForm')}
+                <div className="space-y-[16px] text-[#002A40]">
+                  <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
+                    Self Signup
+                  </h1>
+                  <p className="text-[16px] text-center">
+                    Easily add funds for yourself or a loved one to access
+                    medical care when needed.
+                  </p>
+                </div>
+                <form
+                  onSubmit={handlePreEnrollment}
+                  className="w-full md:w-[790px] px-8 py-8 space-y-8 text-[#002A40]"
                 >
-                  Accept Terms and Conditions
-                </button>
-              </div>
-          </div>)}
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      Title
+                    </label>
+                    <select
+                      name="title"
+                      required
+                      value={formData.title}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    >
+                      <option value="" disabled>
+                        Select Title
+                      </option>
+                      <option value="Mr.">Mr.</option>
+                      <option value="Mrs.">Mrs.</option>
+                      <option value="Miss">Miss</option>
+                      <option value="Dr.">Dr.</option>
+                      <option value="Prof.">Prof.</option>
+                      <option value="Chief">Chief</option>
+                      <option value="Engr.">Engr.</option>
+                    </select>
+                  </div>
 
-          {SignupFormSubpage==='signupForm' && (<div>
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      name="lastName"
+                      placeholder="Enter your full name"
+                      required
+                      value={formData.lastName}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      name="firstName"
+                      placeholder="Enter your full name"
+                      required
+                      value={formData.firstName}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      Middle Name
+                    </label>
+                    <input
+                      type="text"
+                      name="middleName"
+                      placeholder="Enter your full name"
+                      required
+                      value={formData.middleName}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Enter your email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      NIN
+                    </label>
+                    <input
+                      type="text"
+                      name="idNumber"
+                      placeholder="Enter your idNumber"
+                      required
+                      value={formData.idNumber}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      Emergency Contact 1
+                    </label>
+                    <input
+                      type="text"
+                      name="emc1"
+                      required
+                      value={formData.emc1}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      Emergency Contact1 Mobile Number
+                    </label>
+                    <input
+                      type="text"
+                      name="emc1Mobile"
+                      required
+                      value={formData.emc1Mobile}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      Relationship with Emergency Contact 1
+                    </label>
+                    <input
+                      type="text"
+                      name="emc1Relationship"
+                      required
+                      value={formData.emc1Relationship}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      Emergency Contact 2
+                    </label>
+                    <input
+                      type="text"
+                      name="emc2"
+                      value={formData.emc2}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      Emergency Contact2 Mobile Number
+                    </label>
+                    <input
+                      type="text"
+                      name="emc2Mobile"
+                      value={formData.emc2Mobile}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      Relationship with Emergency Contact 2
+                    </label>
+                    <input
+                      type="text"
+                      name="emc2Relationship"
+                      value={formData.emc2Relationship}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      Promo Code
+                    </label>
+                    <input
+                      type="text"
+                      name="promoCode"
+                      placeholder="Enter your promoCode if you have any"
+                      value={formData.promoCode}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-[#002A40] mb-1">
+                      Attach Government-issued ID Document (JPG, JPEG, PNG)
+                    </label>
+                    <input
+                      type="file"
+                      name="fileAttachment"
+                      onChange={handleChange}
+                      accept=".jpg,.jpeg,.png" // Optional: limit to specific file types
+                      required
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
+                  >
+                    Submit
+                  </button>
+                </form>
+              </div>
+            )}
+          </div>
+        )}
+
+        {CurrentPage === "paygate" && (
+          <div className="bg-white space-y-6">
             <div className="space-y-[16px] text-[#002A40]">
               <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
-                Self Signup
-                </h1>
-                <p className="text-[16px] text-center">
-                Easily add funds for yourself or a loved one to access medical care when needed.
+                PAYGATE
+              </h1>
+              {/* Display error to users */}
+              {error && (
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                  {error}
+                  <button
+                    onClick={() => setError("")}
+                    className="float-right font-bold"
+                  >
+                    ×
+                  </button>
+                </div>
+              )}
+              {/* Display warning to users */}
+              {formData.warning && (
+                <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+                  {formData.warning}
+                </div>
+              )}
+              <p className="text-[16px] text-center">
+                You will be taken to our payment page to pay ₦
+                {parseInt(formData.amount) / 100}. Click OK to continue.
               </p>
             </div>
-              <form onSubmit={handlePreEnrollment} className="w-full md:w-[790px] px-8 py-8 space-y-8 text-[#002A40]">
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Title
-                  </label>
-                  <select
-                    name="title"
-                    required
-                    value={formData.title}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  >
-                    <option value="" disabled>
-                      Select Title
-                    </option>
-                    <option value="Mr.">Mr.</option>
-                    <option value="Mrs.">Mrs.</option>
-                    <option value="Miss">Miss</option>
-                    <option value="Dr.">Dr.</option>
-                    <option value="Prof.">Prof.</option>
-                    <option value="Chief">Chief</option>
-                    <option value="Engr.">Engr.</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    name="lastName"
-                    placeholder="Enter your full name"
-                    required
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    First Name
-                  </label>
-                  <input
-                    type="text"
-                    name="firstName"
-                    placeholder="Enter your full name"
-                    required
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Middle Name
-                  </label>
-                  <input
-                    type="text"
-                    name="middleName"
-                    placeholder="Enter your full name"
-                    required
-                    value={formData.middleName}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Enter your email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    NIN
-                  </label>
-                  <input
-                    type="text"
-                    name="idNumber"
-                    placeholder="Enter your idNumber"
-                    required
-                    value={formData.idNumber}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Emergency Contact 1
-                  </label>
-                  <input
-                    type="text"
-                    name="emc1"
-                    required
-                    value={formData.emc1}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Emergency Contact1 Mobile Number
-                  </label>
-                  <input
-                    type="text"
-                    name="emc1Mobile"
-                    required
-                    value={formData.emc1Mobile}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Relationship with Emergency Contact 1
-                  </label>
-                  <input
-                    type="text"
-                    name="emc1Relationship"
-                    required
-                    value={formData.emc1Relationship}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Emergency Contact 2
-                  </label>
-                  <input
-                    type="text"
-                    name="emc2"
-                    value={formData.emc2}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Emergency Contact2 Mobile Number
-                  </label>
-                  <input
-                    type="text"
-                    name="emc2Mobile"
-                    value={formData.emc2Mobile}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Relationship with Emergency Contact 2
-                  </label>
-                  <input
-                    type="text"
-                    name="emc2Relationship"
-                    value={formData.emc2Relationship}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Promo Code
-                  </label>
-                  <input
-                    type="text"
-                    name="promoCode"
-                    placeholder="Enter your promoCode if you have any"
-                    value={formData.promoCode}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-[#002A40] mb-1">
-                    Attach Government-issued ID Document (JPG, JPEG, PNG)
-                  </label>
-                  <input
-                    type="file"
-                    name="fileAttachment"
-                    onChange={handleChange}
-                    accept=".jpg,.jpeg,.png"  // Optional: limit to specific file types
-                    required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                  />
-                </div>
-
-
-                <button
-                  type="submit"
-                  className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
-                >
-                  Submit
-                </button>
-              </form>
-          </div>)}
-
-        </div>)}
-
-        {CurrentPage==='paygate' && (<div className="bg-white space-y-6">
-          
-          <div className="space-y-[16px] text-[#002A40]">
-          <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
-            PAYGATE
-            </h1>*
-            <p className="text-[16px] text-center">
-            You will be taken to our payment page to pay ₦{parseInt(formData.amount)/100}. Click OK to continue.
-          </p>
-          </div>
-            <form onSubmit={handlePaystackPayment} className="w-full md:w-[790px] px-8 py-8 space-y-8">
+            <form
+              onSubmit={handlePaystackPayment}
+              className="w-full md:w-[790px] px-8 py-8 space-y-8"
+            >
               <button
                 type="submit"
                 className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
@@ -600,20 +678,36 @@ const SelfSignup = () => {
                 OK
               </button>
             </form>
-        </div>)}
-
-
-        {CurrentPage==='verification' && (<div className="bg-white space-y-6">
-          
-          <div className="space-y-[16px] text-[#002A40]">
-          <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
-            Verification
-            </h1>*
-            <p className="text-[16px] text-center">
-            Please enter OTP sent to your email and the phone number associated with your NIN
-          </p>
           </div>
-            <form onSubmit={handleOTPVerification} className="w-full md:w-[790px] px-8 py-8 space-y-8">
+        )}
+
+        {CurrentPage === "verification" && (
+          <div className="bg-white space-y-6">
+            <div className="space-y-[16px] text-[#002A40]">
+              <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
+                Verification
+              </h1>
+              *
+              {error && (
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                  {error}
+                  <button
+                    onClick={() => setError("")}
+                    className="float-right font-bold"
+                  >
+                    ×
+                  </button>
+                </div>
+              )}
+              <p className="text-[16px] text-center">
+                Please enter OTP sent to your email and the phone number
+                associated with your NIN
+              </p>
+            </div>
+            <form
+              onSubmit={handleOTPVerification}
+              className="w-full md:w-[790px] px-8 py-8 space-y-8"
+            >
               <div>
                 <label className="block text-sm font-medium text-[#002A40] mb-1">
                   OTP from {formData.registeredEmail}
@@ -651,26 +745,29 @@ const SelfSignup = () => {
                 Verify
               </button>
             </form>
-        </div>)}
-
-
-        {CurrentPage==='success' && (<div className="bg-white space-y-6">
-          <div className="space-y-[16px] text-[#002A40]">
-          <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
-            Success Page
-            </h1>*
-            <p className="text-[16px] text-center">
-            Account creation successful and certificate sent to the registered email 
-            </p>
-
-            <p>
-              You can view and manage your healthcare appointments and that of your dependants on patient.prescribe.ng. <br/>
-
-              For any technical hitches, please contact on on support@prescribe.ng
-            </p>
           </div>
-        </div>)}
+        )}
 
+        {CurrentPage === "success" && (
+          <div className="bg-white space-y-6">
+            <div className="space-y-[16px] text-[#002A40]">
+              <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
+                Success Page
+              </h1>
+              *
+              <p className="text-[16px] text-center">
+                Account creation successful and certificate sent to the
+                registered email
+              </p>
+              <p>
+                You can view and manage your healthcare appointments and that of
+                your dependants on patient.prescribe.ng. <br />
+                For any technical hitches, please contact on on
+                support@prescribe.ng
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
