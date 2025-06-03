@@ -38,8 +38,8 @@ const test = () => {
                 What happens next?
               </h3>
               <p className="mt-1 text-sm text-blue-800">
-                You'll be redirected to Paystack's secure payment page. After
-                successful payment, you'll receive verification codes to
+                You&apos;ll be redirected to Paystack&apos;s secure payment page. After
+                successful payment, you&apos;ll receive verification codes to
                 complete your registration.
               </p>
             </div>
@@ -122,7 +122,7 @@ const test = () => {
           Verify Your Identity
         </h1>
         <p className="text-gray-600 leading-relaxed">
-          We've sent verification codes to your registered email and phone number. 
+          We&apos;ve sent verification codes to your registered email and phone number. 
           Please enter both codes below to continue.
         </p>
       </div>
@@ -212,7 +212,7 @@ const test = () => {
 
         {/* Resend Options */}
         <div className="text-center pt-4 border-t border-gray-100">
-          <p className="text-sm text-gray-600 mb-3">Didn't receive the codes?</p>
+          <p className="text-sm text-gray-600 mb-3">Didn&apos;t receive the codes?</p>
           <div className="flex justify-center space-x-4">
             <button type="button" className="text-[#0077B6] text-sm font-medium hover:underline">
               Resend Email Code
