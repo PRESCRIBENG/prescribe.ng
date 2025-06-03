@@ -76,6 +76,11 @@ const SelfSignup = () => {
       if (CurrentPage === "success") {
         return;
       }
+      // Only make API call if we have some meaningful data or this is a refresh
+      // Skip initial empty state unless refresh is triggered
+      if (!refresh && !formData.ppn && !formData.email && !formData.idNumber) {
+        return;
+      }
       try {
         setIsLoading(true);
         const statusDataResponse = await fetch("/api/web/pre_signup", {
@@ -662,20 +667,97 @@ const SelfSignup = () => {
                   {formData.warning}
                 </div>
               )}
-              <p className="text-[16px] text-center">
+              {/* <p className="text-[16px] text-center">
                 You will be taken to our payment page to pay ₦
                 {parseInt(formData.amount) / 100}. Click OK to continue.
-              </p>
+              </p> */}
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-6 border border-gray-200">
+                <div className="text-center space-y-4">
+                  <div className="inline-flex items-center px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
+                    Verification Fee
+                  </div>
+                  <div className="space-y-2">
+                    <div className="text-4xl font-bold text-[#002A40]">
+                      ₦{parseInt(formData.amount) / 100}
+                    </div>
+                    <p className="text-gray-600 text-sm">
+                      Secure payment processing via Paystack
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
             <form
               onSubmit={handlePaystackPayment}
               className="w-full md:w-[790px] px-8 py-8 space-y-8"
             >
-              <button
+              {/* <button
                 type="submit"
                 className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
               >
                 OK
+              </button> */}
+
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="h-[41px] bg-[#0077B6] hover:bg-[#005f94] disabled:bg-gray-400 text-white font-semibold py-4 px-8 rounded-[10px] shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:cursor-not-allowed disabled:transform-none focus:outline-none focus:ring-4 focus:ring-blue-300 flex items-center justify-center space-x-3"
+              >
+                {isLoading ? (
+                  <>
+                    <svg
+                      className="animate-spin h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    <span>Processing...</span>
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                      />
+                    </svg>
+                    <span>Proceed to Secure Payment</span>
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </>
+                )}
               </button>
             </form>
           </div>
@@ -712,30 +794,65 @@ const SelfSignup = () => {
                 <label className="block text-sm font-medium text-[#002A40] mb-1">
                   OTP from {formData.registeredEmail}
                 </label>
-                <input
-                  type="text"
-                  name="otpEmail"
-                  placeholder="Enter OTP"
-                  required
-                  value={formData.otpEmail}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="otpEmail"
+                    placeholder="Enter OTP"
+                    required
+                    value={formData.otpEmail}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                  />
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                    <svg
+                      className="w-5 h-5 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </div>
+                </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-[#002A40] mb-1">
                   OTP from {formData.registeredMobileNumber}
                 </label>
-                <input
-                  type="text"
-                  name="otpMobile"
-                  placeholder="Enter OTP"
-                  required
-                  value={formData.otpMobile}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="otpMobile"
+                    placeholder="Enter OTP"
+                    required
+                    value={formData.otpMobile}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                  />
+
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                    <svg
+                      className="w-5 h-5 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </div>
+                </div>
               </div>
 
               <button
