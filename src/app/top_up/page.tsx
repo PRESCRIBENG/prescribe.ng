@@ -146,7 +146,7 @@ const TopUp = () => {
 
           {submitted ? (
             <p className="text-green-600 text-center">
-              Thank you! We&apos;ll get back to you soon.
+              Thank you! We&apos;ll your PrescribeNg Patient Wallet is being credited.
             </p>
           ) : (
             <form onSubmit={handlePayment} className="w-full md:w-[790px] px-8 py-8 space-y-8">
