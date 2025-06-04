@@ -182,11 +182,8 @@ const TopUp = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-[#002A40] mb-1">
-                  Email
-                </label>
                 <input
-                  type="email"
+                  type="hidden"
                   name="email"
                   placeholder="Enter your email"
                   required
