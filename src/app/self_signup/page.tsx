@@ -633,9 +633,10 @@ const SelfSignup = () => {
 
                   <button
                     type="submit"
+                    disabled={isLoading}
                     className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
                   >
-                    Submit
+                    {isLoading ? "Loading..." : "Submit"}
                   </button>
                 </form>
               </div>
@@ -859,7 +860,7 @@ const SelfSignup = () => {
                 type="submit"
                 className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
               >
-                Verify
+                {isLoading ? "Loading..." : "Verify OTPs"}
               </button>
             </form>
           </div>
