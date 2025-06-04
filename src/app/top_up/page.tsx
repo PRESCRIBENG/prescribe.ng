@@ -25,7 +25,7 @@ const TopUp = () => {
     const handleAccountVerification = async () => {
       if (!formData.ppn) return;
   
-      if (formData.ppn.length !== 10) {
+      if (formData.ppn.length !== 9) {
         setFormData((prev) => ({ ...prev, patient: "", paystackPublicKey: "" }));
         return;
       }
@@ -176,6 +176,7 @@ const TopUp = () => {
                   required
                   value={formData.patient}
                   onChange={handleChange}
+                  readonly
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
                 />
               </div>
