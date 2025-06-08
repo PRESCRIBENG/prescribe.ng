@@ -198,7 +198,21 @@ const SaveALife = () => {
       return;
     }
 
-    const paystackAmount = parseInt(selectedPatient.amount) * 100;
+    const desiredAmount = parseInt(formData.amount) * 100; // in kobo
+      let fee = desiredAmount * 0.015;
+
+      // Add ₦100 only if desired amount is ₦2500 or more
+      if (desiredAmount >= 250000) {
+        fee += 10000;
+      }
+
+      // Cap fee at ₦2000
+      if (fee > 200000) {
+        fee = 200000;
+      }
+
+      const paystackAmount = desiredAmount + Math.ceil(fee);
+
 
     const handler = window.PaystackPop.setup({
       key: selectedPatient.paystackPublicKey,
