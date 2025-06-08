@@ -198,7 +198,7 @@ const SaveALife = () => {
       return;
     }
 
-    const desiredAmount = parseInt(formData.amount) * 100; // in kobo
+    const desiredAmount = parseInt(selectedPatient.amount) * 100; // in kobo
       let fee = desiredAmount * 0.015;
 
       // Add ₦100 only if desired amount is ₦2500 or more
