@@ -252,7 +252,7 @@ const About = () => {
           </div>
         </div>
 
-        <div className="space-y-6">
+        {/* <div className="space-y-6">
           <h1 className="flex justify-center text-[32px] font-montserrat font-extrabold leading-[50px] text-[#002A40]">
             Meet the Team
           </h1>
@@ -284,7 +284,7 @@ const About = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="bg-[#FFF1E8] px-6 xl:px-[130px] py-12 space-y-4">
         <div className="flex flex-col items-center space-y-3">
@@ -306,7 +306,7 @@ const About = () => {
         </div>
       </div>
 
-      <div className="space-y-6 py-12  overflow-hidden">
+      {/* <div className="space-y-6 py-12  overflow-hidden">
         <h1 className="text-[32px] font-montserrat font-extrabold flex justify-center leading-[50px] text-[#002A40]">
           What People Are Saying About Prescribeng
         </h1>
@@ -318,9 +318,9 @@ const About = () => {
                   <h2 className="text-[16px] w-full  italic text-[#002A40]">
                     {item.review}
                   </h2>
-                  <div className="space-y-2">
+                  <div className="flex flex-col justify-center items-center space-y-2">
                     <Image
-                      className="w-[85px] flex justify-center items-center h-[17px]"
+                      className="w-[85px]  h-[17px]"
                       src="/ratings.svg"
                       alt="ratings"
                       width={85}
@@ -335,7 +335,7 @@ const About = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

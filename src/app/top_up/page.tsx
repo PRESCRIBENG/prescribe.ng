@@ -152,7 +152,7 @@ const TopUp = () => {
           <div className="space-y-[16px] text-[#002A40]">
           <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
             Patient Top up
-            </h1>*
+            </h1>
             <p className="text-[16px] text-center">
             Easily add funds for yourself or a loved one to access medical care when needed.
           </p>
@@ -179,6 +179,7 @@ const TopUp = () => {
                 />
               </div>
 
+              {formData.patient  && (
               <div>
                 <label className="block text-sm font-medium text-[#002A40] mb-1">
                   Full Name
@@ -193,9 +194,12 @@ const TopUp = () => {
                   readOnly
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
                 />
-              </div>
+              </div>                                  
+                )}
 
-              <div>
+              { formData.patient && ( 
+                
+                <div>
                 <input
                   type="hidden"
                   name="email"
@@ -204,9 +208,11 @@ const TopUp = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                />
-              </div>
+                />   
+                </div>
+              )}
 
+              {formData.patient && (
               <div>
                 <label className="block text-sm font-medium text-[#002A40] mb-1">
                   Amount (₦)
@@ -222,6 +228,9 @@ const TopUp = () => {
                 />
               </div>
 
+              )}
+
+              {formData.patient && (
               <div>
                 <label className="block text-sm font-medium text-[#002A40] mb-1">
                   Description (Optional)
@@ -234,7 +243,9 @@ const TopUp = () => {
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
                 />
-              </div>
+              </div>                
+              )}
+
 
               <button
                 type="submit"
