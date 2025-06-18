@@ -25,11 +25,13 @@ const FundraiserForm = ({ onSubmit }: FundraiserFormProps) => {
     description: "",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -38,11 +40,15 @@ const FundraiserForm = ({ onSubmit }: FundraiserFormProps) => {
     onSubmit(formData);
   };
 
-
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
+        <label
+          htmlFor="name"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Full Name
+        </label>
         <input
           type="text"
           id="name"
@@ -50,12 +56,17 @@ const FundraiserForm = ({ onSubmit }: FundraiserFormProps) => {
           required
           value={formData.name}
           onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
         />
       </div>
-      
+
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Email
+        </label>
         <input
           type="email"
           id="email"
@@ -63,12 +74,17 @@ const FundraiserForm = ({ onSubmit }: FundraiserFormProps) => {
           required
           value={formData.email}
           onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
         />
       </div>
-      
+
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
+        <label
+          htmlFor="phone"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Phone Number
+        </label>
         <input
           type="tel"
           id="phone"
@@ -76,12 +92,17 @@ const FundraiserForm = ({ onSubmit }: FundraiserFormProps) => {
           required
           value={formData.phone}
           onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
         />
       </div>
-      
+
       <div>
-        <label htmlFor="fundraisingGoal" className="block text-sm font-medium text-gray-700">Fundraising Goal (₦)</label>
+        <label
+          htmlFor="fundraisingGoal"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Fundraising Goal (₦)
+        </label>
         <input
           type="number"
           id="fundraisingGoal"
@@ -89,12 +110,17 @@ const FundraiserForm = ({ onSubmit }: FundraiserFormProps) => {
           required
           value={formData.fundraisingGoal}
           onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
         />
       </div>
-      
+
       <div>
-        <label htmlFor="medicalCondition" className="block text-sm font-medium text-gray-700">Medical Condition</label>
+        <label
+          htmlFor="medicalCondition"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Medical Condition
+        </label>
         <input
           type="text"
           id="medicalCondition"
@@ -102,12 +128,17 @@ const FundraiserForm = ({ onSubmit }: FundraiserFormProps) => {
           required
           value={formData.medicalCondition}
           onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
         />
       </div>
-      
+
       <div>
-        <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
+        <label
+          htmlFor="description"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Description
+        </label>
         <textarea
           id="description"
           name="description"
@@ -115,12 +146,12 @@ const FundraiserForm = ({ onSubmit }: FundraiserFormProps) => {
           required
           value={formData.description}
           onChange={handleChange}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
         />
       </div>
-      
+
       <div>
-        <button 
+        <button
           type="submit"
           className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#0077B6] hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >

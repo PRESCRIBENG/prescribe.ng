@@ -1,23 +1,42 @@
 "use client";
 import { useRef } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+  const router = useRouter();
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => {
-    carouselRef.current?.scrollBy({ left: -carouselRef.current.offsetWidth, behavior: "smooth" });
+    carouselRef.current?.scrollBy({
+      left: -carouselRef.current.offsetWidth,
+      behavior: "smooth",
+    });
   };
 
   const scrollRight = () => {
-    carouselRef.current?.scrollBy({ left: carouselRef.current.offsetWidth, behavior: "smooth" });
+    carouselRef.current?.scrollBy({
+      left: carouselRef.current.offsetWidth,
+      behavior: "smooth",
+    });
+  };
+
+  const handleNavigation = (index: number) => {
+    if (index === 0) {
+      router.push("/save_a_life");
+    } else if (index === 1) {
+      router.push("/become_a_partner");
+    } else if (index === 2) {
+      router.push("/verify_letter");
+    }
   };
 
   return (
     <div className="overflow-hidden text-[16px] p-6 md:p-4 lg:p-[80px] xl:p-[130px] xl:py-[150px]">
       <div className="space-y-[45px] flex flex-col justify-center text-[#002A40]">
         <h1 className="w-[740px] mx-auto text-[32px] font-montserrat font-extrabold text-center leading-[50px]">
-          Discover the tools and services that make healthcare accessible for everyone.
+          Discover the tools and services that make healthcare accessible for
+          everyone.
         </h1>
 
         {/* Navigation arrows for mobile only */}
@@ -48,7 +67,9 @@ const Header = () => {
 
               <Image
                 className="w-[50px] h-[50px]"
-                src={i === 0 ? "/mingcute_love-fill.svg" : "/mdi_partnership.svg"}
+                src={
+                  i === 0 ? "/mingcute_love-fill.svg" : "/mdi_partnership.svg"
+                }
                 alt="Icon"
                 width={50}
                 height={50}
@@ -60,11 +81,13 @@ const Header = () => {
                   "Help those in need by contributing to their medical expenses"}
                 {i === 1 &&
                   "Join us as a healthcare professional or institution."}
-                {i === 2 &&
-                  "Ensure the authenticity of medical documents."}
+                {i === 2 && "Ensure the authenticity of medical documents."}
               </p>
 
-              <div className="flex gap-2 items-center justify-center">
+              <div
+                onClick={() => handleNavigation(i)}
+                className="flex gap-2 items-center justify-center"
+              >
                 <p className="text-[16px] text-[#0077B6]">
                   {i === 0 && "Donate Now"}
                   {i === 1 && "Become a Partner"}

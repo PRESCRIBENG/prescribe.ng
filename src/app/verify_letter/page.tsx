@@ -27,7 +27,7 @@ const VerifyLetter = () => {
 
     try {
       const verificationUrl = `https://gelataskia.prescribe.ng/web/verify_correspondence?refID=${encodeURIComponent(
-      //const verificationUrl = `https://127.0.0.1:5002/web/verify_correspondence?refID=${encodeURIComponent(
+        //const verificationUrl = `https://127.0.0.1:5002/web/verify_correspondence?refID=${encodeURIComponent(
         referenceId
       )}`;
 
@@ -76,8 +76,9 @@ const VerifyLetter = () => {
                 Verify Medical Letters
               </h1>
               <p className="text-[16px] text-center">
-                Enter the reference ID below to verify sick notes/exemption letter/medical reports/discharge summaries issued
-                by any or our partner healthcare services providers.
+                Enter the reference ID below to verify sick notes/exemption
+                letter/medical reports/discharge summaries issued by any or our
+                partner healthcare services providers.
               </p>
             </div>
 
@@ -97,7 +98,7 @@ const VerifyLetter = () => {
                     placeholder="Enter the reference ID"
                     value={referenceId}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0077B6]"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                   />
                 </div>
 
@@ -187,9 +188,9 @@ const VerifyLetter = () => {
                 />
               </div>
             </div>
-            <div className="w-full max-w-4xl">        
+            <div className="w-full max-w-4xl">
               <p className="mt-2">
-                <span className="font-bold ">Verification check status:   </span>
+                <span className="font-bold ">Verification check status: </span>
                 <span className="">Original</span>
               </p>
               <p className="mt-2">

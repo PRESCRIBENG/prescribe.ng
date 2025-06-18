@@ -6,18 +6,18 @@ import { useRouter } from "next/navigation";
 
 const ForgotPassword = () => {
   const router = useRouter();
-  
+
   // State for managing form data
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     confirmPassword: "",
-    code: ["", "", "", "", "", ""] // Array for the 6-digit code
+    code: ["", "", "", "", "", ""], // Array for the 6-digit code
   });
 
   // State for managing the current step in the flow
   const [step, setStep] = useState("email-request"); // email-request, code-verification, new-password, success
-  
+
   // States for handling API interactions
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -39,7 +39,7 @@ const ForgotPassword = () => {
     const newCode = [...formData.code];
     newCode[index] = value;
     setFormData({ ...formData, code: newCode });
-    
+
     // Clear errors when user starts typing again
     if (error) setError("");
 
@@ -61,10 +61,10 @@ const ForgotPassword = () => {
       // Email request step - send request for password reset link
       if (step === "email-request") {
         // Using Next.js API route to avoid CORS issues
-        const response = await fetch('/api/password/generate-reset-link', {
-          method: 'POST',
+        const response = await fetch("/api/password/generate-reset-link", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ email: formData.email }),
         });
@@ -72,18 +72,24 @@ const ForgotPassword = () => {
         // Check if response is JSON
         const contentType = response.headers.get("content-type");
         if (!contentType || !contentType.includes("application/json")) {
-          throw new Error("Server returned non-JSON response. Please try again later.");
+          throw new Error(
+            "Server returned non-JSON response. Please try again later."
+          );
         }
 
         const data = await response.json();
-        
+
         if (response.ok) {
-          setSuccess(data.message || "Password reset link has been sent to your email");
+          setSuccess(
+            data.message || "Password reset link has been sent to your email"
+          );
           setStep("code-verification");
         } else {
-          throw new Error(data.message || "Failed to send reset link. Please try again.");
+          throw new Error(
+            data.message || "Failed to send reset link. Please try again."
+          );
         }
-      } 
+      }
       // Code verification step - this would typically validate the code
       else if (step === "code-verification") {
         // In a real implementation, you would verify the code with an API
@@ -95,7 +101,7 @@ const ForgotPassword = () => {
         } else {
           setError("Please enter a valid 6-digit code");
         }
-      } 
+      }
       // New password step - update the password
       else if (step === "new-password") {
         if (formData.password !== formData.confirmPassword) {
@@ -106,34 +112,38 @@ const ForgotPassword = () => {
 
         // Get the verification code
         const verificationCode = formData.code.join("");
-        
+
         // Using Next.js API route to avoid CORS issues
-        const response = await fetch('/api/password/reset-password', {
-          method: 'POST',
+        const response = await fetch("/api/password/reset-password", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             email: formData.email,
             code: verificationCode,
             newPassword: formData.password,
-            newPasswordRepeat: formData.confirmPassword
+            newPasswordRepeat: formData.confirmPassword,
           }),
         });
 
         // Check if response is JSON
         const contentType = response.headers.get("content-type");
         if (!contentType || !contentType.includes("application/json")) {
-          throw new Error("Server returned non-JSON response. Please try again later.");
+          throw new Error(
+            "Server returned non-JSON response. Please try again later."
+          );
         }
 
         const data = await response.json();
-        
+
         if (response.ok) {
           setSuccess(data.message || "Password updated successfully");
           setStep("success");
         } else {
-          throw new Error(data.message || "Failed to update password. Please try again.");
+          throw new Error(
+            data.message || "Failed to update password. Please try again."
+          );
         }
       }
     } catch (err) {
@@ -154,7 +164,8 @@ const ForgotPassword = () => {
               Forgot Password
             </h1>
             <p className="text-[16px] text-center">
-              Enter the email address you registered with to receive a password reset code
+              Enter the email address you registered with to receive a password
+              reset code
             </p>
           </div>
           <div className="bg-white space-y-6 w-full max-w-[790px] shadow-md rounded-md">
@@ -173,27 +184,24 @@ const ForgotPassword = () => {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0077B6]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                 />
               </div>
-              
+
               {error && (
                 <div className="bg-red-100 text-red-700 p-3 rounded-md">
                   {error}
                 </div>
               )}
-              
+
               {success && (
                 <div className="bg-green-100 text-green-700 p-3 rounded-md">
                   {success}
                 </div>
               )}
-              
+
               <div className="flex justify-between items-center">
-                <Link
-                  href="/login"
-                  className="text-[#0077B6] hover:underline"
-                >
+                <Link href="/login" className="text-[#0077B6] hover:underline">
                   Back to Login
                 </Link>
                 <button
@@ -238,23 +246,23 @@ const ForgotPassword = () => {
                     maxLength={1}
                     value={formData.code[index]}
                     onChange={(e) => handleCodeChange(index, e.target.value)}
-                    className="w-12 h-12 text-center px-2 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0077B6]"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                   />
                 ))}
               </div>
-              
+
               {error && (
                 <div className="bg-red-100 text-red-700 p-3 rounded-md">
                   {error}
                 </div>
               )}
-              
+
               {success && (
                 <div className="bg-green-100 text-green-700 p-3 rounded-md">
                   {success}
                 </div>
               )}
-              
+
               <div className="flex justify-between items-center">
                 <button
                   type="button"
@@ -307,7 +315,7 @@ const ForgotPassword = () => {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0077B6]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                 />
               </div>
               <div>
@@ -321,22 +329,22 @@ const ForgotPassword = () => {
                   required
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0077B6]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                 />
               </div>
-              
+
               {error && (
                 <div className="bg-red-100 text-red-700 p-3 rounded-md">
                   {error}
                 </div>
               )}
-              
+
               {success && (
                 <div className="bg-green-100 text-green-700 p-3 rounded-md">
                   {success}
                 </div>
               )}
-              
+
               <div className="flex justify-between items-center">
                 <button
                   type="button"
@@ -375,13 +383,24 @@ const ForgotPassword = () => {
           </div>
           <div className="bg-white space-y-6 w-full max-w-[790px] shadow-md rounded-md p-8 text-center">
             <div className="py-8">
-              <svg className="w-16 h-16 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+              <svg
+                className="w-16 h-16 text-green-500 mx-auto"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 13l4 4L19 7"
+                ></path>
               </svg>
               <p className="mt-4 text-lg">{success}</p>
             </div>
             <button
-              onClick={() => router.push('/login')}
+              onClick={() => router.push("/login")}
               className="inline-block w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-md hover:bg-[#005d8f] transition text-center"
             >
               Back to Login
