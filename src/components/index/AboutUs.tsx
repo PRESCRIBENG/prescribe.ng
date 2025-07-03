@@ -1,7 +1,13 @@
-// import Link from "next/link";
+'use client'
+
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 
 const Header = () => {
+      const router = useRouter();
+
   return (
     <div className="overflow-hidden bg-[#F5F5F5] text-[16px] px-5 py-20 md:px-12 xl:px-[130px] md:p-[150px]">
       <Image
@@ -45,7 +51,10 @@ const Header = () => {
             * We also assist patients who are unable to afford their healthcare cost in raising funds strictly for the purposes of accessing healthcare services.<br/>
             </p>
           </div>
-          <button className="w-[140px] h-[42px] bg-[#0077B6] text-white rounded">
+          <button 
+            onClick={() => router.push("about")}
+
+          className="w-[140px] h-[42px] bg-[#0077B6] text-white rounded">
             Learn More
           </button>
         </div>

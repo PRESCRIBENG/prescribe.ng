@@ -3,10 +3,8 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-  
 
-
-  interface Patient {
+interface Patient {
   name: string;
   shareCodeReason: string;
   credit: string;
@@ -22,8 +20,6 @@ interface SaveALifeProps {
 // const SaveALife = () => {
 
 const SaveALife = ({ patients }: SaveALifeProps) => {
-
-
   const router = useRouter();
 
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -101,34 +97,33 @@ const SaveALife = ({ patients }: SaveALifeProps) => {
 
             className="flex md:grid md:grid-cols-2 gap-4 overflow-x-auto md:overflow-visible scroll-smooth snap-x snap-mandatory scrollbar-hide w-full"
           >
-                    {patients?.slice(0, 4).map((card, i) => (
-
-            // {[
-            //   {
-            //     name: "Aisha Bello",
-            //     need: "Needs ₦1,200,000 for surgery",
-            //     raised: "₦450,000 | 37%",
-            //     image: "/image 4.svg",
-            //   },
-            //   {
-            //     name: "Michael Adewale",
-            //     need: "Needs ₦2,500,000 for kidney transplant",
-            //     raised: "₦850,000 | 34%",
-            //     image: "/image-3.svg",
-            //   },
-            //   {
-            //     name: "Emeka Onwuchekwa",
-            //     need: "Needs ₦2,000,000 for chemotherapy",
-            //     raised: "₦740,000 | 40%",
-            //     image: "/image-1.svg",
-            //   },
-            //   {
-            //     name: "Fatima Yusuf",
-            //     need: "Needs ₦1,500,000 for heart surgery",
-            //     raised: "₦900,000 | 37%",
-            //     image: "/image-2.svg",
-            //   },
-            // ].map((card, i) => (
+            {patients?.slice(0, 4).map((card, i) => (
+              // {[
+              //   {
+              //     name: "Aisha Bello",
+              //     need: "Needs ₦1,200,000 for surgery",
+              //     raised: "₦450,000 | 37%",
+              //     image: "/image 4.svg",
+              //   },
+              //   {
+              //     name: "Michael Adewale",
+              //     need: "Needs ₦2,500,000 for kidney transplant",
+              //     raised: "₦850,000 | 34%",
+              //     image: "/image-3.svg",
+              //   },
+              //   {
+              //     name: "Emeka Onwuchekwa",
+              //     need: "Needs ₦2,000,000 for chemotherapy",
+              //     raised: "₦740,000 | 40%",
+              //     image: "/image-1.svg",
+              //   },
+              //   {
+              //     name: "Fatima Yusuf",
+              //     need: "Needs ₦1,500,000 for heart surgery",
+              //     raised: "₦900,000 | 37%",
+              //     image: "/image-2.svg",
+              //   },
+              // ].map((card, i) => (
               <div
                 key={i}
                 className="snap-start flex-shrink-0 w-[234px] md:w-[234px] bg-white rounded-[5px]"
@@ -141,33 +136,45 @@ const SaveALife = ({ patients }: SaveALifeProps) => {
                   height={148}
                 />
 
-                  <div className="p-4 space-y-2">
-                    <p className="font-montserrat text-[16px] font-bold">{card.name}</p>
-                    <p>
-                      <span className="font-bold">Condition: </span> {card.shareCodeReason}
-                    </p>
-                    <p>
-                      <span className="font-bold">Location: </span> {card.location}
-                    </p>
-                    <p>
-                      <span className="font-bold">Raised: </span> {card.credit} ✅
-                    </p>
-                    <p>
-                      <span className="font-bold">Share Code: </span> {card.shareCode}
-                    </p>
-                    <div
-                      className="flex gap-2 items-center cursor-pointer"
-                    >
-                      <p className="text-[#0077B6] text-[16px]">Donate Now</p>
-                      <Image
-                        className="w-[24px] h-[24px]"
-                        src="/arrow-right.svg"
-                        alt="Arrow"
-                        width={24}
-                        height={24}
-                      />
-                    </div>
+                <div className="p-4 space-y-2">
+                  <p className="font-montserrat text-[16px] font-bold">
+                    {card.name}
+                  </p>
+                  <p>
+                    <span className="font-bold">Condition: </span>{" "}
+                    {card.shareCodeReason}
+                  </p>
+                  <p>
+                    <span className="font-bold">Location: </span>{" "}
+                    {card.location}
+                  </p>
+                  <p>
+                    <span className="font-bold">Raised: </span> {card.credit} ✅
+                  </p>
+                  <p>
+                    <span className="font-bold">Share Code: </span>{" "}
+                    {card.shareCode}
+                  </p>
+                  <div
+                    onClick={() => {
+                      sessionStorage.setItem(
+                        "selectedPatient",
+                        JSON.stringify(card)
+                      );
+                      router.push("/save_a_life?");
+                    }}
+                    className="flex gap-2 items-center cursor-pointer"
+                  >
+                    <p className="text-[#0077B6] text-[16px]">Donate Now</p>
+                    <Image
+                      className="w-[24px] h-[24px]"
+                      src="/arrow-right.svg"
+                      alt="Arrow"
+                      width={24}
+                      height={24}
+                    />
                   </div>
+                </div>
               </div>
             ))}
           </div>

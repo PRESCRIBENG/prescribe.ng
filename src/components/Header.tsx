@@ -4,8 +4,13 @@ import Image from "next/image";
 import ECGLine from "@/components/ECGLine";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+
 
 const Header = () => {
+    const router = useRouter();
+  
   return (
     <div className="relative w-full h-auto md:h-[684px] bg-[#FFF1E8] text-[16px] p-6 md:p-4 lg:p-[80px] xl:p-[130px] xl:py-[150px] mt-24 md:mb-32">
       {/* ECG Line */}
@@ -21,8 +26,8 @@ const Header = () => {
 
             <div className="space-y-[19px] text-[#002A40]">
               <h1 className="w-full md:w-[644px] text-[32px] md:text-[40px] font-montserrat font-extrabold leading-[50px]" style={{color:'red'}}>
-                {/*Connecting You to Life Saving Care & Support*/}
-                THIS WEBSITE IS UNDER CONSTRUCTION
+                Connecting You to Life Saving Care & Support
+                {/* THIS WEBSITE IS UNDER CONSTRUCTION */}
               </h1>
               <p className="text-[14px] sm:text-[16px]">
                 World-Class Healthcare. Built on Trust. Powered by Connection.
@@ -60,7 +65,11 @@ const Header = () => {
                 </button>
               </Link>
 
-              <button className="w-[213px] h-[57px] p-2 border border-[#0077B6] text-primaryLight rounded">
+              <button 
+              onClick={() => router.push("become_a_partner")}
+              className="w-[213px] h-[57px] p-2 border border-[#0077B6] text-primaryLight rounded"
+              
+              >
                 Become a Partner
               </button>
             </div>

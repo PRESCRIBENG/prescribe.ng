@@ -24,12 +24,16 @@ const TopUp = () => {
   useEffect(() => {
     const handleAccountVerification = async () => {
       if (!formData.ppn) return;
-  
+
       if (formData.ppn.length !== 9) {
-        setFormData((prev) => ({ ...prev, patient: "", paystackPublicKey: "" }));
+        setFormData((prev) => ({
+          ...prev,
+          patient: "",
+          paystackPublicKey: "",
+        }));
         return;
       }
-  
+
       try {
         const verificationResponse = await fetch(
           `/api/web/verify_account?query=${encodeURIComponent(formData.ppn)}`,
@@ -40,18 +44,18 @@ const TopUp = () => {
             },
           }
         );
-  
+
         const contentType = verificationResponse.headers.get("content-type");
         if (!contentType || !contentType.includes("application/json")) {
           throw new Error("Server returned non-JSON response.");
         }
-  
+
         const verificationData = await verificationResponse.json();
-  
+
         if (!verificationResponse.ok) {
           throw new Error(verificationData.message || "Verification failed");
         }
-  
+
         setFormData((prev) => ({
           ...prev,
           ...verificationData,
@@ -64,10 +68,9 @@ const TopUp = () => {
         }
       }
     };
-  
+
     handleAccountVerification();
   }, [formData.ppn]);
-  
 
   // Load Paystack SDK
   useEffect(() => {
@@ -110,7 +113,6 @@ const TopUp = () => {
 
       const paystackAmount = desiredAmount + Math.ceil(fee);
 
-
       const handler = window.PaystackPop.setup({
         key: formData.paystackPublicKey,
         email: formData.email,
@@ -143,27 +145,30 @@ const TopUp = () => {
     }
   };
 
-  
-
   return (
     <div className="overflow-hidden bg-[#F5F5F5] mt-50 mb-16 text-[16px] px-4 md:px-[130px]">
       <div className="md:flex md:flex-col items-center space-y-8">
         <div className="bg-white space-y-6">
           <div className="space-y-[16px] text-[#002A40]">
-          <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
-            Patient Top up
+            <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
+              Patient Top up
             </h1>
             <p className="text-[16px] text-center">
-            Easily add funds for yourself or a loved one to access medical care when needed.
-          </p>
+              Easily add funds for yourself or a loved one to access medical
+              care when needed.
+            </p>
           </div>
 
           {submitted ? (
             <p className="text-green-600 text-center">
-              Thank you! We&apos;ll your PrescribeNg Patient Wallet is being credited.
+              Thank you! We&apos;ll your PrescribeNg Patient Wallet is being
+              credited.
             </p>
           ) : (
-            <form onSubmit={handlePayment} className="w-full md:w-[790px] px-8 py-8 space-y-8">
+            <form
+              onSubmit={handlePayment}
+              className="w-full md:w-[790px] px-8 py-8 space-y-8"
+            >
               <div>
                 <label className="block text-sm font-medium text-[#002A40] mb-1">
                   PPN
@@ -175,77 +180,74 @@ const TopUp = () => {
                   placeholder="Enter your unique PPN or NHIS number"
                   value={formData.ppn}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                 />
               </div>
 
-              {formData.patient  && (
-              <div>
-                <label className="block text-sm font-medium text-[#002A40] mb-1">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  name="patient"
-                  placeholder="Enter your full name"
-                  required
-                  value={formData.patient}
-                  onChange={handleChange}
-                  readOnly
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                />
-              </div>                                  
-                )}
-
-              { formData.patient && ( 
-                
+              {formData.patient && (
                 <div>
-                <input
-                  type="hidden"
-                  name="email"
-                  placeholder="Enter your email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                />   
+                  <label className="block text-sm font-medium text-[#002A40] mb-1">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    name="patient"
+                    placeholder="Enter your full name"
+                    required
+                    value={formData.patient}
+                    onChange={handleChange}
+                    readOnly
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
+                  />
                 </div>
               )}
 
               {formData.patient && (
-              <div>
-                <label className="block text-sm font-medium text-[#002A40] mb-1">
-                  Amount (₦)
-                </label>
-                <input
-                  type="text"
-                  name="amount"
-                  placeholder="Enter the amount"
-                  required
-                  value={formData.amount}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                />
-              </div>
-
+                <div>
+                  <input
+                    type="hidden"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
+                  />
+                </div>
               )}
 
               {formData.patient && (
-              <div>
-                <label className="block text-sm font-medium text-[#002A40] mb-1">
-                  Description (Optional)
-                </label>
-                <input
-                  type="text"
-                  name="description"
-                  placeholder="Note or reference"
-                  value={formData.description}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
-                />
-              </div>                
+                <div>
+                  <label className="block text-sm font-medium text-[#002A40] mb-1">
+                    Amount (₦)
+                  </label>
+                  <input
+                    type="text"
+                    name="amount"
+                    placeholder="Enter the amount"
+                    required
+                    value={formData.amount}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
+                  />
+                </div>
               )}
 
+              {formData.patient && (
+                <div>
+                  <label className="block text-sm font-medium text-[#002A40] mb-1">
+                    Description (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    name="description"
+                    placeholder="Note or reference"
+                    value={formData.description}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
+                  />
+                </div>
+              )}
 
               <button
                 type="submit"

@@ -1,6 +1,11 @@
+'use client'
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 
 const Header = () => {
+  const router = useRouter()
   return (
     <div className="relative overflow-hidden bg-[#FFF1E8] text-[16px] pt-8 pr-0 md:pb-0 pl-6 xl:pl-[130px] xl:pl-[130px]">
       <div className="flex flex-col md:flex-row items-center justify-between">
@@ -29,7 +34,9 @@ const Header = () => {
               </p>
             </div>
           </div>
-          <button className="w-[119px] h-[42px] bg-[#0077B6] p-2 mb-4 text-white rounded">
+          <button 
+            onClick={() => router.push("login")}
+          className="w-[119px] h-[42px] bg-[#0077B6] p-2 mb-4 text-white rounded">
             Get Started
           </button>
         </div>

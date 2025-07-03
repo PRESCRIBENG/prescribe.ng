@@ -38,9 +38,9 @@ const test = () => {
                 What happens next?
               </h3>
               <p className="mt-1 text-sm text-blue-800">
-                You&apos;ll be redirected to Paystack&apos;s secure payment page. After
-                successful payment, you&apos;ll receive verification codes to
-                complete your registration.
+                You&apos;ll be redirected to Paystack&apos;s secure payment
+                page. After successful payment, you&apos;ll receive verification
+                codes to complete your registration.
               </p>
             </div>
           </div>
@@ -107,129 +107,175 @@ const test = () => {
           </button>
         </form>
       </div>
-      
 
-  <div className="bg-white min-h-screen flex items-center justify-center p-4">
-    <div className="w-full max-w-md space-y-8">
-      {/* Header Section */}
-      <div className="text-center space-y-4">
-        <div className="w-16 h-16 bg-gradient-to-br from-[#0077B6] to-[#FF6B00] rounded-full mx-auto flex items-center justify-center mb-6">
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-        <h1 className="text-3xl font-bold text-[#002A40] tracking-tight">
-          Verify Your Identity
-        </h1>
-        <p className="text-gray-600 leading-relaxed">
-          We&apos;ve sent verification codes to your registered email and phone number. 
-          Please enter both codes below to continue.
-        </p>
-      </div>
-
-      {/* Error Alert */}
-        <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-lg shadow-sm">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <svg className="w-5 h-5 text-red-400 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+      <div className="bg-white min-h-screen flex items-center justify-center p-4">
+        <div className="w-full max-w-md space-y-8">
+          {/* Header Section */}
+          <div className="text-center space-y-4">
+            <div className="w-16 h-16 bg-gradient-to-br from-[#0077B6] to-[#FF6B00] rounded-full mx-auto flex items-center justify-center mb-6">
+              <svg
+                className="w-8 h-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
               </svg>
-              <span className="text-red-800 text-sm font-medium">error</span>
             </div>
+            <h1 className="text-3xl font-bold text-[#002A40] tracking-tight">
+              Verify Your Identity
+            </h1>
+            <p className="text-gray-600 leading-relaxed">
+              We&apos;ve sent verification codes to your registered email and
+              phone number. Please enter both codes below to continue.
+            </p>
+          </div>
+
+          {/* Error Alert */}
+          <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-lg shadow-sm">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <svg
+                  className="w-5 h-5 text-red-400 mr-3"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span className="text-red-800 text-sm font-medium">error</span>
+              </div>
+              <button className="text-red-400 hover:text-red-600 transition-colors">
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Form */}
+          <form className="space-y-6">
+            {/* Email OTP */}
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-[#002A40]">
+                Email Verification Code
+              </label>
+              <p className="text-xs text-gray-500 mb-3">Sent to</p>
+              <div className="relative">
+                <input
+                  type="text"
+                  name="otpEmail"
+                  placeholder="Enter 6-digit code"
+                  required
+                  //   maxLength="6"
+                  //   value={formData.otpEmail}
+                  //   onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                  <svg
+                    className="w-5 h-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile OTP */}
+            <div className="space-y-2">
+              <label className="block text-sm font-semibold text-[#002A40]">
+                SMS Verification Code
+              </label>
+              <p className="text-xs text-gray-500 mb-3">
+                {/* Sent to {formData.registeredMobileNumber} */}
+              </p>
+              <div className="relative">
+                <input
+                  type="text"
+                  name="otpMobile"
+                  placeholder="Enter 6-digit code"
+                  required
+                  //   maxLength="6"
+                  //   value={formData.otpMobile}
+                  //   onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                  <svg
+                    className="w-5 h-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Submit Button */}
             <button
-              className="text-red-400 hover:text-red-600 transition-colors"
+              type="submit"
+              className="w-full bg-gradient-to-r from-[#0077B6] to-[#005a8b] text-white py-3 px-6 rounded-lg font-semibold text-lg hover:from-[#005a8b] hover:to-[#004466] focus:outline-none focus:ring-4 focus:ring-[#0077B6]/30 transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl"
             >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
+              Verify & Continue
             </button>
-          </div>
-        </div>
 
-      {/* Form */}
-      <form className="space-y-6">
-        {/* Email OTP */}
-        <div className="space-y-2">
-          <label className="block text-sm font-semibold text-[#002A40]">
-            Email Verification Code
-          </label>
-          <p className="text-xs text-gray-500 mb-3">
-            Sent to 
-          </p>
-          <div className="relative">
-            <input
-              type="text"
-              name="otpEmail"
-              placeholder="Enter 6-digit code"
-              required
-            //   maxLength="6"
-            //   value={formData.otpEmail}
-            //   onChange={handleChange}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#0077B6] focus:ring-4 focus:ring-[#0077B6]/10 transition-all duration-200 text-center text-lg font-mono tracking-widest"
-            />
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-              <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
+            {/* Resend Options */}
+            <div className="text-center pt-4 border-t border-gray-100">
+              <p className="text-sm text-gray-600 mb-3">
+                Didn&apos;t receive the codes?
+              </p>
+              <div className="flex justify-center space-x-4">
+                <button
+                  type="button"
+                  className="text-[#0077B6] text-sm font-medium hover:underline"
+                >
+                  Resend Email Code
+                </button>
+                <span className="text-gray-300">|</span>
+                <button
+                  type="button"
+                  className="text-[#0077B6] text-sm font-medium hover:underline"
+                >
+                  Resend SMS Code
+                </button>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
-
-        {/* Mobile OTP */}
-        <div className="space-y-2">
-          <label className="block text-sm font-semibold text-[#002A40]">
-            SMS Verification Code
-          </label>
-          <p className="text-xs text-gray-500 mb-3">
-            {/* Sent to {formData.registeredMobileNumber} */}
-          </p>
-          <div className="relative">
-            <input
-              type="text"
-              name="otpMobile"
-              placeholder="Enter 6-digit code"
-              required
-            //   maxLength="6"
-            //   value={formData.otpMobile}
-            //   onChange={handleChange}
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#0077B6] focus:ring-4 focus:ring-[#0077B6]/10 transition-all duration-200 text-center text-lg font-mono tracking-widest"
-            />
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-              <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="w-full bg-gradient-to-r from-[#0077B6] to-[#005a8b] text-white py-3 px-6 rounded-lg font-semibold text-lg hover:from-[#005a8b] hover:to-[#004466] focus:outline-none focus:ring-4 focus:ring-[#0077B6]/30 transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl"
-        >
-          Verify & Continue
-        </button>
-
-        {/* Resend Options */}
-        <div className="text-center pt-4 border-t border-gray-100">
-          <p className="text-sm text-gray-600 mb-3">Didn&apos;t receive the codes?</p>
-          <div className="flex justify-center space-x-4">
-            <button type="button" className="text-[#0077B6] text-sm font-medium hover:underline">
-              Resend Email Code
-            </button>
-            <span className="text-gray-300">|</span>
-            <button type="button" className="text-[#0077B6] text-sm font-medium hover:underline">
-              Resend SMS Code
-            </button>
-          </div>
-        </div>
-      </form>
+      </div>
     </div>
-  </div>
-
-    </div>
-
-
   );
 };
 
