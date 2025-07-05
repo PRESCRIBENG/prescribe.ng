@@ -566,7 +566,7 @@ const SelfSignup = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-[#002A40] mb-1">
-                      Emergency Contact 2
+                      Emergency Contact 2 (Optional)
                     </label>
                     <input
                       type="text"
@@ -579,7 +579,7 @@ const SelfSignup = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-[#002A40] mb-1">
-                      Emergency Contact2 Mobile Number
+                      Emergency Contact2 Mobile Number (Optional)
                     </label>
                     <input
                       type="text"
@@ -592,7 +592,7 @@ const SelfSignup = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-[#002A40] mb-1">
-                      Relationship with Emergency Contact 2
+                      Relationship with Emergency Contact 2 (Optional)
                     </label>
                     <input
                       type="text"
@@ -605,7 +605,7 @@ const SelfSignup = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-[#002A40] mb-1">
-                      Promo Code
+                      Referral Code
                     </label>
                     <input
                       type="text"
@@ -617,7 +617,7 @@ const SelfSignup = () => {
                     />
                   </div>
 
-                  <div>
+                  {/*<div>
                     <label className="block text-sm font-medium text-[#002A40] mb-1">
                       Attach Government-issued ID Document (JPG, JPEG, PNG)
                     </label>
@@ -629,7 +629,7 @@ const SelfSignup = () => {
                       required
                       className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                     />
-                  </div>
+                  </div>*/}
 
                   <button
                     type="submit"
