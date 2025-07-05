@@ -30,9 +30,11 @@ declare global {
   }
 }
 
-
 const SaveALife = () => {
-  const [currentPage, setCurrentPage] = useState<"home" | "donationForm">("home");
+
+  const [currentPage, setCurrentPage] = useState<"home" | "donationForm">(
+    "home"
+  );
   const [patientsList, setPatientsList] = useState<Patient[]>([
     //{
     //  name: "Aisha Bello",
@@ -69,19 +71,21 @@ const SaveALife = () => {
 
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setSelectedPatient({ ...selectedPatient, [e.target.name]: e.target.value });
   };
 
-  
   const handleFetchPatientsInNeed = async () => {
     const searchParameter = selectedPatient.shareCode?.trim() || "random";
 
-  // Validate only if it's not the special 'random' keyword
-  if (searchParameter !== "random" && (searchParameter.length !== 6)) {// || !/^\d{6}$/.test(searchParameter))) {
-    //alert("Share code must be exactly 6 digits.");
-    return;
-  }
+    // Validate only if it's not the special 'random' keyword
+    if (searchParameter !== "random" && searchParameter.length !== 6) {
+      // || !/^\d{6}$/.test(searchParameter))) {
+      //alert("Share code must be exactly 6 digits.");
+      return;
+    }
 
     try {
       const res = await fetch(
@@ -117,29 +121,33 @@ const SaveALife = () => {
     }
   };
 
-
   useEffect(() => {
-    
-      const searchParameter = selectedPatient.shareCode?.trim() || "random";
-  
+    const searchParameter = selectedPatient.shareCode?.trim() || "random";
+
     // Validate only if it's not the special 'random' keyword
-    if (searchParameter !== "random" && (searchParameter.length !== 6 || !/^\d{6}$/.test(searchParameter))) {
+    if (
+      searchParameter !== "random" &&
+      (searchParameter.length !== 6 || !/^\d{6}$/.test(searchParameter))
+    ) {
       //alert("Share code must be exactly 6 digits.");
       return;
     }
 
     const handleFetchRandomPatientsInNeed = async () => {
       const searchParameter = selectedPatient.shareCode?.trim() || "random";
-  
-    // Validate only if it's not the special 'random' keyword
-    if (searchParameter !== "random" && (searchParameter.length !== 6)) {// || !/^\d{6}$/.test(searchParameter))) {
-      //alert("Share code must be exactly 6 digits.");
-      return;
-    }
-  
+
+      // Validate only if it's not the special 'random' keyword
+      if (searchParameter !== "random" && searchParameter.length !== 6) {
+        // || !/^\d{6}$/.test(searchParameter))) {
+        //alert("Share code must be exactly 6 digits.");
+        return;
+      }
+
       try {
         const res = await fetch(
-          `/api/web/save_a_life?shareCode=${encodeURIComponent(searchParameter)}`,
+          `/api/web/save_a_life?shareCode=${encodeURIComponent(
+            searchParameter
+          )}`,
           {
             method: "GET",
             headers: {
@@ -147,20 +155,20 @@ const SaveALife = () => {
             },
           }
         );
-  
+
         const contentType = res.headers.get("content-type");
         const raw = await res.text();
-  
+
         if (!contentType || !contentType.includes("application/json")) {
           throw new Error("Invalid server response");
         }
-  
+
         const patients = JSON.parse(raw) as { patientsList: Patient[] };
-  
+
         if (!res.ok) {
           throw new Error(patients as unknown as string);
         }
-  
+
         setPatientsList(patients.patientsList);
       } catch (err) {
         if (err instanceof Error) {
@@ -170,11 +178,10 @@ const SaveALife = () => {
         }
       }
     };
-  
+
     handleFetchRandomPatientsInNeed();
   }, [selectedPatient.shareCode]);
-  
-  
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://js.paystack.co/v1/inline.js";
@@ -185,6 +192,20 @@ const SaveALife = () => {
     };
   }, []);
 
+  useEffect(() => {
+      const storedPatient = sessionStorage.getItem("selectedPatient");
+      if (storedPatient) {
+        try {
+          const patientData = JSON.parse(storedPatient);
+          setSelectedPatient((prev) => ({ ...prev, ...patientData }));
+          setCurrentPage("donationForm");
+          sessionStorage.removeItem("selectedPatient");
+        } catch (error) {
+          console.error("Error parsing patient data:", error);
+        }
+      }
+  });
+
   const handlePayment = (e: FormEvent) => {
     e.preventDefault();
 
@@ -193,12 +214,29 @@ const SaveALife = () => {
       return;
     }
 
-    if (!selectedPatient.paystackPublicKey || !selectedPatient.shareCode || !selectedPatient.amount) {
+    if (
+      !selectedPatient.paystackPublicKey ||
+      !selectedPatient.shareCode ||
+      !selectedPatient.amount
+    ) {
       alert("Incomplete payment data. Please try again.");
       return;
     }
 
-    const paystackAmount = parseInt(selectedPatient.amount) * 100;
+    const desiredAmount = parseInt(selectedPatient.amount) * 100; // in kobo
+    let fee = desiredAmount * 0.015;
+
+    // Add ₦100 only if desired amount is ₦2500 or more
+    if (desiredAmount >= 250000) {
+      fee += 10000;
+    }
+
+    // Cap fee at ₦2000
+    if (fee > 200000) {
+      fee = 200000;
+    }
+
+    const paystackAmount = desiredAmount + Math.ceil(fee);
 
     const handler = window.PaystackPop.setup({
       key: selectedPatient.paystackPublicKey,
@@ -251,26 +289,32 @@ const SaveALife = () => {
         <div className="px-6 xl:px-[130px] py-12 space-y-16">
           <div className="space-y-3">
             <h1 className="text-[32px] font-montserrat font-bold leading-[50px] text-[#002A40]">
-              <span className="text-[#FE6F15]">PrescribeNg</span> Save A Life Initiative
+              <span className="text-[#FE6F15]">PrescribeNg</span> Save A Life
+              Initiative
             </h1>
             <p className="text-[16px]">
-              At Prescribeng, we believe that no one should be denied healthcare due to financial
-              constraints. Our Save a Life initiative is a crowdfunding platform where you can
-              directly contribute to the medical expenses of patients in need.
-            </p>
-            <p>✅ 100% of your donation goes directly to medical care – we do not charge any commission.</p>
-            <p>
-              ✅ Funds are strictly for settling hospital bills at the point of service and cannot be
-              withdrawn or transferred by the patient or their family.
+              At Prescribeng, we believe that no one should be denied healthcare
+              due to financial constraints. Our Save a Life initiative is a
+              crowdfunding platform where you can directly contribute to the
+              medical expenses of patients in need.
             </p>
             <p>
-              ✅ In the unfortunate event of a patient&apos;s passing, we ensure full transparency by
-              issuing the raised funds to the family via a cheque, upon presenting a verified death
-              certificate.
+              ✅ 100% of your donation goes directly to medical care – we do not
+              charge any commission.
+            </p>
+            <p>
+              ✅ Funds are strictly for settling hospital bills at the point of
+              service and cannot be withdrawn or transferred by the patient or
+              their family.
+            </p>
+            <p>
+              ✅ In the unfortunate event of a patient&apos;s passing, we ensure
+              full transparency by issuing the raised funds to the family via a
+              cheque, upon presenting a verified death certificate.
             </p>
             <p className="text-[16px]">
-              Every contribution, no matter how small, brings hope and healing to those who need it
-              most.
+              Every contribution, no matter how small, brings hope and healing
+              to those who need it most.
             </p>
           </div>
 
@@ -281,7 +325,7 @@ const SaveALife = () => {
               placeholder="Input share code"
               value={selectedPatient.shareCode}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
             />
             <button
               onClick={handleFetchPatientsInNeed}
@@ -306,18 +350,24 @@ const SaveALife = () => {
                     height={178}
                   />
                   <div className="p-4 space-y-2">
-                    <p className="font-montserrat text-[16px] font-bold">{card.name}</p>
-                    <p>
-                      <span className="font-bold">Condition: </span> {card.shareCodeReason}
+                    <p className="font-montserrat text-[16px] font-bold">
+                      {card.name}
                     </p>
                     <p>
-                      <span className="font-bold">Location: </span> {card.location}
+                      <span className="font-bold">Condition: </span>{" "}
+                      {card.shareCodeReason}
                     </p>
                     <p>
-                      <span className="font-bold">Raised: </span> {card.credit} ✅
+                      <span className="font-bold">Location: </span>{" "}
+                      {card.location}
                     </p>
                     <p>
-                      <span className="font-bold">Share Code: </span> {card.shareCode}
+                      <span className="font-bold">Raised: </span> {card.credit}{" "}
+                      ✅
+                    </p>
+                    <p>
+                      <span className="font-bold">Share Code: </span>{" "}
+                      {card.shareCode}
                     </p>
                     <div
                       className="flex gap-2 items-center cursor-pointer"
@@ -346,7 +396,9 @@ const SaveALife = () => {
       {currentPage === "donationForm" && (
         <div className="md:flex md:flex-col items-center space-y-8 py-12">
           <div className="bg-white space-y-6 w-full md:w-[790px] px-8 py-8">
-            <h1 className="text-[32px] font-extrabold text-center">{selectedPatient.name}</h1>
+            <h1 className="text-[32px] font-extrabold text-center">
+              {selectedPatient.name}
+            </h1>
             <Image
               className="w-full h-[187px] object-cover rounded"
               src={selectedPatient.image}
@@ -354,15 +406,28 @@ const SaveALife = () => {
               width={342}
               height={178}
             />
-            <p><strong>Condition:</strong> {selectedPatient.shareCodeReason}</p>
-            <p><strong>Location:</strong> {selectedPatient.location}</p>
-            <p><strong>Raised:</strong> {selectedPatient.credit}</p>
-            <p><strong>Share Code:</strong> {selectedPatient.shareCode}</p>
+            <p>
+              <strong>Condition:</strong> {selectedPatient.shareCodeReason}
+            </p>
+            <p>
+              <strong>Location:</strong> {selectedPatient.location}
+            </p>
+            <p>
+              <strong>Raised:</strong> {selectedPatient.credit}
+            </p>
+            <p>
+              <strong>Share Code:</strong> {selectedPatient.shareCode}
+            </p>
 
             {submitted ? (
               <div className="text-center space-y-4">
-                <p className="text-green-600">Thank you! We&apos;ll get back to you soon.</p>
-                <button onClick={resetAndReturnHome} className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition">
+                <p className="text-green-600">
+                  Thank you! We&apos;ll get back to you soon.
+                </p>
+                <button
+                  onClick={resetAndReturnHome}
+                  className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
+                >
                   Close
                 </button>
               </div>
@@ -375,7 +440,7 @@ const SaveALife = () => {
                   required
                   value={selectedPatient.donorEmail || ""}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                 />
                 <input
                   type="text"
@@ -384,7 +449,7 @@ const SaveALife = () => {
                   required
                   value={selectedPatient.amount || ""}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                 />
                 <input
                   type="text"
@@ -392,14 +457,23 @@ const SaveALife = () => {
                   placeholder="Note (optional)"
                   value={selectedPatient.description || ""}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                 />
-                <button type="submit" className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition">
-                  Donate
-                </button>
-                <button type="button" onClick={resetAndReturnHome} className="bg-gray-300 text-black py-2 px-4 rounded-md hover:bg-gray-400 transition">
-                  Back
-                </button>
+                <div className="flex justify-between">
+                  <button
+                    type="submit"
+                    className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
+                  >
+                    Donate
+                  </button>
+                  <button
+                    type="button"
+                    onClick={resetAndReturnHome}
+                    className="bg-gray-300 text-black py-2 px-4 rounded-md hover:bg-gray-400 transition"
+                  >
+                    Back
+                  </button>
+                </div>
               </form>
             )}
           </div>

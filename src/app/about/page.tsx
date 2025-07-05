@@ -28,53 +28,53 @@ const About = () => {
     },
   ];
 
-  const meetTheTeam = [
-    {
-      icon: "/image8.png",
-      title: "Dr. Jane Doe",
-      subTitle: "Co-Founder & Healthcare Advisor",
-      description:
-        "With over 15 years of experience in healthcare, Dr. Jane is passionate about making medical care accessible to all",
-    },
-    {
-      icon: "/image.png",
-      title: "John Smith",
-      subTitle: "Co-Founder & Tech Lead",
-      description:
-        "John is a seasoned software engineer with over a decade of experience in building scalable and secure platforms...",
-    },
-    {
-      icon: "/image-1.png",
-      title: "Sarah Johnson",
-      subTitle: "Head of Partnerships",
-      description:
-        "Sarah brings a wealth of experience in healthcare management and strategic partnerships. She is dedicated to building...",
-    },
-  ];
-  const reviews = [
-    {
-      review:
-        '"When my son was diagnosed with a critical heart condition, we had no idea how we would afford the surgery. Thanks to Prescribeng, we raised the needed funds in just two weeks. Today, he is healthy and strong! I am forever grateful."',
-      reviewer: "Aisha O., Abuja",
+  // const meetTheTeam = [
+  //   {
+  //     icon: "/image8.png",
+  //     title: "Dr. Jane Doe",
+  //     subTitle: "Co-Founder & Healthcare Advisor",
+  //     description:
+  //       "With over 15 years of experience in healthcare, Dr. Jane is passionate about making medical care accessible to all",
+  //   },
+  //   {
+  //     icon: "/image.png",
+  //     title: "John Smith",
+  //     subTitle: "Co-Founder & Tech Lead",
+  //     description:
+  //       "John is a seasoned software engineer with over a decade of experience in building scalable and secure platforms...",
+  //   },
+  //   {
+  //     icon: "/image-1.png",
+  //     title: "Sarah Johnson",
+  //     subTitle: "Head of Partnerships",
+  //     description:
+  //       "Sarah brings a wealth of experience in healthcare management and strategic partnerships. She is dedicated to building...",
+  //   },
+  // ];
+  // const reviews = [
+  //   {
+  //     review:
+  //       '"When my son was diagnosed with a critical heart condition, we had no idea how we would afford the surgery. Thanks to Prescribeng, we raised the needed funds in just two weeks. Today, he is healthy and strong! I am forever grateful."',
+  //     reviewer: "Aisha O., Abuja",
 
-      description:
-        "With over 15 years of experience in healthcare, Dr. Jane is passionate about making medical care accessible to all",
-    },
-    {
-      review: `"I was hesitant about online fundraising, but Prescribeng's verification process gave me confidence. Every donation I received went directly to my treatment, and now I'm on my way to recovery. Thank you for giving me hope!`,
-      reviewer: "John Smith",
+  //     description:
+  //       "With over 15 years of experience in healthcare, Dr. Jane is passionate about making medical care accessible to all",
+  //   },
+  //   {
+  //     review: `"I was hesitant about online fundraising, but Prescribeng's verification process gave me confidence. Every donation I received went directly to my treatment, and now I'm on my way to recovery. Thank you for giving me hope!`,
+  //     reviewer: "John Smith",
 
-      description:
-        "John is a seasoned software engineer with over a decade of experience in building scalable and secure platforms...",
-    },
-    {
-      review: `"I’ve always wanted to help people in need, but I didn’t know how. Prescribeng made it simple and transparent. Seeing the progress of the patients I donate to gives me so much fulfillment!"`,
-      reviewer: "Sarah Johnson",
+  //     description:
+  //       "John is a seasoned software engineer with over a decade of experience in building scalable and secure platforms...",
+  //   },
+  //   {
+  //     review: `"I’ve always wanted to help people in need, but I didn’t know how. Prescribeng made it simple and transparent. Seeing the progress of the patients I donate to gives me so much fulfillment!"`,
+  //     reviewer: "Sarah Johnson",
 
-      description:
-        "Sarah brings a wealth of experience in healthcare management and strategic partnerships. She is dedicated to building...",
-    },
-  ];
+  //     description:
+  //       "Sarah brings a wealth of experience in healthcare management and strategic partnerships. She is dedicated to building...",
+  //   },
+  // ];
   return (
     <div className="relative mt-20">
       {/* Background Image */}
@@ -252,7 +252,7 @@ const About = () => {
           </div>
         </div>
 
-        <div className="space-y-6">
+        {/* <div className="space-y-6">
           <h1 className="flex justify-center text-[32px] font-montserrat font-extrabold leading-[50px] text-[#002A40]">
             Meet the Team
           </h1>
@@ -284,7 +284,7 @@ const About = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="bg-[#FFF1E8] px-6 xl:px-[130px] py-12 space-y-4">
         <div className="flex flex-col items-center space-y-3">
@@ -306,7 +306,7 @@ const About = () => {
         </div>
       </div>
 
-      <div className="space-y-6 py-12  overflow-hidden">
+      {/* <div className="space-y-6 py-12  overflow-hidden">
         <h1 className="text-[32px] font-montserrat font-extrabold flex justify-center leading-[50px] text-[#002A40]">
           What People Are Saying About Prescribeng
         </h1>
@@ -318,9 +318,9 @@ const About = () => {
                   <h2 className="text-[16px] w-full  italic text-[#002A40]">
                     {item.review}
                   </h2>
-                  <div className="space-y-2">
+                  <div className="flex flex-col justify-center items-center space-y-2">
                     <Image
-                      className="w-[85px] flex justify-center items-center h-[17px]"
+                      className="w-[85px]  h-[17px]"
                       src="/ratings.svg"
                       alt="ratings"
                       width={85}
@@ -335,7 +335,7 @@ const About = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

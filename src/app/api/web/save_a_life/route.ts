@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
 
     
     const response = await fetch(`https://gelataskia.prescribe.ng/web/save_a_life?shareCode=${encodeURIComponent(shareCode)}`, {
-    //const response = await fetch(`http://127.0.0.1:5002/web/save_a_life?shareCode=${encodeURIComponent(shareCode)}`, {  
+    //const response = await fetch(`http://127.0.0.1:5002/web/save_a_life?shareCode=${encodeURIComponent(shareCode)}`, {  //
     method: 'GET',
       headers: {
         'Content-Type': 'application/json',

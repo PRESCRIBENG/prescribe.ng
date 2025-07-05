@@ -15,9 +15,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [step, setStep] = useState("login"); // login, totp, or success
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     // Clear errors when user starts typing again
     if (error) setError("");
@@ -35,42 +33,44 @@ const Login = () => {
 
     try {
       // Using next js to avoid CORS issues
-      const loginResponse = await fetch('/api/clinician/login', {
-        method: 'POST',
+      const loginResponse = await fetch("/api/clinician/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: formData.email,
-          password: formData.password
+          password: formData.password,
         }),
       });
 
       // Check if response is JSON
       const contentType = loginResponse.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("Server returned non-JSON response. Please try again later.");
+        throw new Error(
+          "Server returned non-JSON response. Please try again later."
+        );
       }
 
       const loginData = await loginResponse.json();
 
       if (!loginResponse.ok) {
-        throw new Error(loginData.message || 'Login failed');
+        throw new Error(loginData.message || "Login failed");
       }
 
       // Store the incomplete token for TOTP verification
-      localStorage.setItem('incompleteToken', loginData.token);
-      
+      localStorage.setItem("incompleteToken", loginData.token);
+
       // Move to TOTP verification step
       setStep("totp");
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error("Login error:", err);
-        setError(err.message || 'An error occurred during login');
+        setError(err.message || "An error occurred during login");
       } else {
-        setError('An unknown error occurred.');
+        setError("An unknown error occurred.");
       }
-    }finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -79,55 +79,56 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-  
+
     try {
-      const incompleteToken = localStorage.getItem('incompleteToken');
-      
+      const incompleteToken = localStorage.getItem("incompleteToken");
+
       if (!incompleteToken) {
-        throw new Error('Login session expired. Please login again.');
+        throw new Error("Login session expired. Please login again.");
       }
-  
+
       // Using Next.js API route to avoid CORS issues
-      const totpResponse = await fetch('/api/clinician/verify-totp', {
-        method: 'POST',
+      const totpResponse = await fetch("/api/clinician/verify-totp", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${incompleteToken}` 
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${incompleteToken}`,
         },
         body: JSON.stringify({
-          totp: totpToken
+          totp: totpToken,
         }),
       });
-  
+
       // Check if response is JSON
       const contentType = totpResponse.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("Server returned non-JSON response. Please try again later.");
+        throw new Error(
+          "Server returned non-JSON response. Please try again later."
+        );
       }
-  
+
       const totpData = await totpResponse.json();
-  
+
       if (!totpResponse.ok) {
-        throw new Error(totpData.message || 'TOTP verification failed');
+        throw new Error(totpData.message || "TOTP verification failed");
       }
-  
+
       // Store the complete token
-      localStorage.setItem('token', totpData.token);
-      
+      localStorage.setItem("token", totpData.token);
+
       // Fetch user data
       await fetchClinicianData(totpData.token);
-      
+
       // Navigate to dashboard or clinician panel
-      router.push('/dashboard');
+      router.push("/dashboard");
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error("Login error:", err);
-        setError(err.message || 'An error occurred during login');
+        setError(err.message || "An error occurred during login");
       } else {
-        setError('An unknown error occurred.');
+        setError("An unknown error occurred.");
       }
-    }
-     finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -135,38 +136,39 @@ const Login = () => {
   const fetchClinicianData = async (token: string) => {
     try {
       // Using Next.js API route to avoid CORS issues
-      const response = await fetch('/api/clinician/clinicianpanel', {
-        method: 'GET',
+      const response = await fetch("/api/clinician/clinicianpanel", {
+        method: "GET",
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
       });
-  
+
       // Check if response is JSON
       const contentType = response.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("Server returned non-JSON response. Please try again later.");
+        throw new Error(
+          "Server returned non-JSON response. Please try again later."
+        );
       }
-  
+
       const data = await response.json();
-  
+
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to fetch clinician data');
+        throw new Error(data.message || "Failed to fetch clinician data");
       }
-  
+
       // Store user data for use
-      localStorage.setItem('userData', JSON.stringify(data.userData));
+      localStorage.setItem("userData", JSON.stringify(data.userData));
       return data.userData;
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error("Login error:", err);
-        setError(err.message || 'An error occurred during login');
+        setError(err.message || "An error occurred during login");
       } else {
-        setError('An unknown error occurred.');
+        setError("An unknown error occurred.");
       }
     }
-    
   };
 
   // Render login form
@@ -179,7 +181,8 @@ const Login = () => {
               Clinician Login
             </h1>
             <p className="text-[16px] text-center">
-              Access your Prescribeng account to manage your profile and services
+              Access your Prescribeng account to manage your profile and
+              services
             </p>
           </div>
           <div className="bg-white space-y-6 w-full max-w-[790px] shadow-md rounded-md">
@@ -198,7 +201,7 @@ const Login = () => {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0077B6]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                 />
               </div>
               <div>
@@ -212,7 +215,7 @@ const Login = () => {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0077B6]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                 />
               </div>
               {error && (
@@ -221,15 +224,53 @@ const Login = () => {
                 </div>
               )}
               <div className="flex justify-between items-center">
-                <Link href="/forgot-password" className="text-[#0077B6] hover:underline">
+                <Link
+                  href="/forgot-password"
+                  className="text-[#0077B6] hover:underline"
+                >
                   Forgot Password?
                 </Link>
-                <button
+                {/* <button
                   type="submit"
                   disabled={isLoading}
                   className="w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-md hover:bg-[#005d8f] transition disabled:bg-gray-400"
                 >
                   {isLoading ? "Loading..." : "Log In"}
+                </button> */}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="h-[41px] bg-[#0077B6] hover:bg-[#005f94] disabled:bg-gray-400 text-white font-semibold py-4 px-8 rounded-[10px] shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:cursor-not-allowed disabled:transform-none focus:outline-none focus:ring-4 focus:ring-blue-300 flex items-center justify-center space-x-3"
+                >
+                  {isLoading ? (
+                    <>
+                      <svg
+                        className="animate-spin h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      {/* <span>Processing...</span> */}
+                    </>
+                  ) : (
+                    <>
+                      <span>Log In</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
@@ -269,7 +310,7 @@ const Login = () => {
                   pattern="[0-9]{6}"
                   value={totpToken}
                   onChange={handleTotpChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0077B6]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                 />
               </div>
               {error && (

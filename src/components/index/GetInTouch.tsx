@@ -16,7 +16,9 @@ const GetInTouch = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -42,7 +44,7 @@ const GetInTouch = () => {
             priority
           />
         </div>
-        
+
         {/* Form container */}
         <div className="w-full lg:w-1/2 xl:w-[500px] space-y-6">
           <div className="space-y-4 text-[#002A40]">
@@ -50,9 +52,9 @@ const GetInTouch = () => {
               Get in Touch with Us
             </h1>
             <p className="text-sm md:text-base">
-              Have questions, need support, or want to partner with us? We&apos;re
-              here to help! Fill out the form below, and our team will get back
-              to you as soon as possible.
+              Have questions, need support, or want to partner with us?
+              We&apos;re here to help! Fill out the form below, and our team
+              will get back to you as soon as possible.
             </p>
           </div>
 
@@ -75,7 +77,7 @@ const GetInTouch = () => {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                   />
                 </div>
 
@@ -89,7 +91,7 @@ const GetInTouch = () => {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                   />
                 </div>
               </div>
@@ -102,7 +104,7 @@ const GetInTouch = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                 />
               </div>
               <div>
@@ -110,7 +112,7 @@ const GetInTouch = () => {
                   Subject
                 </label>
                 <select
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
@@ -133,7 +135,7 @@ const GetInTouch = () => {
                   rows={4}
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00]"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                 />
               </div>
 

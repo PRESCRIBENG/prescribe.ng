@@ -6,12 +6,12 @@ import Link from "next/link";
 
 const ChangePassword = () => {
   //const router = useRouter();
-  
+
   // State for managing form data
   const [formData, setFormData] = useState({
     oldPassword: "",
     newPassword: "",
-    newPasswordRepeat: ""
+    newPasswordRepeat: "",
   });
 
   // States for handling API interactions
@@ -45,45 +45,51 @@ const ChangePassword = () => {
       }
 
       // Get token from local storage or context
-      const token = localStorage.getItem('authToken') || '';
-      
+      const token = localStorage.getItem("authToken") || "";
+
       if (!token) {
-        setError("You are not logged in. Please log in to change your password.");
+        setError(
+          "You are not logged in. Please log in to change your password."
+        );
         setIsLoading(false);
         return;
       }
 
       // Using Next.js API route to avoid CORS issues
-      const response = await fetch('/api/password/change-password', {
-        method: 'POST',
+      const response = await fetch("/api/password/change-password", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           oldPassword: formData.oldPassword,
           newPassword: formData.newPassword,
-          newPasswordRepeat: formData.newPasswordRepeat
+          newPasswordRepeat: formData.newPasswordRepeat,
         }),
       });
 
       // Check if response is JSON
       const contentType = response.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("Server returned non-JSON response. Please try again later.");
+        throw new Error(
+          "Server returned non-JSON response. Please try again later."
+        );
       }
 
       const data = await response.json();
-      
+
       if (response.ok) {
         setSuccess(data.message || "Password updated successfully");
         setFormData({
           oldPassword: "",
           newPassword: "",
-          newPasswordRepeat: ""
+          newPasswordRepeat: "",
         });
       } else {
-        throw new Error(data.message || "Failed to update password. Please try again.");
+        throw new Error(
+          data.message || "Failed to update password. Please try again."
+        );
       }
     } catch (err) {
       setError("An error occurred. Please try again later.");
@@ -120,7 +126,7 @@ const ChangePassword = () => {
                 required
                 value={formData.oldPassword}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0077B6]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
               />
             </div>
             <div>
@@ -134,7 +140,7 @@ const ChangePassword = () => {
                 required
                 value={formData.newPassword}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0077B6]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
               />
             </div>
             <div>
@@ -148,22 +154,22 @@ const ChangePassword = () => {
                 required
                 value={formData.newPasswordRepeat}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0077B6]"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
               />
             </div>
-            
+
             {error && (
               <div className="bg-red-100 text-red-700 p-3 rounded-md">
                 {error}
               </div>
             )}
-            
+
             {success && (
               <div className="bg-green-100 text-green-700 p-3 rounded-md">
                 {success}
               </div>
             )}
-            
+
             <div className="flex justify-between items-center">
               <Link
                 href="/dashboard"
