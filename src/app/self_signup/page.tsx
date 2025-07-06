@@ -611,7 +611,7 @@ const SelfSignup = () => {
                       type="text"
                       name="promoCode"
                       placeholder="Enter your promoCode if you have any"
-                      value={formData.promoCode}
+                      value={formData.promoCode || 'PRESC1'}
                       onChange={handleChange}
                       className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                     />
