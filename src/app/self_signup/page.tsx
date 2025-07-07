@@ -36,7 +36,7 @@ const SelfSignup = () => {
     reference: "",
     metaPayload: {},
     routeTo: "",
-    promoCode: "",
+    promoCode: "PRESC1",
     token: "",
     otpEmail: "",
     otpMobile: "",
@@ -611,7 +611,7 @@ const SelfSignup = () => {
                       type="text"
                       name="promoCode"
                       placeholder="Enter your promoCode if you have any"
-                      value={formData.promoCode || 'PRESC1'}
+                      value={formData.promoCode}
                       onChange={handleChange}
                       className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                     />
