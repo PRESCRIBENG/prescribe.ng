@@ -164,7 +164,7 @@ const DirectDebit = () => {
         return;
       }
   
-      const { paystackPublicKey, ppn, amount, email, description } = formData;
+      const { paystackPublicKey, ppn, amount, email } = formData;
   
       if (!paystackPublicKey || !ppn || !amount || !email) {
         alert("Incomplete payment data. Please fill out all required fields.");
@@ -202,81 +202,6 @@ const DirectDebit = () => {
     }
   };
 
-
-
-  const handleDirectDebitSetupSavedVersion = (e: React.FormEvent) => {
-    e.preventDefault();
-  
-    try {
-      if (!window.PaystackPop) {
-        alert("Payment gateway not loaded. Please refresh the page.");
-        return;
-      }
-  
-      const { paystackPublicKey, ppn, amount, email, description } = formData;
-  
-      if (!paystackPublicKey || !ppn || !amount || !email) {
-        alert("Incomplete payment data. Please fill out all required fields.");
-        return;
-      }
-  
-      const debitAmount = parseInt(amount) * 100; // Convert Naira to Kobo
-  
-      if (isNaN(debitAmount) || debitAmount < 500000) {
-        alert("Minimum amount for direct debit is ₦5000.");
-        return;
-      }
-  
-      const handler = window.PaystackPop.setup({
-        key: paystackPublicKey,
-        email: email,
-        amount: 10000, // ₦100 mandate fee just to initialize setup, will be refunded immediately by the webhook.
-        currency: "NGN",
-        channels: ["bank"], // Required for direct debit
-        metadata: {
-            transactionCategory: 'patientDebitInitialization',
-            ppn: formData.ppn,
-            debitAmount: debitAmount,
-        },
-        callback: function (response: { reference: string }) {
-          console.log("Mandate authorization successful. Ref:", response.reference);
-  
-          // Send reference to your backend for recording the mandate
-          fetch("/api/web/record_direct_debit_reference", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              reference: response.reference,
-              ppn,
-              email,
-              amount: debitAmount,
-              description,
-            }),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              console.log("Saved direct debit reference:", data);
-              //setSubmitted(true);
-              setCurrentPage("success");
-            })
-            .catch((err) => {
-              console.error("Failed to save reference:", err);
-              alert("Setup succeeded, but we couldn’t record your mandate.");
-            });
-        },
-        onClose: function () {
-          alert("Direct debit setup was cancelled.");
-        },
-      });
-  
-      handler.openIframe();
-    } catch (error) {
-      console.error("Error setting up direct debit:", error);
-      alert("Something went wrong while setting up direct debit.");
-    }
-  };
 
 
   
