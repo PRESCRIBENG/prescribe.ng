@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 const TopUp = () => {
   const [formData, setFormData] = useState({
@@ -161,7 +162,7 @@ const TopUp = () => {
 
           {submitted ? (
             <p className="text-green-600 text-center">
-              Thank you! We&apos;ll your PrescribeNg Patient Wallet is being
+              Success! ...your PrescribeNg Patient Wallet is being
               credited.
             </p>
           ) : (
@@ -255,6 +256,13 @@ const TopUp = () => {
               >
                 Proceed to Payment
               </button>
+
+              <Link
+                href="/direct_debit"
+                className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#e35c00] transition"
+              >
+                Setup Direct Debit
+              </Link>
             </form>
           )}
         </div>
