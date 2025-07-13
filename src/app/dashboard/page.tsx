@@ -17,6 +17,7 @@ interface UserData {
   registrationVerification: string;
   specialty: string;
   userDomain: string;
+  userRegulator: string;
   userID: string;
   vettingStatus: string;
 }
@@ -28,6 +29,10 @@ const Dashboard = () => {
   const [error, setError] = useState("");
 
   const profileData = [
+    {
+      key: "Regulator",
+      value: userData?.userRegulator,
+    },
     {
       key: "Domain",
       value: userData?.userDomain,
