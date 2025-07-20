@@ -85,8 +85,8 @@ const HealthCareProviders = () => {
 
   return (
     <div className="bg-[#F5F5F5] py-8">
-      <h1 className="w-full text-[32px] text-center font-montserrat font-extrabold mb-8">
-        Healthcare Providers
+      <h1 className="w-full text-[32px] text-center text-black font-montserrat font-extrabold mb-8">
+        Our Partner Healthcare Providers
       </h1>
       
       <div className="relative max-w-screen-full mx-auto">
