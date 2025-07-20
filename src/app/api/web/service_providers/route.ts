@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    const body = await req.json();
     const response = await fetch(`https://gelataskia.prescribe.ng/web/service_providers`, {
     //const response = await fetch(`http://127.0.0.1:5002/web/service_providers`, {  //
     method: 'GET',
