@@ -25,7 +25,7 @@ const Header = () => {
             <p className="text-[24px] text-[#FE6F15] font-bold">prescribe.ng</p>
 
             <div className="space-y-[19px] text-[#002A40]">
-              <h1 className="w-full md:w-[644px] text-[32px] md:text-[40px] font-montserrat font-extrabold leading-[50px]" style={{color:'red'}}>
+              <h1 className="w-full md:w-[644px] text-[32px] md:text-[40px] font-montserrat font-extrabold leading-[50px]" style={{color:'green'}}>
                 Connecting You to Life Saving Care & Support
                 {/* THIS WEBSITE IS UNDER CONSTRUCTION */}
               </h1>
@@ -67,7 +67,7 @@ const Header = () => {
 
               <button 
               onClick={() => router.push("become_a_partner")}
-              className="w-[213px] h-[57px] p-2 border border-[#0077B6] text-primaryLight rounded"
+              className="w-[213px] h-[57px] p-2 border border-[#0077B6] text-[#FE6F15] rounded"
               
               >
                 Become a Partner

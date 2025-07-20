@@ -46,16 +46,19 @@ const SaveALife = ({ patients }: SaveALifeProps) => {
           Save a Life – Urgent Medical Cases
         </h1>
         <p className="text-[16px]">
-          Every fundraising campaign on{" "}
+          Every fundraiser campaign on{" "}
           <span className="font-bold">Prescribeng</span>goes through a strict
-          verification process to ensure authenticity. Patients are required to
-          submit a valid medical report from a recognized hospital, which is
-          carefully reviewed before their campaign is approved and published.
+          verification process to ensure authenticity of claims made by patients 
+          who are in need of life saving medical services that they are unable 
+          to afford before their campaign is approved and published.<br/>
+
           This process helps protect donors from fraudulent cases and ensures
-          that funds go directly to those who genuinely need medical assistance.
+          that funds go directly to those who genuinely need medical assistance.<br/>
+          
           By donating, you are not just giving money, you are giving hope,
           relief, and a chance at life. No matter the amount, your support can
           make a real difference for someone fighting for their health.
+          Together, we can save lives.one fighting for their health.
           Together, we can save lives.
         </p>
         <button
