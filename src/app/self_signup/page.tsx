@@ -308,71 +308,17 @@ const SelfSignup = () => {
                       <b>Requirements:</b> <br />
                       * PrescribeNg services is currently open to only Nigerians
                       and Nigerian residents with NIN <br />
-                      * User must have access to the mobile phone number linked
-                      to their NIN * Intending users must have access to the
+                      *Intending users must have access to the
                       Nigerian mobile number linked to their NIN <br />
                     </label>
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-[#002A40] mb-1">
-                      <b>How we use your data:</b> <br />
-                      * PrescribeNg is an e-commerce-styled healthcare platform
-                      where qualified, licensed and thoroughly vetted healthcare
-                      services providers/personnels meet healthcare services
-                      users <br />
-                      * Data access and visibility is strictly consent based. We
-                      restrict the viewing of your data to only the heathcare
-                      services providers you have authorized, and only to the
-                      right personnels. <br />
-                      * Users can authorize access at their own <br />
-                    </label>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-[#002A40] mb-1">
-                      <b>Safety Precautions:</b> <br />
-                      * At PrescribeNG our aim is to put you in control of your
-                      healthcare data, and to keep you safe as you navigate
-                      through the journey of seeking healthcare in Nigeria,
-                      ensuring you would only ever come across licensed and
-                      thoroughly vetted healthcare services providers and
-                      personnels through our vigorous and multi-layered vetting
-                      and verification procedures <br />
-                    </label>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-[#002A40] mb-1">
-                      <b>Fraud Prevention:</b> <br />
-                      * PrescribeNg Healthcare platform frowns at any attempts
-                      at impersonations and has taken all necessary measures to
-                      discourage impersonation. <br />
-                      * Where it has been determined that an impersonation
-                      attempt has occured, PrescribeNG LTD WILL pursue a
-                      criminal prosecution against perpetrators <br />*
-                      Occasionally we do assist patients who required urgent
-                      life-saving medical treatments but are not able to afford
-                      it... on such occasions, we carry out detailed background
-                      checks and verification of claims provided by such
-                      patients. Only upon successful verification of such claims
-                      do we grant approval for such fund raisers through our{" "}
-                      <b>SAVE A LIFE</b> initiative. <br />* Funds raised under
-                      the save a life initiative are neither transferrable or
-                      withdrawable to any bank account, but can only be directly
-                      used in settling cost of healthcare services at point of
-                      care.
-                    </label>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-[#002A40] mb-1">
                       <b>Warning:</b> <br />
-                      * We do charge a token of ₦1,500 at signup... this is to
-                      cover the cost of verification of the data provided to us,
-                      before approving users on our platform. Providing a valid
-                      promo code from any of our promoters would reduce this fee
-                      to ₦500 <br />
+                      * As part of our efforts to prevent fraud, we do charge a refundable
+                       token of 500 at signup, which will be refunded following successful verification. <br />
+                      
                       * Providing an invalid/incorrect details would lead to the
                       failure of the authentication processes, in which case we
                       would not be able to issue a refund.
@@ -603,7 +549,7 @@ const SelfSignup = () => {
                     />
                   </div>
 
-                  <div>
+                  {/*<div>
                     <label className="block text-sm font-medium text-[#002A40] mb-1">
                       Referral Code
                     </label>
@@ -615,7 +561,7 @@ const SelfSignup = () => {
                       onChange={handleChange}
                       className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
                     />
-                  </div>
+                  </div>*/}
 
                   {/*<div>
                     <label className="block text-sm font-medium text-[#002A40] mb-1">

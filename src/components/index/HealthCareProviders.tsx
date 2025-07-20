@@ -6,43 +6,57 @@ import Image from "next/image";
 const HealthCareProviders = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const providers = [
+  const [serviceProviders, setServiceProviders] = useState([
     {
-      name: "St. Luke's Specialist Hospital",
+      organisation: "St. Luke's Specialist Hospital",
       location: "Lagos, Nigeria",
       description:
         "Multispecialty hospital offering advanced surgical and medical care.",
       image: "/image 5.svg",
     },
-    {
-      name: "MediPlus Pharmacy",
-      location: "Abuja, Nigeria",
-      description:
-        "Trusted pharmacy providing genuine prescription and over-the-counter drugs.",
-      image: "/image-4.svg",
-    },
-    {
-      name: "Dr. Adebayo Williams",
-      location: "Cardiologist | Enugu, Nigeria",
-      description:
-        "Heart specialist with 10+ years of experience in cardiovascular treatments",
-      image: "/image-5.svg",
-    },
-    {
-      name: "Hope Alive Clinic",
-      location: "Port Harcourt, Nigeria",
-      description:
-        "Affordable primary healthcare and maternity services.",
-      image: "/image 6.svg",
-    },
-    {
-      name: "Dr. Fatima Musa",
-      location: "Pediatrician | Kano, Nigeria",
-      description:
-        "Expert child healthcare specialist providing consultations for infants and kids.",
-      image: "/image-6.svg",
-    },
-  ];
+  ]);
+
+
+  useEffect(() => {
+   
+    const handleFetchRandomPatientsInNeed = async () => {
+      
+      try {
+        const res = await fetch(
+          `/api/web/service_providers`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const contentType = res.headers.get("content-type");
+        const raw = await res.text();
+
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error("Invalid server response");
+        }
+
+        const data = JSON.parse(raw) as { serviceProviders: [] };
+
+        if (!res.ok) {
+          throw new Error(data as unknown as string);
+        }
+
+        setServiceProviders(data.serviceProviders);
+      } catch (err) {
+        if (err instanceof Error) {
+          console.error("Fetch error:", err.message);
+        } else {
+          console.error("Unknown error occurred");
+        }
+      }
+    };
+
+    handleFetchRandomPatientsInNeed();
+  }, []);
 
   // Create a circular array for continuous display
   const getVisibleProviders = () => {
@@ -53,8 +67,8 @@ const HealthCareProviders = () => {
     const visibleCount = 5;
     
     for (let i = 0; i < visibleCount; i++) {
-      const index = (activeIndex + i) % providers.length;
-      visibleProviders.push(providers[index]);
+      const index = (activeIndex + i) % serviceProviders.length;
+      visibleProviders.push(serviceProviders[index]);
     }
     
     return visibleProviders;
@@ -63,11 +77,11 @@ const HealthCareProviders = () => {
   // Auto-slide every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveIndex((current) => (current + 1) % providers.length);
+      setActiveIndex((current) => (current + 1) % serviceProviders.length);
     }, 5000);
     
     return () => clearInterval(interval);
-  }, [providers.length]);
+  }, [serviceProviders.length]);
 
   return (
     <div className="bg-[#F5F5F5] py-8">
@@ -86,13 +100,13 @@ const HealthCareProviders = () => {
                 <Image
                   className="w-[290px] h-[161px] rounded-t-[5px] object-cover"
                   src={provider.image}
-                  alt={provider.name}
+                  alt={provider.organisation}
                   width={290}
                   height={161}
                   priority
                 />
                 <div className="h-[200px] p-4 space-y-2 bg-white rounded-b-[5px]">
-                  <p className="font-montserrat text-[16px] font-bold">{provider.name}</p>
+                  <p className="font-montserrat text-[16px] font-bold">{provider.organisation}</p>
                   <p className="text-[16px]">{provider.location}</p>
                   <p>{provider.description}</p>
                 </div>
@@ -104,7 +118,7 @@ const HealthCareProviders = () => {
 
       {/* Indicator dots */}
       {/* <div className="flex justify-center gap-2 mt-6">
-        {providers.map((_, index) => (
+        {serviceProviders.map((_, index) => (
           <button
             key={index}
             className={`w-2 h-2 rounded-full ${

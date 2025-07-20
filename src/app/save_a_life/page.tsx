@@ -296,7 +296,7 @@ const SaveALife = () => {
               At Prescribeng, we believe that no one should be denied healthcare
               due to financial constraints. Our Save a Life initiative is a
               crowdfunding platform where you can directly contribute to the
-              medical expenses of patients in need.
+              medical expenses of patients in need, after a thorough verification exercise.
             </p>
             <p>
               ✅ 100% of your donation goes directly to medical care – we do not
