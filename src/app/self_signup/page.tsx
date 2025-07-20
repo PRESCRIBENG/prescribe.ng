@@ -326,7 +326,7 @@ const SelfSignup = () => {
                       * Where a user has failed to supply us with the correct
                       OTPs after 3 attempts, such signup attempt is invalidated
                       and user would have to start afresh.
-                      <br />* Only procede to the next page if you accept our
+                      <br />* Only proceed to the next page if you accept our
                       terms and conditions.
                     </label>
                   </div>
@@ -460,7 +460,7 @@ const SelfSignup = () => {
                     <input
                       type="text"
                       name="idNumber"
-                      placeholder="Enter your idNumber"
+                      placeholder="Enter your NIN"
                       required
                       value={formData.idNumber}
                       onChange={handleChange}
