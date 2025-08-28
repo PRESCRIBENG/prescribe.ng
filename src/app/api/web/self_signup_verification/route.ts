@@ -6,6 +6,7 @@ export async function POST(req: NextRequest) {
     
     const response = await fetch('https://gelataskia.prescribe.ng/web/self_signup_verification', {
     //const response = await fetch('http://192.168.1.144:5002/web/self_signup_verification', {
+    //const response = await fetch('http://127.0.0.1:5002/web/self_signup_verification', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
