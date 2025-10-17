@@ -321,12 +321,7 @@ const SelfSignup = () => {
 
                         <li>
                           <strong>Eligibility</strong><br />
-                          PrescribeNG is available to Nigerian citizens and residents with a valid <strong>NIN</strong> (National Identification Number).
-                        </li>
-
-                        <li>
-                          <strong>Mobile Verification</strong><br />
-                          You must register with a Nigerian mobile number linked to your NIN to verify your identity and access services.
+                          PrescribeNG is available to Nigerian citizens and residents with a valid <strong>NIN</strong> (National Identification Number), to prevent duplicate profiles and as part of KYC (Know Your Customer) requirements.
                         </li>
 
                         <li>
@@ -391,8 +386,6 @@ const SelfSignup = () => {
                     Self Signup
                   </h1>
                   <p className="text-[16px] text-center">
-                    Easily add funds for yourself or a loved one to access
-                    medical care when needed.
                   </p>
                 </div>
                 <form
@@ -430,7 +423,7 @@ const SelfSignup = () => {
                     <input
                       type="text"
                       name="lastName"
-                      placeholder="Enter your full name"
+                      placeholder="Enter your last name only"
                       required
                       value={formData.lastName}
                       onChange={handleChange}
@@ -445,7 +438,7 @@ const SelfSignup = () => {
                     <input
                       type="text"
                       name="firstName"
-                      placeholder="Enter your full name"
+                      placeholder="Enter your first name only"
                       required
                       value={formData.firstName}
                       onChange={handleChange}
@@ -460,7 +453,7 @@ const SelfSignup = () => {
                     <input
                       type="text"
                       name="middleName"
-                      placeholder="Enter your full name"
+                      placeholder="Enter your other names"
                       required
                       value={formData.middleName}
                       onChange={handleChange}
@@ -514,7 +507,7 @@ const SelfSignup = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-[#002A40] mb-1">
-                      Emergency Contact1 Mobile Number
+                      Emergency Contact 1 Mobile Number
                     </label>
                     <input
                       type="text"
@@ -555,7 +548,7 @@ const SelfSignup = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-[#002A40] mb-1">
-                      Emergency Contact2 Mobile Number (Optional)
+                      Emergency Contact 2 Mobile Number (Optional)
                     </label>
                     <input
                       type="text"
