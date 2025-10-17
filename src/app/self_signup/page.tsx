@@ -299,37 +299,67 @@ const SelfSignup = () => {
 
                 <div className="space-y-[16px] text-[#002A40]">
                   <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
-                    TERMS AND CONDITIONS (read carefully).
+                  PrescribeNG Terms & Conditions
                   </h1>
                 </div>
                 <div className="w-full md:w-[790px] px-8 py-8 space-y-8 text-[#002A40]">
+                  {/* PrescribeNG signup terms (summary) */}
                   <div>
-                    <label className="block text-sm font-medium text-[#002A40] mb-1">
-                      <b>Requirements:</b> <br />
-                      * PrescribeNg services is currently open to only Nigerians
-                      and Nigerian residents with NIN <br />
-                      *Intending users must have access to the
-                      Nigerian mobile number linked to their NIN <br />
-                    </label>
+                    <p className="block text-sm font-medium text-[#002A40] mb-2">By creating a PrescribeNG account, you agree to the following:</p>
+
+                    <div className="text-xs text-[#002A40] leading-relaxed">
+                      <ol className="list-decimal list-inside space-y-3">
+                        <li>
+                          <strong>Unified Healthcare Profile</strong><br />
+                          Creating your account opens a personal healthcare profile (your unique <strong>Prescribe Prescription Number — PPN</strong>) usable at our partner hospitals, clinics and pharmacies across Nigeria.
+                        </li>
+
+                        <li>
+                          <strong>Privacy &amp; Data Protection</strong><br />
+                          Your medical information is stored securely and shared only with verified healthcare professionals when needed to provide care, sharing only what is required. E.g displaying your allergies on the screen when a doctor is about to write you a new prescription.
+                        </li>
+
+                        <li>
+                          <strong>Eligibility</strong><br />
+                          PrescribeNG is available to Nigerian citizens and residents with a valid <strong>NIN</strong> (National Identification Number).
+                        </li>
+
+                        <li>
+                          <strong>Mobile Verification</strong><br />
+                          You must register with a Nigerian mobile number linked to your NIN to verify your identity and access services.
+                        </li>
+
+                        <li>
+                          <strong>Fair Use</strong><br />
+                          Provide accurate information and use the platform responsibly for genuine healthcare needs. Misuse may lead to suspension or termination.
+                        </li>
+
+                        <li>
+                          <strong>Access for All</strong><br />
+                          PrescribeNG is open to everyone regardless of age, gender, religion or background — our aim is quality healthcare for all Nigerians.
+                        </li>
+                      </ol>
+
+                      <p className="mt-4 text-[13px]">
+                        By clicking <strong>“Create Account”</strong>, you confirm you have read and agree to these terms.
+                      </p>
+                    </div>
+
+                    {/* Accessible consent checkbox (recommended for signup) 
+                    <div className="mt-3 flex items-start gap-2 text-sm">
+                      <input
+                        id="acceptTerms"
+                        name="acceptTerms"
+                        type="checkbox"
+                        required
+                        className="h-4 w-4 rounded border-gray-300 text-[#002A40] focus:ring-[#002A40]"
+                      />
+                      <label htmlFor="acceptTerms" className="text-[#002A40]">
+                        I agree to the <a href="/terms" className="underline">Terms &amp; Conditions</a> and <a href="/privacy" className="underline">Privacy Policy</a>.
+                      </label>
+                    </div>*/}
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-[#002A40] mb-1">
-                      <b>Warning:</b> <br />
-                      * As part of our efforts to prevent fraud, we do charge a refundable
-                       token of 500 at signup, which will be refunded following successful verification. <br />
-                      
-                      * Providing an invalid/incorrect details would lead to the
-                      failure of the authentication processes, in which case we
-                      would not be able to issue a refund.
-                      <br />
-                      * Where a user has failed to supply us with the correct
-                      OTPs after 3 attempts, such signup attempt is invalidated
-                      and user would have to start afresh.
-                      <br />* Only proceed to the next page if you accept our
-                      terms and conditions.
-                    </label>
-                  </div>
 
                   <button
                     type="submit"
