@@ -8,7 +8,7 @@ const HealthCareProviders = () => {
 
   const [serviceProviders, setServiceProviders] = useState([
     {
-      organisation: "St. Luke's Specialist Hospital",
+      organisation: "St. TEST Hospital",
       location: "Lagos, Nigeria",
       description:
         "Multispecialty hospital offering advanced surgical and medical care.",

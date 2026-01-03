@@ -144,7 +144,7 @@ const Footer = () => {
                   height={32}
                   className="mr-2"
                 />
-                <span>(+234) 803 826 6633</span>
+                <span>(+234) 201 700 1192</span>
               </li>
               <li className="flex items-start">
                 <Image
@@ -165,8 +165,7 @@ const Footer = () => {
                   className="mr-2"
                 />
                 <span>
-                  NO. 13 WORUKWO STREET, OFF ST JOHN BUS STOP D/LINE BY ABA
-                  ROAD, PORT HARCOURT , RIVERS STATE, NIGERIA
+                  GROUND FLOOR, 57 COLLEGE ROAD, OGBA, IKEJA, LAGOS STATE, NIGERIA
                 </span>
               </li>
             </ul>

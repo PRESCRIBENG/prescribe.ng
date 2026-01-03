@@ -8,39 +8,18 @@ const BecomeAPartner = () => {
 	
 		const providers = [
 			{
-				name: "St. Luke's Specialist Hospital",
+				name: "Test Hospital",
 				location: "Lagos, Nigeria",
 				description:
 					"Multispecialty hospital offering advanced surgical and medical care.",
 				image: "/image 5.svg",
 			},
 			{
-				name: "MediPlus Pharmacy",
+				name: "Test Pharmacy",
 				location: "Abuja, Nigeria",
 				description:
 					"Trusted pharmacy providing genuine prescription and over-the-counter drugs.",
 				image: "/image-4.svg",
-			},
-			{
-				name: "Dr. Adebayo Williams",
-				location: "Cardiologist | Enugu, Nigeria",
-				description:
-					"Heart specialist with 10+ years of experience in cardiovascular treatments",
-				image: "/image-5.svg",
-			},
-			{
-				name: "Hope Alive Clinic",
-				location: "Port Harcourt, Nigeria",
-				description:
-					"Affordable primary healthcare and maternity services.",
-				image: "/image 6.svg",
-			},
-			{
-				name: "Dr. Fatima Musa",
-				location: "Pediatrician | Kano, Nigeria",
-				description:
-					"Expert child healthcare specialist providing consultations for infants and kids.",
-				image: "/image-6.svg",
 			},
 		];
 	
@@ -208,34 +187,34 @@ const BecomeAPartner = () => {
             />
           </div>					
           <div className="w-full md:w-[500px] space-y-6">
-            <div className="space-y-[18px] text-[#002A40]">
+            <div className="space-y-[18px] text-[#0077B6]">
               <h1 className="text-[32px] font-montserrat font-extrabold leading-[50px]">
                 Who Can Partner With Us
               </h1>
               <div className="flex gap-4 items-start">
                 <p>
-                  <span className="text-[#002A40] font-bold">
+                  <span className="text-[#0077B6] font-bold">
 									🔹 Doctors & Specialists –
                   </span>{" "} Provide consultations, diagnoses, and treatments.
                 </p>
               </div>
               <div className="flex gap-4 items-start">
                 <p>
-                  <span className="text-[#002A40] font-bold">
+                  <span className="text-[#0077B6] font-bold">
 									🔹 Hospitals & Clinics –
                   </span>{" "} Offer inpatient and outpatient care for funded patients.
                 </p>
               </div>
               <div className="flex gap-4 items-start">
                 <p>
-                  <span className="text-[#002A40] font-bold">
+                  <span className="text-[#0077B6] font-bold">
 									🔹 Pharmacies –
                   </span>{" "}Access a pool of funded patients who need your services.
                 </p>
               </div>
               <div className="flex gap-4 items-start">
                 <p>
-                  <span className="text-[#002A40] font-bold">
+                  <span className="text-[#0077B6] font-bold">
 									🔹 Laboratories & Diagnostic Centers –
                   </span>{" "}Conduct medical tests for accurate diagnoses.
                 </p>
@@ -251,35 +230,8 @@ const BecomeAPartner = () => {
 						<h1 className="w-full text-[32px] text-center font-montserrat font-extrabold mb-8">
 							Healthcare Providers
 						</h1>
-						
-						<div className="relative max-w-screen-full mx-auto">
-							<div className="flex justify-center overflow-hidden">
-								<div className="flex gap-6 transition-all duration-1000 ease-in-out">
-									{getVisibleProviders().map((provider, index) => (
-										<div
-											key={`${activeIndex}-${index}`}
-											className="flex-shrink-0 w-[290px] rounded-[5px]"
-										>
-											<Image
-												className="w-[290px] h-[161px] rounded-t-[5px] object-cover"
-												src={provider.image}
-												alt={provider.name}
-												width={290}
-												height={161}
-												priority
-											/>
-											<div className="h-[200px] p-4 space-y-2 bg-white rounded-b-[5px]">
-												<p className="font-montserrat text-[16px] font-bold">{provider.name}</p>
-												<p className="text-[16px]">{provider.location}</p>
-												<p>{provider.description}</p>
-											</div>
-										</div>
-									))}
-								</div>
-							</div>
-						</div>
 		
-						<div className="relative max-w-screen-full mx-auto">
+						{/*<div className="relative max-w-screen-full mx-auto">
 							<div className="flex justify-center overflow-hidden">
 								<div className="flex gap-6 transition-all duration-1000 ease-in-out">
 									{getVisibleProviders().map((provider, index) => (
@@ -304,7 +256,7 @@ const BecomeAPartner = () => {
 									))}
 								</div>
 							</div>
-						</div>
+                </div>*/}
 		
 			
 						<div className="flex justify-center mt-8">
