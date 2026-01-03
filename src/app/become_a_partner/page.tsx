@@ -1,52 +1,52 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
+//import { useState, useEffect } from "react";
 
 const BecomeAPartner = () => {
-		const [activeIndex, setActiveIndex] = useState(0);
+		//const [activeIndex, setActiveIndex] = useState(0);
 	
-		const providers = [
-			{
-				name: "Test Hospital",
-				location: "Lagos, Nigeria",
-				description:
-					"Multispecialty hospital offering advanced surgical and medical care.",
-				image: "/image 5.svg",
-			},
-			{
-				name: "Test Pharmacy",
-				location: "Abuja, Nigeria",
-				description:
-					"Trusted pharmacy providing genuine prescription and over-the-counter drugs.",
-				image: "/image-4.svg",
-			},
-		];
+		//const providers = [
+			//{
+				//name: "Test Hospital",
+				//location: "Lagos, Nigeria",
+				//description:
+				//	"Multispecialty hospital offering advanced surgical and medical care.",
+				//image: "/image 5.svg",
+			//},
+			//{
+				//name: "Test Pharmacy",
+				//location: "Abuja, Nigeria",
+				//description:
+				//	"Trusted pharmacy providing genuine prescription and over-the-counter drugs.",
+				//image: "/image-4.svg",
+			//},
+		//];
 	
 		// Circular array for continuous display
-		const getVisibleProviders = () => {
+		//const getVisibleProviders = () => {
 			// Show the current provider
-			const visibleProviders = [];
-			
-			// number of cards to show at once
-			const visibleCount = 5;
-			
-			for (let i = 0; i < visibleCount; i++) {
-				const index = (activeIndex + i) % providers.length;
-				visibleProviders.push(providers[index]);
-			}
-			
-			return visibleProviders;
-		};
+			//const visibleProviders = [];
+			//
+			//// number of cards to show at once
+			//const visibleCount = 5;
+			//
+			//for (let i = 0; i < visibleCount; i++) {
+			//	const index = (activeIndex + i) % providers.length;
+			//	visibleProviders.push(providers[index]);
+			//}
+			//
+			//return visibleProviders;
+		//};
 	
 		// Auto-slide every 5 seconds
-		useEffect(() => {
-			const interval = setInterval(() => {
-				setActiveIndex((current) => (current + 1) % providers.length);
-			}, 5000);
+		//useEffect(() => {
+			//const interval = setInterval(() => {
+				//setActiveIndex((current) => (current + 1) % providers.length);
+			//}, 5000);
 			
-			return () => clearInterval(interval);
-		}, [providers.length]);
+			//return () => clearInterval(interval);
+		//}, [providers.length]);
 	
 
  
