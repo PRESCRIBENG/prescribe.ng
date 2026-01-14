@@ -71,6 +71,12 @@ const Navbar = () => {
           >
             Verify Letter
           </Link>
+          <Link 
+            href="/prescription_search" 
+            className={`${pathname === '/prescription_search' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
+          >
+            Search Prescriptions
+          </Link>
         </nav>
 
         {/* Desktop Button */}
