@@ -23,12 +23,43 @@ const GetInTouch = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("Form submitted:", formData);
-    setSubmitted(true);
+    try {
+
+      const url = `https://gelataskia.prescribe.ng/web/contact_us`;
+      //const url = `http://127.0.0.1:5002/web/contact_us`;
+      const response = await fetch(`${url}`, {  // replace with your endpoint
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error posting form:', errorData);
+        alert(`Failed to submit: ${errorData.message || response.statusText}`);
+        return;
+      }
+
+      const data = await response.json();
+      console.log('Form successfully submitted:', data);
+      setSubmitted(true);
+
+      // Optionally reset the form
+      // setFormData({ email: '', title: '', message: '' });
+
+    } catch (error) {
+      console.error('Network or server error:', error);
+      alert('An error occurred while submitting your message.');
+    }
   };
+
 
   return (
     <div className="overflow-hidden bg-[#F5F5F5] text-base p-4 md:p-8 lg:p-16 xl:p-[130px]">

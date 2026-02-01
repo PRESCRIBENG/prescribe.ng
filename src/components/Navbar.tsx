@@ -35,44 +35,44 @@ const Navbar = () => {
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center space-x-8">
-          <Link 
-            href="/about" 
+          <Link
+            href="/about"
             className={`${pathname === '/about' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
           >
             About
           </Link>
-          <Link 
-            href="/services" 
+          {/*<Link
+            href="/services"
             className={`${pathname === '/services' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
           >
             Services
-          </Link>
-          <Link 
-            href="/become_a_partner" 
+          </Link>*/}
+          <Link
+            href="/become_a_partner"
             className={`${pathname === '/become_a_partner' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
           >
             Become a Partner
           </Link>
-          <Link 
-            href="/top_up" 
+          <Link
+            href="/top_up"
             className={`${pathname === '/top_up' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
           >
             Top Up
           </Link>
-          <Link 
-            href="/save_a_life" 
+          <Link
+            href="/save_a_life"
             className={`${pathname === '/save_a_life' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
           >
             Save a Life
           </Link>
-          <Link 
-            href="/verify_letter" 
+          <Link
+            href="/verify_letter"
             className={`${pathname === '/verify_letter' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
           >
             Verify Letter
           </Link>
-          <Link 
-            href="/prescription_search" 
+          <Link
+            href="/prescription_search"
             className={`${pathname === '/prescription_search' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
           >
             Search Prescriptions
@@ -105,47 +105,54 @@ const Navbar = () => {
       {isOpen && (
         <div className="lg:hidden bg-white text-black flex flex-col items-center pt-4 pb-6 overflow-y-auto max-h-[80vh]">
           <div className="space-y-5 text-center w-full">
-            <Link 
-              href="/about" 
+            <Link
+              href="/about"
               className={`block py-2 ${pathname === '/about' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
               onClick={handleItemClick}
             >
               About
             </Link>
-            <Link 
-              href="/services" 
+            {/*<Link
+              href="/services"
               className={`block py-2 ${pathname === '/services' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
               onClick={handleItemClick}
             >
               Services
-            </Link>
-            <Link 
-              href="/become_a_partner" 
+            </Link>*/}
+            <Link
+              href="/become_a_partner"
               className={`block py-2 ${pathname === '/become_a_partner' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
               onClick={handleItemClick}
             >
               Become a Partner
             </Link>
-            <Link 
-              href="/top_up" 
+            <Link
+              href="/top_up"
               className={`block py-2 ${pathname === '/top_up' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
               onClick={handleItemClick}
             >
               Top Up
             </Link>
-            <Link 
-              href="/save_a_life" 
+            <Link
+              href="/save_a_life"
               className={`block py-2 ${pathname === '/save_a_life' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
               onClick={handleItemClick}
             >
               Save a Life
             </Link>
-            <Link 
-              href="/verify_letter" 
+            <Link
+              href="/verify_letter"
               className={`block py-2 ${pathname === '/verify_letter' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
               onClick={handleItemClick}
             >
               Verify Letter
+            </Link>
+            <Link
+              href="/prescription_search"
+              className={`block py-2 ${pathname === '/prescription_search' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
+              onClick={handleItemClick}
+            >
+              Search Prescriptions
             </Link>
           </div>
 

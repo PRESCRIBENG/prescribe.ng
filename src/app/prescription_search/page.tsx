@@ -90,7 +90,7 @@ const PrescriptionSearch = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter the reference ID"
+                  placeholder="Enter prescription item"
                   value={searchQuery}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal"
