@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 
 const PartnerSignup = () => {
-  const [refresh, setRefresh] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [CurrentPage, setCurrentPage] = useState("");
