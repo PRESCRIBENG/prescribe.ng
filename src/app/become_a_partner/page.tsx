@@ -1,55 +1,56 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 //import { useState, useEffect } from "react";
 
 const BecomeAPartner = () => {
-		//const [activeIndex, setActiveIndex] = useState(0);
-	
-		//const providers = [
-			//{
-				//name: "Test Hospital",
-				//location: "Lagos, Nigeria",
-				//description:
-				//	"Multispecialty hospital offering advanced surgical and medical care.",
-				//image: "/image 5.svg",
-			//},
-			//{
-				//name: "Test Pharmacy",
-				//location: "Abuja, Nigeria",
-				//description:
-				//	"Trusted pharmacy providing genuine prescription and over-the-counter drugs.",
-				//image: "/image-4.svg",
-			//},
-		//];
-	
-		// Circular array for continuous display
-		//const getVisibleProviders = () => {
-			// Show the current provider
-			//const visibleProviders = [];
-			//
-			//// number of cards to show at once
-			//const visibleCount = 5;
-			//
-			//for (let i = 0; i < visibleCount; i++) {
-			//	const index = (activeIndex + i) % providers.length;
-			//	visibleProviders.push(providers[index]);
-			//}
-			//
-			//return visibleProviders;
-		//};
-	
-		// Auto-slide every 5 seconds
-		//useEffect(() => {
-			//const interval = setInterval(() => {
-				//setActiveIndex((current) => (current + 1) % providers.length);
-			//}, 5000);
-			
-			//return () => clearInterval(interval);
-		//}, [providers.length]);
-	
+  //const [activeIndex, setActiveIndex] = useState(0);
 
- 
+  //const providers = [
+  //{
+  //name: "Test Hospital",
+  //location: "Lagos, Nigeria",
+  //description:
+  //	"Multispecialty hospital offering advanced surgical and medical care.",
+  //image: "/image 5.svg",
+  //},
+  //{
+  //name: "Test Pharmacy",
+  //location: "Abuja, Nigeria",
+  //description:
+  //	"Trusted pharmacy providing genuine prescription and over-the-counter drugs.",
+  //image: "/image-4.svg",
+  //},
+  //];
+
+  // Circular array for continuous display
+  //const getVisibleProviders = () => {
+  // Show the current provider
+  //const visibleProviders = [];
+  //
+  //// number of cards to show at once
+  //const visibleCount = 5;
+  //
+  //for (let i = 0; i < visibleCount; i++) {
+  //	const index = (activeIndex + i) % providers.length;
+  //	visibleProviders.push(providers[index]);
+  //}
+  //
+  //return visibleProviders;
+  //};
+
+  // Auto-slide every 5 seconds
+  //useEffect(() => {
+  //const interval = setInterval(() => {
+  //setActiveIndex((current) => (current + 1) % providers.length);
+  //}, 5000);
+
+  //return () => clearInterval(interval);
+  //}, [providers.length]);
+
+
+
   const become_a_partner = [
     {
       title: "Expand Your Reach",
@@ -84,13 +85,20 @@ const BecomeAPartner = () => {
         {/* Page title */}
         <div className="absolute inset-0 flex items-center px-6 xl:px-[130px]">
           <div className="space-y-4">
-            <h1 className="text-[32px] font-montserrat font-extrabold leading-[50px] text-[#002A40]">
+            <h1 className="text-[32px] font-montserrat font-extrabold leading-[50px] text-[#0077B6]">
               Become a Prescribeng Partner
             </h1>
             <p className="text-[14px] w-full md:w-[719px] sm:text-[16px]">
               Join our network of trusted healthcare professionals, hospitals,
               and pharmacies to provide life-saving care to those in need.
             </p>
+            <div className="flex justify-center mt-8">
+              <button className="w-[194px] h-[42px] bg-[#0077B6] p-2 text-white rounded">
+                <Link href="./partner_signup">
+                  Join Us
+                </Link>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -135,7 +143,7 @@ const BecomeAPartner = () => {
                 <div className="flex-shrink-0 w-[25px] h-[25px] border-[5px] border-[#FE6F15] rounded-full" />
                 <p>
                   <span className="text-[#002A40] font-bold">
-									Get Verified –
+                    Get Verified –
                   </span>{" "} Our team reviews and verifies your information.. this involves reaching out to the authorities for a thorough verification and relevant regulatory bodies.
                 </p>
               </div>
@@ -143,7 +151,7 @@ const BecomeAPartner = () => {
                 <div className="flex-shrink-0 w-[25px] h-[25px] border-[5px] border-[#FE6F15] rounded-full" />
                 <p>
                   <span className="text-[#002A40] font-bold">
-									Get Onboarded –
+                    Get Onboarded –
                   </span>{" "} Upon successful verification, we would send our recruitment team to your stated address to carry out further physical verifications and to ensure your organisation meets our standard, following which your organisation will be onboarded on our platform
                 </p>
               </div>
@@ -151,7 +159,7 @@ const BecomeAPartner = () => {
                 <div className="flex-shrink-0 w-[25px] h-[25px] border-[5px] border-[#FE6F15] rounded-full" />
                 <p>
                   <span className="text-[#002A40] font-bold">
-									Connect with Patients –
+                    Connect with Patients –
                   </span>{" "}Access a pool of patients who need your services, as well as a guarantee of payments for services rendered.
                 </p>
               </div>
@@ -185,7 +193,7 @@ const BecomeAPartner = () => {
               height={409}
               priority
             />
-          </div>					
+          </div>
           <div className="w-full md:w-[500px] space-y-6">
             <div className="space-y-[18px] text-[#0077B6]">
               <h1 className="text-[32px] font-montserrat font-extrabold leading-[50px]">
@@ -194,28 +202,28 @@ const BecomeAPartner = () => {
               <div className="flex gap-4 items-start">
                 <p>
                   <span className="text-[#0077B6] font-bold">
-									🔹 Doctors & Specialists –
+                    🔹 Doctors & Specialists –
                   </span>{" "} Provide consultations, diagnoses, and treatments.
                 </p>
               </div>
               <div className="flex gap-4 items-start">
                 <p>
                   <span className="text-[#0077B6] font-bold">
-									🔹 Hospitals & Clinics –
+                    🔹 Hospitals & Clinics –
                   </span>{" "} Offer inpatient and outpatient care for funded patients.
                 </p>
               </div>
               <div className="flex gap-4 items-start">
                 <p>
                   <span className="text-[#0077B6] font-bold">
-									🔹 Pharmacies –
+                    🔹 Pharmacies –
                   </span>{" "}Access a pool of funded patients who need your services.
                 </p>
               </div>
               <div className="flex gap-4 items-start">
                 <p>
                   <span className="text-[#0077B6] font-bold">
-									🔹 Laboratories & Diagnostic Centers –
+                    🔹 Laboratories & Diagnostic Centers –
                   </span>{" "}Conduct medical tests for accurate diagnoses.
                 </p>
               </div>
@@ -226,12 +234,12 @@ const BecomeAPartner = () => {
         </div>
       </div>
 
-					<div className="bg-[#F5F5F5] py-8 space-y-8">
-						<h1 className="w-full text-[32px] text-center font-montserrat font-extrabold mb-8">
-							Healthcare Providers
-						</h1>
-		
-						{/*<div className="relative max-w-screen-full mx-auto">
+      <div className="bg-[#F5F5F5] py-8 space-y-8">
+        <h1 className="w-full text-[32px] text-center font-montserrat font-extrabold mb-8">
+          Healthcare Providers
+        </h1>
+
+        {/*<div className="relative max-w-screen-full mx-auto">
 							<div className="flex justify-center overflow-hidden">
 								<div className="flex gap-6 transition-all duration-1000 ease-in-out">
 									{getVisibleProviders().map((provider, index) => (
@@ -257,14 +265,16 @@ const BecomeAPartner = () => {
 								</div>
 							</div>
                 </div>*/}
-		
-			
-						<div className="flex justify-center mt-8">
-							<button className="w-[194px] h-[42px] bg-[#0077B6] p-2 text-white rounded">
-								Join Us
-							</button>
-						</div>
-					</div>
+
+
+        <div className="flex justify-center mt-8">
+          <button className="w-[194px] h-[42px] bg-[#0077B6] p-2 text-white rounded">
+            <Link href="./partner_signup">
+              Join Us
+            </Link>
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
