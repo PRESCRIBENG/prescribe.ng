@@ -28,8 +28,8 @@ const SelfSignup = () => {
     emc2: "",
     emc2Mobile: "",
     emc2Relationship: "",
-    registeredEmail: "*****@gmail.com",
-    registeredMobileNumber: "****4738",
+    registeredEmail: "",
+    registeredMobileNumber: "",
     paystackPublicKey: "",
     amount: "",
     description: "",
@@ -276,9 +276,8 @@ const SelfSignup = () => {
 
   return (
     <div //className="overflow-hidden bg-[#F5F5F5] mt-50 mb-16 text-[16px] px-4 md:px-[130px]"
-      className={`overflow-hidden bg-[#F5F5F5] mt-50 mb-16 text-[16px] px-4 md:px-[130px] ${
-        isLoading ? "cursor-wait" : "cursor-default"
-      }`}
+      className={`overflow-hidden bg-[#F5F5F5] mt-50 mb-16 text-[16px] px-4 md:px-[130px] ${isLoading ? "cursor-wait" : "cursor-default"
+        }`}
     >
       <div className="md:flex md:flex-col items-center space-y-8">
         {CurrentPage === "" && (
@@ -299,7 +298,7 @@ const SelfSignup = () => {
 
                 <div className="space-y-[16px] text-[#002A40]">
                   <h1 className="text-[32px] font-extrabold text-center leading-[50px]">
-                  PrescribeNG Terms & Conditions
+                    PrescribeNG Terms & Conditions
                   </h1>
                 </div>
                 <div className="w-full md:w-[790px] px-8 py-8 space-y-8 text-[#002A40]">
