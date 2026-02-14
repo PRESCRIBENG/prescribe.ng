@@ -11,8 +11,8 @@ export async function GET(req: NextRequest) {
         }
 
 
-        //const response = await fetch(`https://gelataskia.prescribe.ng/web/approved_localities?state=${encodeURIComponent(state)}`, {
-        const response = await fetch(`http://127.0.0.1:5002/web/approved_localities?state=${encodeURIComponent(state)}`, {  //
+        const response = await fetch(`https://gelataskia.prescribe.ng/web/approved_localities?state=${encodeURIComponent(state)}`, {
+            //const response = await fetch(`http://127.0.0.1:5002/web/approved_localities?state=${encodeURIComponent(state)}`, {  //
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

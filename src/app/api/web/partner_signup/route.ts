@@ -13,9 +13,9 @@ export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
 
-        //const response = await fetch('https://gelataskia.prescribe.ng/web/partner_signup', {
-        //const response = await fetch('http://192.168.1.144:5002/web/partner_signup', {
-        const response = await fetch('http://127.0.0.1:5002/web/partner_signup', {
+        const response = await fetch('https://gelataskia.prescribe.ng/web/partner_signup', {
+            //const response = await fetch('http://192.168.1.144:5002/web/partner_signup', {
+            //const response = await fetch('http://127.0.0.1:5002/web/partner_signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
