@@ -193,18 +193,18 @@ const SaveALife = () => {
   }, []);
 
   useEffect(() => {
-      const storedPatient = sessionStorage.getItem("selectedPatient");
-      if (storedPatient) {
-        try {
-          const patientData = JSON.parse(storedPatient);
-          setSelectedPatient((prev) => ({ ...prev, ...patientData }));
-          setCurrentPage("donationForm");
-          sessionStorage.removeItem("selectedPatient");
-        } catch (error) {
-          console.error("Error parsing patient data:", error);
-        }
+    const storedPatient = sessionStorage.getItem("selectedPatient");
+    if (storedPatient) {
+      try {
+        const patientData = JSON.parse(storedPatient);
+        setSelectedPatient((prev) => ({ ...prev, ...patientData }));
+        setCurrentPage("donationForm");
+        sessionStorage.removeItem("selectedPatient");
+      } catch (error) {
+        console.error("Error parsing patient data:", error);
       }
-  });
+    }
+  }, []);
 
   const handlePayment = (e: FormEvent) => {
     e.preventDefault();
