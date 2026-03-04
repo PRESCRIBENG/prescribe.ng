@@ -120,7 +120,7 @@ const Login = () => {
       await fetchClinicianData(totpData.token);
 
       // Navigate to dashboard or clinician panel
-      router.push("/dashboard");
+      router.push("/clinician-portal/dashboard");
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error("Login error:", err);
@@ -225,7 +225,7 @@ const Login = () => {
               )}
               <div className="flex justify-between items-center">
                 <Link
-                  href="/forgot-password"
+                  href="/clinician-portal/forgot-password"
                   className="text-[#0077B6] hover:underline"
                 >
                   Forgot Password?

@@ -9,8 +9,8 @@ import { useRouter } from "next/navigation";
 
 
 const Header = () => {
-    const router = useRouter();
-  
+  const router = useRouter();
+
   return (
     <div className="relative w-full h-auto md:h-[684px] bg-[#FFF1E8] text-[16px] p-6 md:p-4 lg:p-[80px] xl:p-[130px] xl:py-[150px] mt-24 md:mb-32">
       {/* ECG Line */}
@@ -22,10 +22,10 @@ const Header = () => {
         {/* Top content section */}
         <div className="flex flex-col md:flex-row gap-16">
           <div className="w-full md:w-1/2 space-y-4 py-8">
-            <p className="text-[24px] text-[#FE6F15] font-bold">prescribe.ng</p>
+            <p className="text-[24px] text-[#FE6F15] font-bold">PRESCRIBE-NG</p>
 
             <div className="space-y-[19px] text-[#002A40]">
-              <h1 className="w-full md:w-[644px] text-[32px] md:text-[40px] font-montserrat font-extrabold leading-[50px]" style={{color:'green'}}>
+              <h1 className="w-full md:w-[644px] text-[32px] md:text-[40px] font-montserrat font-extrabold leading-[50px]" style={{ color: 'green' }}>
                 Connecting You to Life Saving Care & Support
                 {/* THIS WEBSITE IS UNDER CONSTRUCTION */}
               </h1>
@@ -58,19 +58,19 @@ const Header = () => {
 
             <div className="flex space-x-4 mt-[50px] text-[16px] flex-wrap">
               <Link
-                href="../self_signup"
+                href="https://patient.prescribe.ng"
               >
                 <button className="w-[119px] h-[57px] bg-[#0077B6] p-2 text-[#ffffff] rounded mb-2 sm:mb-0">
-                  Sign Up
+                  Virtual Clinic
                 </button>
               </Link>
 
-              <button 
-              onClick={() => router.push("become_a_partner")}
-              className="w-[213px] h-[57px] p-2 border border-[#0077B6] text-[#FE6F15] rounded"
-              
+              <button
+                onClick={() => router.push("products")}
+                className="w-[213px] h-[57px] p-2 border border-[#0077B6] text-[#FE6F15] rounded"
+
               >
-                Become a Partner
+                Our Products
               </button>
             </div>
           </div>

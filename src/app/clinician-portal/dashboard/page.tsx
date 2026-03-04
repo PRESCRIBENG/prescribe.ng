@@ -111,7 +111,7 @@ const Dashboard = () => {
         } else {
           setError("An unknown error occurred");
         }
-      }finally {
+      } finally {
         setIsLoading(false);
       }
     };
@@ -123,7 +123,7 @@ const Dashboard = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userData");
     localStorage.removeItem("incompleteToken");
-    router.push("/login");
+    router.push("/clinician-portal/login");
   };
 
   const changePassword = () => {
@@ -170,12 +170,12 @@ const Dashboard = () => {
   }
 
   //const formatDate = (dateString: string) => {
-    //const date = new Date(dateString);
-    //return new Intl.DateTimeFormat("en-US", {
-      //day: "numeric",
-      //month: "long",
-      //year: "numeric",
-    //}).format(date);
+  //const date = new Date(dateString);
+  //return new Intl.DateTimeFormat("en-US", {
+  //day: "numeric",
+  //month: "long",
+  //year: "numeric",
+  //}).format(date);
   //};
 
   return (
@@ -207,7 +207,7 @@ const Dashboard = () => {
                     height={178}
                     className="w-[329px] h-[329px] rounded-full object-cover"
                   />
-                  
+
                   <button
                     className="absolute bottom-3 right-3 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
                     onClick={() => {

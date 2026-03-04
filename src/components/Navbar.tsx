@@ -36,8 +36,8 @@ const Navbar = () => {
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center space-x-8">
           <Link
-            href="/about"
-            className={`${pathname === '/about' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
+            href="/about-us"
+            className={`${pathname === '/about-us' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
           >
             About
           </Link>
@@ -48,10 +48,10 @@ const Navbar = () => {
             Services
           </Link>*/}
           <Link
-            href="/become_a_partner"
-            className={`${pathname === '/become_a_partner' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
+            href="/solutions/products"
+            className={`${pathname === '/solutions/products' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
           >
-            Become a Partner
+            Our Products
           </Link>
           <Link
             href="/top_up"
@@ -59,12 +59,12 @@ const Navbar = () => {
           >
             Top Up
           </Link>
-          <Link
+          {/*<Link
             href="/save_a_life"
             className={`${pathname === '/save_a_life' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
           >
             Save a Life
-          </Link>
+        </Link>*/}
           <Link
             href="/verify_letter"
             className={`${pathname === '/verify_letter' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
@@ -80,7 +80,7 @@ const Navbar = () => {
         </nav>
 
         {/* Desktop Button */}
-        <Link href="/login" className="">
+        <Link href="/clinician-portal/login" className="">
           <button className="hidden lg:block w-[154px] h-[41px] bg-[#0077B6] text-white rounded">
             Clinician Portal
           </button>
@@ -106,8 +106,8 @@ const Navbar = () => {
         <div className="lg:hidden bg-white text-black flex flex-col items-center pt-4 pb-6 overflow-y-auto max-h-[80vh]">
           <div className="space-y-5 text-center w-full">
             <Link
-              href="/about"
-              className={`block py-2 ${pathname === '/about' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
+              href="/about-us"
+              className={`block py-2 ${pathname === '/about-us' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
               onClick={handleItemClick}
             >
               About
@@ -120,11 +120,11 @@ const Navbar = () => {
               Services
             </Link>*/}
             <Link
-              href="/become_a_partner"
-              className={`block py-2 ${pathname === '/become_a_partner' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
+              href="/solutions/products"
+              className={`block py-2 ${pathname === '/solutions/products' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
               onClick={handleItemClick}
             >
-              Become a Partner
+              Our Products
             </Link>
             <Link
               href="/top_up"
@@ -133,13 +133,13 @@ const Navbar = () => {
             >
               Top Up
             </Link>
-            <Link
+            {/*<Link
               href="/save_a_life"
               className={`block py-2 ${pathname === '/save_a_life' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
               onClick={handleItemClick}
             >
               Save a Life
-            </Link>
+          </Link>*/}
             <Link
               href="/verify_letter"
               className={`block py-2 ${pathname === '/verify_letter' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
@@ -156,7 +156,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <Link href="/login" className="mt-6" onClick={handleItemClick}>
+          <Link href="/clinician-portal/login" className="mt-6" onClick={handleItemClick}>
             <button className="w-[154px] h-[41px] bg-[#0077B6] text-white rounded">
               Clinician Portal
             </button>
