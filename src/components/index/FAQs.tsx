@@ -5,16 +5,21 @@ import Image from "next/image";
 
 const faqs = [
   {
-    question: "What is Prescribeng?",
+    question: "What is Prescribe-NG?",
     answer:
-      "Prescribeng is a healthcare crowdfunding and service platform that helps patients raise funds for medical treatment while connecting them with verified healthcare professionals, pharmacies, and hospitals.",
+      "Prescribeng is an integrated telehealthcare platform where Nigerians can access a wide range of virtual and in-person healthcare services at any time of the day.",
   },
   {
-    question: "How do I start a crowdfunding campaign?",
+    question: "How do I get started?",
     answer:
-      "Sign up as a patient, upload a verified medical report, and submit your fundraising request. Once approved, your campaign will go live for donations.",
+      "Visit https://patient.prescribe.ng and Sign up as a patient and complete id verification. Once completed, you can login and book virtual or physical consultations, as well access your clinical records such as prescriptions and clinical letters.",
   },
   {
+    question: "Are the Doctors real?",
+    answer:
+      "Yes. We maintain a verified and upto date record of all our doctors such as their licenses, as well as ensure a strict adherence to set standards, to give you the best experience.",
+  },
+  /*{
     question: "How do I know the campaigns are real?",
     answer:
       "Every campaign undergoes a strict verification process, requiring medical reports from recognized hospitals before approval.",
@@ -52,7 +57,7 @@ const faqs = [
     question: "What should I do if I suspect fraud?",
     answer:
       'Report any suspicious activity immediately through our "Contact Us" page. You can find the contact us feature on the footer',
-  },
+  },*/
 ];
 
 const FAQs = () => {
