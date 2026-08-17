@@ -5,15 +5,15 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const shareCode = searchParams.get('shareCode');
 
-    if (shareCode===null) {
+    if (shareCode === null) {
       //shareCode = 'all';
       return NextResponse.json({ message: 'Missing shareCode parameter' }, { status: 400 });
     }
 
-    
+
     const response = await fetch(`https://gelataskia.prescribe.ng/web/save_a_life?shareCode=${encodeURIComponent(shareCode)}`, {
-    //const response = await fetch(`http://127.0.0.1:5002/web/save_a_life?shareCode=${encodeURIComponent(shareCode)}`, {  //
-    method: 'GET',
+      //const response = await fetch(`http://127.0.0.1:5001/web/save_a_life?shareCode=${encodeURIComponent(shareCode)}`, {  //
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
