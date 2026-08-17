@@ -66,7 +66,7 @@ const Header = () => {
               </Link>
 
               <button
-                onClick={() => router.push("products")}
+                onClick={() => router.push("solutions/products")}
                 className="w-[213px] h-[57px] p-2 border border-[#0077B6] text-[#FE6F15] rounded"
 
               >

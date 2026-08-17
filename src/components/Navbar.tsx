@@ -59,12 +59,12 @@ const Navbar = () => {
           >
             Top Up
           </Link>
-          {/*<Link
+          <Link
             href="/save_a_life"
             className={`${pathname === '/save_a_life' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
           >
             Save a Life
-        </Link>*/}
+          </Link>
           <Link
             href="/verify_letter"
             className={`${pathname === '/verify_letter' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
@@ -133,13 +133,13 @@ const Navbar = () => {
             >
               Top Up
             </Link>
-            {/*<Link
+            <Link
               href="/save_a_life"
               className={`block py-2 ${pathname === '/save_a_life' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
               onClick={handleItemClick}
             >
               Save a Life
-          </Link>*/}
+            </Link>
             <Link
               href="/verify_letter"
               className={`block py-2 ${pathname === '/verify_letter' ? 'text-[#0077B6]' : ''} hover:text-[#0077B6]`}
