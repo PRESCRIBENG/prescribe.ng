@@ -22,7 +22,7 @@ const Header = () => {
         {/* Top content section */}
         <div className="flex flex-col md:flex-row gap-16">
           <div className="w-full md:w-1/2 space-y-4 py-8">
-            <p className="text-[24px] text-[#FE6F15] font-bold">PRESCRIBE-NG</p>
+            <p className="text-[24px] text-[#FE6F15] font-bold">PRESCRIBE.NG</p>
 
             <div className="space-y-[19px] text-[#002A40]">
               <h1 className="w-full md:w-[644px] text-[32px] md:text-[40px] font-montserrat font-extrabold leading-[50px]" style={{ color: 'green' }}>
