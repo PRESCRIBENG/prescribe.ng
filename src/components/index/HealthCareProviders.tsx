@@ -3,18 +3,17 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
+type ServiceProvider = {
+  organisation: string;
+  location: string;
+  description: string;
+  image: string;
+};
+
 const HealthCareProviders = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const [serviceProviders, setServiceProviders] = useState([
-    {
-      organisation: "St. TEST Hospital",
-      location: "Lagos, Nigeria",
-      description:
-        "Multispecialty hospital offering advanced surgical and medical care.",
-      image: "/image 5.svg",
-    },
-  ]);
+  const [serviceProviders, setServiceProviders] = useState<ServiceProvider[]>([]);
 
 
   useEffect(() => {
@@ -39,13 +38,13 @@ const HealthCareProviders = () => {
           throw new Error("Invalid server response");
         }
 
-        const data = JSON.parse(raw) as { serviceProviders: [] };
+        const data = JSON.parse(raw) as { serviceProviders?: ServiceProvider[] };
 
         if (!res.ok) {
           throw new Error(data as unknown as string);
         }
 
-        setServiceProviders(data.serviceProviders);
+        setServiceProviders(Array.isArray(data.serviceProviders) ? data.serviceProviders : []);
       } catch (err) {
         if (err instanceof Error) {
           console.error("Fetch error:", err.message);
@@ -60,6 +59,8 @@ const HealthCareProviders = () => {
 
   // Create a circular array for continuous display
   const getVisibleProviders = () => {
+    if (serviceProviders.length === 0) return [];
+
     // show current provider and the next few
     const visibleProviders = [];
     
@@ -76,12 +77,17 @@ const HealthCareProviders = () => {
 
   // Auto-slide every 5 seconds
   useEffect(() => {
+    if (serviceProviders.length === 0) return;
+
     const interval = setInterval(() => {
       setActiveIndex((current) => (current + 1) % serviceProviders.length);
     }, 5000);
     
     return () => clearInterval(interval);
   }, [serviceProviders.length]);
+
+  // Hide the section entirely when there are no providers to show
+  if (serviceProviders.length === 0) return null;
 
   return (
     <div className="bg-[#F5F5F5] py-8">
