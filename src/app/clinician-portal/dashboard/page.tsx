@@ -22,114 +22,174 @@ interface UserData {
   vettingStatus: string;
 }
 
+const LOGIN_PATH = "/clinician-portal/login";
+
+const inputClass =
+  "w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#FF6B00] text-gray-900 bg-white placeholder-gray-500 font-sans text-base leading-normal";
+
+// Colour a status value green/amber/red based on common wording
+const statusClass = (value?: string) => {
+  const v = (value || "").toLowerCase();
+  if (/(active|verified|approved|valid|complete)/.test(v))
+    return "bg-green-100 text-green-800";
+  if (/(pending|review|processing|awaiting)/.test(v))
+    return "bg-amber-100 text-amber-800";
+  if (v) return "bg-red-100 text-red-700";
+  return "bg-gray-100 text-gray-600";
+};
+
+const initials = (name?: string) =>
+  (name || "")
+    .replace(/^dr\.?\s+/i, "")
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("");
+
 const Dashboard = () => {
   const router = useRouter();
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [photoFailed, setPhotoFailed] = useState(false);
 
-  const profileData = [
-    {
-      key: "Regulator",
-      value: userData?.userRegulator,
-    },
-    {
-      key: "Domain",
-      value: userData?.userDomain,
-    },
-    {
-      key: "Specialty",
-      value: userData?.specialty,
-    },
-    {
-      key: "Grade",
-      value: userData?.grade,
-    },
-    {
-      key: "License Expiry",
-      value: userData?.licenseExpiry,
-    },
-    {
-      key: "Email",
-      value: userData?.email,
-    },
-    {
-      key: "Mobile",
-      value: userData?.mobile,
-    },
-    {
-      key: "Account Status",
-      value: userData?.accountStatus,
-    },
-  ];
+  // Change password state
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [showPasswords, setShowPasswords] = useState(false);
+  const [passwordForm, setPasswordForm] = useState({
+    oldPassword: "",
+    newPassword: "",
+    newPasswordRepeat: "",
+  });
+  const [passwordLoading, setPasswordLoading] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordSuccess, setPasswordSuccess] = useState("");
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userData");
+    localStorage.removeItem("incompleteToken");
+    router.push(LOGIN_PATH);
+  };
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        // Check if token exists
-        const token = localStorage.getItem("token");
-        if (!token) {
-          router.push("/login");
-          return;
-        }
+    const loadUserData = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        router.push(LOGIN_PATH);
+        return;
+      }
 
-        // Get user data from localStorage
-        const storedUserData = localStorage.getItem("userData");
-        if (storedUserData) {
+      // Show cached data immediately, then refresh it (photo URLs expire)
+      const storedUserData = localStorage.getItem("userData");
+      if (storedUserData) {
+        try {
           setUserData(JSON.parse(storedUserData));
           setIsLoading(false);
-          return;
+        } catch {
+          localStorage.removeItem("userData");
         }
+      }
 
-        // If not in localStorage, fetch from API
-        const response = await fetch(
-          "https://gelataskia.prescribe.ng/clinicianpanel",
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+      try {
+        // Using Next.js API route to avoid CORS issues
+        const response = await fetch("/api/clinician/panel", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch user data");
+        if (response.status === 401 || response.status === 403) {
+          logout();
+          return;
         }
 
         const data = await response.json();
+        if (!response.ok || !data.userData) {
+          throw new Error(data.message || "Failed to fetch user data");
+        }
+
         setUserData(data.userData);
+        setPhotoFailed(false);
         localStorage.setItem("userData", JSON.stringify(data.userData));
       } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message || "An error occurred");
-          if (err.message.includes("auth") || err.message.includes("token")) {
-            localStorage.removeItem("token");
-            localStorage.removeItem("userData");
-            router.push("/login");
-          }
-        } else {
-          setError("An unknown error occurred");
-        }
+        console.error("Dashboard load error:", err);
+        setError(
+          err instanceof Error ? err.message : "An unknown error occurred"
+        );
       } finally {
         setIsLoading(false);
       }
     };
 
-    checkAuth();
-  }, [router]);
+    loadUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userData");
-    localStorage.removeItem("incompleteToken");
-    router.push("/clinician-portal/login");
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPasswordForm({ ...passwordForm, [e.target.name]: e.target.value });
+    if (passwordError) setPasswordError("");
+    if (passwordSuccess) setPasswordSuccess("");
   };
 
-  const changePassword = () => {
-    router.push("/login");
+  const closeChangePassword = () => {
+    setShowChangePassword(false);
+    setShowPasswords(false);
+    setPasswordForm({ oldPassword: "", newPassword: "", newPasswordRepeat: "" });
+    setPasswordError("");
   };
 
+  const submitPasswordChange = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPasswordError("");
+    setPasswordSuccess("");
+
+    if (passwordForm.newPassword !== passwordForm.newPasswordRepeat) {
+      setPasswordError("New passwords do not match");
+      return;
+    }
+    if (passwordForm.newPassword === passwordForm.oldPassword) {
+      setPasswordError("New password must be different from your current password");
+      return;
+    }
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      logout();
+      return;
+    }
+
+    setPasswordLoading(true);
+    try {
+      // Using Next.js API route to avoid CORS issues
+      const response = await fetch("/api/clinician/change_password", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(passwordForm),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to change password");
+      }
+
+      closeChangePassword();
+      setPasswordSuccess(data.message || "Password updated!");
+    } catch (err: unknown) {
+      setPasswordError(
+        err instanceof Error ? err.message : "An unknown error occurred"
+      );
+    } finally {
+      setPasswordLoading(false);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -139,15 +199,15 @@ const Dashboard = () => {
     );
   }
 
-  if (error && !userData) {
+  if (!userData) {
     return (
       <div className="flex flex-col items-center justify-center h-screen p-4">
-        <div className="bg-red-100 text-red-700 p-4 rounded-md mb-4 max-w-md">
-          {error}
+        <div className="bg-red-100 text-red-700 p-4 rounded-md mb-4 max-w-md text-center">
+          {error || "No user data found. Please log in again."}
         </div>
         <button
-          onClick={() => router.push("/login")}
-          className="bg-[#0077B6] text-white py-2 px-4 rounded-md"
+          onClick={logout}
+          className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#005d8f] transition"
         >
           Back to Login
         </button>
@@ -155,133 +215,216 @@ const Dashboard = () => {
     );
   }
 
-  if (!userData) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <p>No user data found. Please log in again.</p>
-        <button
-          onClick={() => router.push("/login")}
-          className="mt-4 bg-[#0077B6] text-white py-2 px-4 rounded-md"
-        >
-          Go to Login
-        </button>
-      </div>
-    );
-  }
+  const profileData = [
+    { key: "Registration No.", value: userData.userID },
+    { key: "Folio Number", value: userData.folioNumber },
+    { key: "Regulator", value: userData.userRegulator },
+    { key: "Domain", value: userData.userDomain },
+    { key: "Specialty", value: userData.specialty },
+    { key: "Grade", value: userData.grade },
+    { key: "License Expiry", value: userData.licenseExpiry },
+    { key: "Email", value: userData.email },
+    { key: "Mobile", value: userData.mobile },
+  ];
 
-  //const formatDate = (dateString: string) => {
-  //const date = new Date(dateString);
-  //return new Intl.DateTimeFormat("en-US", {
-  //day: "numeric",
-  //month: "long",
-  //year: "numeric",
-  //}).format(date);
-  //};
+  const statusData = [
+    { key: "Account Status", value: userData.accountStatus },
+    { key: "Vetting Status", value: userData.vettingStatus },
+    { key: "Registration", value: userData.registrationVerification },
+  ];
 
   return (
-    <div className="min-h-screen overflow-hidden bg-[#F5F5F5] mt-20 text-[16px] p-4 md:p-[130px]">
-      {/* Header */}
-      <header className="flex justify-end">
-        <button
-          onClick={handleLogout}
-          className="bg-[#F20D0D] text-white py-2 px-4 rounded-md hover:bg-[#F20D0D]"
-        >
-          Logout
-        </button>
-      </header>
+    <div className="min-h-screen overflow-hidden bg-[#F5F5F5] mt-20 text-[16px] p-4 md:px-[130px] md:py-16">
+      <div className="max-w-[1100px] mx-auto space-y-6 text-[#002A40]">
+        {/* Header */}
+        <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <p className="text-sm text-gray-600">Clinician Portal</p>
+            <h1 className="text-[28px] md:text-[32px] font-montserrat font-extrabold leading-tight">
+              Welcome, {userData.clinician}
+            </h1>
+          </div>
+          <button
+            onClick={logout}
+            className="self-start sm:self-auto bg-[#F20D0D] text-white py-2 px-4 rounded-md hover:bg-[#c90b0b] transition"
+          >
+            Logout
+          </button>
+        </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className=" overflow-hidden mb-4 relative">
-              <p className="mb-4">
-                Welcome, <span className="font-medium">{userData.clinician}</span>
-              </p>
-              {userData.photoUrl ? (
-                <>
-                  <Image
-                    src={userData.photoUrl}
-                    alt={"Profile"}
-                    width={342}
-                    height={178}
-                    className="w-[329px] h-[329px] rounded-full object-cover"
-                  />
+        {error && (
+          <div className="bg-amber-100 text-amber-800 p-3 rounded-md">
+            Showing saved details — couldn&apos;t refresh: {error}
+          </div>
+        )}
 
-                  <button
-                    className="absolute bottom-3 right-3 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onClick={() => {
-                      /* Add edit function */
-                    }}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Profile card */}
+          <section className="bg-white rounded-md shadow-md p-6 flex flex-col items-center text-center">
+            {userData.photoUrl && !photoFailed ? (
+              <Image
+                src={userData.photoUrl}
+                alt={`${userData.clinician} profile photo`}
+                width={200}
+                height={200}
+                onError={() => setPhotoFailed(true)}
+                className="w-[160px] h-[160px] rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-[160px] h-[160px] rounded-full bg-[#0077B6] flex items-center justify-center text-white text-4xl font-bold">
+                {initials(userData.clinician) || "?"}
+              </div>
+            )}
+            <h2 className="mt-4 text-lg font-bold">{userData.clinician}</h2>
+            <p className="text-gray-600">{userData.specialty}</p>
+
+            <div className="w-full mt-6 space-y-3 text-left">
+              {statusData.map((item) => (
+                <div
+                  key={item.key}
+                  className="flex items-center justify-between gap-4"
+                >
+                  <span className="text-sm font-bold">{item.key}</span>
+                  <span
+                    className={`text-sm px-3 py-1 rounded-full capitalize ${statusClass(
+                      item.value
+                    )}`}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-5 h-5 text-gray-700"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                      />
-                    </svg>
-                  </button>
-                </>
-              ) : (
-                <div className="h-full w-full bg-[#0077B6] flex items-center justify-center text-white text-4xl font-bold relative">
-                  <button
-                    className="absolute bottom-3 right-3 bg-white rounded-full p-2 shadow-md hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onClick={() => {
-                      /* Add your edit function here */
-                    }}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-5 h-5 text-gray-700"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                      />
-                    </svg>
-                  </button>
+                    {item.value || "—"}
+                  </span>
                 </div>
-              )}
+              ))}
             </div>
+          </section>
 
-            <div>
-              <div className="mb-6">
-                <div className="space-y-3 text-[16px">
-                  {profileData.map((item, index) => (
-                    <div key={index} className="">
-                      <div className="flex gap-[58px]  mt-4">
-                        <h2 className="w-[134px] text-[16px] font-bold text-[#002A40]">
-                          {item.key}
-                        </h2>
-                        <h2 className="w-[253px] text-[#002A40]">{item.value}</h2>
-                      </div>
-                    </div>
-                  ))}
+          {/* Details + security */}
+          <div className="lg:col-span-2 space-y-6">
+            <section className="bg-white rounded-md shadow-md p-6">
+              <h2 className="text-lg font-bold mb-4">Profile Details</h2>
+              <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
+                {profileData.map((item) => (
+                  <div key={item.key} className="min-w-0">
+                    <dt className="text-sm font-bold">{item.key}</dt>
+                    <dd className="text-gray-700 break-words">
+                      {item.value || "—"}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+
+            <section className="bg-white rounded-md shadow-md p-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <h2 className="text-lg font-bold">Security</h2>
+                  <p className="text-sm text-gray-600">
+                    Update the password you use to sign in
+                  </p>
+                </div>
+                {!showChangePassword && (
                   <button
-                    onClick={changePassword}
-                    className="bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#F20D0D]"
+                    onClick={() => {
+                      setShowChangePassword(true);
+                      setPasswordSuccess("");
+                    }}
+                    className="self-start sm:self-auto bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#005d8f] transition"
                   >
                     Change Password
                   </button>
-                </div>
+                )}
               </div>
-            </div>
+
+              {passwordSuccess && (
+                <div className="mt-4 bg-green-100 text-green-700 p-3 rounded-md">
+                  {passwordSuccess}
+                </div>
+              )}
+
+              {showChangePassword && (
+                <form onSubmit={submitPasswordChange} className="mt-6 space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Current Password
+                    </label>
+                    <input
+                      type={showPasswords ? "text" : "password"}
+                      name="oldPassword"
+                      placeholder="Enter your current password"
+                      autoComplete="current-password"
+                      required
+                      value={passwordForm.oldPassword}
+                      onChange={handlePasswordChange}
+                      className={inputClass}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      New Password
+                    </label>
+                    <input
+                      type={showPasswords ? "text" : "password"}
+                      name="newPassword"
+                      placeholder="Enter your new password"
+                      autoComplete="new-password"
+                      required
+                      value={passwordForm.newPassword}
+                      onChange={handlePasswordChange}
+                      className={inputClass}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Confirm New Password
+                    </label>
+                    <input
+                      type={showPasswords ? "text" : "password"}
+                      name="newPasswordRepeat"
+                      placeholder="Confirm your new password"
+                      autoComplete="new-password"
+                      required
+                      value={passwordForm.newPasswordRepeat}
+                      onChange={handlePasswordChange}
+                      className={inputClass}
+                    />
+                  </div>
+
+                  <label className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      checked={showPasswords}
+                      onChange={(e) => setShowPasswords(e.target.checked)}
+                    />
+                    Show passwords
+                  </label>
+
+                  {passwordError && (
+                    <div className="bg-red-100 text-red-700 p-3 rounded-md">
+                      {passwordError}
+                    </div>
+                  )}
+
+                  <div className="flex justify-end gap-3">
+                    <button
+                      type="button"
+                      onClick={closeChangePassword}
+                      className="py-2 px-4 rounded-md text-[#0077B6] hover:underline"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={passwordLoading}
+                      className="w-[170px] bg-[#0077B6] text-white py-2 px-4 rounded-md hover:bg-[#005d8f] transition disabled:bg-gray-400"
+                    >
+                      {passwordLoading ? "Updating..." : "Update Password"}
+                    </button>
+                  </div>
+                </form>
+              )}
+            </section>
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

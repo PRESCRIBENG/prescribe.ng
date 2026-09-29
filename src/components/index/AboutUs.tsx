@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 
 const Header = () => {
-      const router = useRouter();
+  const router = useRouter();
 
   return (
     <div className="overflow-hidden bg-[#F5F5F5] text-[16px] px-5 py-20 md:px-12 xl:px-[130px] md:p-[150px]">
@@ -39,22 +39,23 @@ const Header = () => {
               About Us
             </h1>
             <p className="text-[14px] sm:text-[16px]">
-            PrescribeNg LTD is a healthcare technology company that provides digital health solutions, particularly in prescription management, patients records management and safe and secure patient data migration as required by patient and providing integrated healthcare platform where licensed and verified healthcare services providers can connect with patients in need of their services.
-            At PrescribeNg, we treamline the prescription process, clinicial appointments and medical referral processes, enhancing patient care, and improving healthcare outcomes through technology. <br/><br/>
+              PrescribeNg LTD is a healthcare technology company that provides digital health solutions, particularly in prescription management, patients records management and safe and secure patient data migration as required by patient and providing integrated healthcare platform where licensed and verified healthcare services providers can connect with patients in need of their services.
+              At PrescribeNg, we treamline the prescription process, clinicial appointments and medical referral processes, enhancing patient care, and improving healthcare outcomes through technology. <br /><br />
 
-            Some potential features and benefits of PrescribeNg LTD solutions include:<br/>
+              Some potential features and benefits of PrescribeNg LTD solutions include:<br />
 
-            * Electronic Prescriptions: Simplifying prescription management and reducing errors.<br/>
-            * Medication Management: Helping patients adhere to medication regimens.<br/>
-            * Clinical Decision Support: Providing healthcare professionals with informed decision-making tools.<br/>
-            * Patient Engagement: Enhancing patient-doctor communication and education.<br/>
-            * We also assist patients who are unable to afford their healthcare cost in raising funds strictly for the purposes of accessing healthcare services.<br/>
+              * Virtual Consultation: 24/7 access to a doctor at time of your choosing.<br />
+              * Electronic Prescriptions: Simplifying prescription management and reducing errors.<br />
+              * Medication Management: Helping patients adhere to medication regimens.<br />
+              * Clinical Decision Support: Providing healthcare professionals with informed decision-making tools.<br />
+              * Patient Engagement: Enhancing patient-doctor communication and education.<br />
+              * We also assist patients who are unable to afford their healthcare cost in raising funds strictly for the purposes of accessing healthcare services.<br />
             </p>
           </div>
-          <button 
+          <button
             onClick={() => router.push("about")}
 
-          className="w-[140px] h-[42px] bg-[#0077B6] text-white rounded">
+            className="w-[140px] h-[42px] bg-[#0077B6] text-white rounded">
             Learn More
           </button>
         </div>

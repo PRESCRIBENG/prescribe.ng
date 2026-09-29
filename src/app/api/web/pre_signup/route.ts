@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { API_BASE_URL } from '@/app/lib/config';
 
 // 🔥 This is the magic: Increase the body size limit for this specific API route
 export const config = {
@@ -13,7 +14,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const response = await fetch('https://gelataskia.prescribe.ng/web/pre_signup', {
+    const response = await fetch(`${API_BASE_URL}/web/pre_signup`, {
       //const response = await fetch('http://192.168.1.144:5002/web/pre_signup', {
       //const response = await fetch('http://127.0.0.1:5002/web/pre_signup', {
       method: 'POST',

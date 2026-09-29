@@ -136,7 +136,7 @@ const Login = () => {
   const fetchClinicianData = async (token: string) => {
     try {
       // Using Next.js API route to avoid CORS issues
-      const response = await fetch("/api/clinician/clinicianpanel", {
+      const response = await fetch("/api/clinician/panel", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

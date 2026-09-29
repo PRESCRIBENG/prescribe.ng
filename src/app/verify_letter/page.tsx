@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from '@/app/lib/config';
 
 const VerifyLetter = () => {
   const [referenceId, setReferenceId] = useState<string>("");
@@ -26,7 +27,7 @@ const VerifyLetter = () => {
     setError("");
 
     try {
-      const verificationUrl = `https://gelataskia.prescribe.ng/web/verify_correspondence?refID=${encodeURIComponent(
+      const verificationUrl = `${API_BASE_URL}/web/verify_correspondence?refID=${encodeURIComponent(
         //const verificationUrl = `https://127.0.0.1:5002/web/verify_correspondence?refID=${encodeURIComponent(
         referenceId
       )}`;

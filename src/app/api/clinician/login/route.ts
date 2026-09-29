@@ -1,20 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { API_BASE_URL } from '@/app/lib/config';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    
-    const response = await fetch('https://gelataskia.prescribe.ng/clinician/login', {
+
+    const response = await fetch(`${API_BASE_URL}/clinician/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
     });
-    
+
     const contentType = response.headers.get('content-type');
     const raw = await response.text();
-    
+
     if (!contentType || !contentType.includes('application/json')) {
       console.error('Unexpected response:', raw);
       return NextResponse.json(
@@ -22,11 +23,11 @@ export async function POST(req: NextRequest) {
         { status: 500 }
       );
     }
-    
+
     const data = JSON.parse(raw);
     return NextResponse.json(data, { status: response.status });
-    
-  
+
+
   } catch (error) {
     console.error('Login API error:', error);
     return NextResponse.json(

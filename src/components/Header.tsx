@@ -29,9 +29,9 @@ const Header = () => {
                 Connecting You to Life Saving Care & Support
                 {/* THIS WEBSITE IS UNDER CONSTRUCTION */}
               </h1>
-              <p className="text-[14px] sm:text-[16px]">
+              {/*<p className="text-[14px] sm:text-[16px]">
                 World-Class Healthcare. Built on Trust. Powered by Connection.
-              </p>
+              </p>*/}
             </div>
 
             <div className="relative">
