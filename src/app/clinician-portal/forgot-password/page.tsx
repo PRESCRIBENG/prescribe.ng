@@ -16,7 +16,7 @@ const ForgotPassword = () => {
   });
 
   // State for managing the current step in the flow
-  const [step, setStep] = useState("email-request"); // email-request, code-verification, new-password, success
+  const [step, setStep] = useState("email-request"); // email-request, link-sent, code-verification, new-password, success
 
   // States for handling API interactions
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +62,7 @@ const ForgotPassword = () => {
       if (step === "email-request") {
         // Using Next.js API route to avoid CORS issues
         const response = await fetch(
-          "/api/clinician/generate_password_reset_link",
+          "/api/clinician/generate_reset_link",
           {
             method: "POST",
             headers: {
@@ -86,7 +86,7 @@ const ForgotPassword = () => {
           setSuccess(
             data.message || "Password reset link has been sent to your email"
           );
-          setStep("code-verification");
+          setStep("link-sent");
         } else {
           throw new Error(
             data.message || "Failed to send reset link. Please try again."
@@ -116,7 +116,7 @@ const ForgotPassword = () => {
         const verificationCode = formData.code.join("");
 
         // Using Next.js API route to avoid CORS issues
-        const response = await fetch("/api/clinician/change_password", {
+        const response = await fetch("/api/clinician/reset-password", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -166,8 +166,8 @@ const ForgotPassword = () => {
               Forgot Password
             </h1>
             <p className="text-[16px] text-center">
-              Enter the email address you registered with to receive a password
-              reset code
+              Enter your username or the email address you registered with to
+              receive a password reset link
             </p>
           </div>
           <div className="bg-white space-y-6 w-full max-w-[790px] shadow-md rounded-md">
@@ -177,12 +177,13 @@ const ForgotPassword = () => {
             >
               <div>
                 <label className="block text-sm font-medium text-[#002A40] mb-1">
-                  Email Address
+                  Username or Email
                 </label>
                 <input
-                  type="email"
+                  type="text"
                   name="email"
-                  placeholder="Enter your email address"
+                  placeholder="Enter your username or email"
+                  autoComplete="username"
                   required
                   value={formData.email}
                   onChange={handleChange}
@@ -215,6 +216,50 @@ const ForgotPassword = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Reset link sent step UI
+  if (step === "link-sent") {
+    return (
+      <div className="overflow-hidden bg-[#F5F5F5] mt-20 text-[16px] p-4 md:p-[130px]">
+        <div className="flex flex-col items-center space-y-8">
+          <div className="space-y-[16px] text-[#002A40]">
+            <h1 className="text-[32px] font-montserrat font-extrabold text-center leading-[50px]">
+              Check Your Email
+            </h1>
+            <p className="text-[16px] text-center">
+              We sent a password reset link to the email address linked to{" "}
+              {formData.email}
+            </p>
+          </div>
+          <div className="bg-white space-y-6 w-full max-w-[790px] shadow-md rounded-md p-8 text-center">
+            <div className="py-8">
+              <svg
+                className="w-16 h-16 text-green-500 mx-auto"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 13l4 4L19 7"
+                ></path>
+              </svg>
+              <p className="mt-4 text-lg">{success}</p>
+            </div>
+            <button
+              onClick={() => router.push("/clinician-portal/login")}
+              className="inline-block w-[154px] bg-[#0077B6] text-white py-2 px-2 rounded-md hover:bg-[#005d8f] transition text-center"
+            >
+              Back to Login
+            </button>
           </div>
         </div>
       </div>

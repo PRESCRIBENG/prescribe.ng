@@ -1,19 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { API_BASE_URL } from '@/app/lib/config';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
+
     // authorization header
     const authHeader = request.headers.get('Authorization');
-    
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return NextResponse.json(
         { message: "Unauthorized" },
         { status: 401 }
       );
     }
-    
+
     // Validate request
     if (!body.oldPassword || !body.newPassword || !body.newPasswordRepeat) {
       return NextResponse.json(
@@ -21,15 +22,15 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    
+
     if (body.newPassword !== body.newPasswordRepeat) {
       return NextResponse.json(
         { message: "Passwords do not match" },
         { status: 400 }
       );
     }
-    
-    const response = await fetch('https://gelataskia.prescribe.ng/change_password', {
+
+    const response = await fetch(`${API_BASE_URL}/clinician/change_password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -41,9 +42,17 @@ export async function POST(request: NextRequest) {
         newPasswordRepeat: body.newPasswordRepeat
       }),
     });
-    
+
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      return NextResponse.json(
+        { message: response.status === 403 ? "Forbidden" : "Unexpected response from server" },
+        { status: response.status >= 400 ? response.status : 502 }
+      );
+    }
+
     const data = await response.json();
-    
+
     // Return response
     return NextResponse.json(
       data,

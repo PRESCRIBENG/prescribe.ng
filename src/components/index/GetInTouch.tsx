@@ -3,6 +3,7 @@
 import { useState } from "react";
 // import Link from "next/link";
 import Image from "next/image";
+import { API_BASE_URL } from '@/app/lib/config';
 
 const GetInTouch = () => {
   const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ const GetInTouch = () => {
 
     try {
 
-      const url = `https://gelataskia.prescribe.ng/web/contact_us`;
+      const url = `${API_BASE_URL}/web/contact_us`;
       //const url = `http://127.0.0.1:5002/web/contact_us`;
       const response = await fetch(`${url}`, {  // replace with your endpoint
         method: 'POST',

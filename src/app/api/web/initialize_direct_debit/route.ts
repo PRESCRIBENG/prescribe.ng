@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { API_BASE_URL } from '@/app/lib/config';
 
 export async function GET(req: NextRequest) {
   try {
@@ -23,7 +24,7 @@ export async function GET(req: NextRequest) {
         //  },
         //});
 
-    const response = await fetch(`https://gelataskia.prescribe.ng/web/initialize_direct_debit?accessCode=${encodeURIComponent(accessCode)}`, {
+    const response = await fetch(`${API_BASE_URL}/web/initialize_direct_debit?accessCode=${encodeURIComponent(accessCode)}`, {
     //const response = await fetch(`http://127.0.0.1:5002/web/initialize_direct_debit?accessCode=${encodeURIComponent(accessCode)}`, {  
     method: 'GET',
       headers: {

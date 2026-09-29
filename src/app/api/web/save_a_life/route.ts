@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { API_BASE_URL } from '@/app/lib/config';
 
 export async function GET(req: NextRequest) {
   try {
@@ -11,8 +12,7 @@ export async function GET(req: NextRequest) {
     }
 
 
-    const response = await fetch(`https://gelataskia.prescribe.ng/web/save_a_life?shareCode=${encodeURIComponent(shareCode)}`, {
-      //const response = await fetch(`http://127.0.0.1:5001/web/save_a_life?shareCode=${encodeURIComponent(shareCode)}`, {  //
+    const response = await fetch(`${API_BASE_URL}/web/save_a_life?shareCode=${encodeURIComponent(shareCode)}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

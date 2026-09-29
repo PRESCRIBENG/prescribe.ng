@@ -1,27 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { API_BASE_URL } from '@/app/lib/config';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    
+
     // Get authorization header
     const authHeader = req.headers.get('Authorization');
-    
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return NextResponse.json({ message: 'Missing or invalid token' }, { status: 401 });
     }
-    
-    const response = await fetch('https://gelataskia.prescribe.ng/clinician/verify_totp', {
+
+    const response = await fetch(`${API_BASE_URL}/clinician/verify_totp`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': authHeader, 
+        'Authorization': authHeader,
       },
       body: JSON.stringify(body),
     });
-    
+
     const data = await response.json();
-    
+
     // Return response
     return NextResponse.json(data, { status: response.status });
   } catch (error) {

@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { API_BASE_URL } from '@/app/lib/config';
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
+
     // Validate request
     if (!body.email || !body.code || !body.newPassword || !body.newPasswordRepeat) {
       return NextResponse.json(
@@ -11,7 +12,7 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    
+
     if (body.newPassword !== body.newPasswordRepeat) {
       return NextResponse.json(
         { message: "Passwords do not match" },
@@ -19,7 +20,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const response = await fetch('https://gelataskia.prescribe.ng/change_password', {
+    const response = await fetch(`${API_BASE_URL}/clinician/change_password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -31,9 +32,9 @@ export async function POST(request: NextRequest) {
         newPasswordRepeat: body.newPasswordRepeat
       }),
     });
-    
+
     const data = await response.json();
-    
+
     // Return response
     return NextResponse.json(
       data,

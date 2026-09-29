@@ -1,11 +1,12 @@
 // import { request } from 'http';
 import { NextResponse } from 'next/server';
+import { API_BASE_URL } from '@/app/lib/config';
 
 export async function GET() {
     try {
         // const body = await request.json()
 
-    const response = await fetch('https://gelataskia.prescribe.ng/web/hmo_partners', {
+    const response = await fetch(`${API_BASE_URL}/web/hmo_partners`, {
      method: 'GET',
       headers: {
         'Content-Type': 'application/json',

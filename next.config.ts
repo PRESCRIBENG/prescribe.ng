@@ -29,7 +29,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'https://gelataskia.prescribe.ng/:path*', // Proxy to Backend
+        destination: `${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://gelataskia.prescribe.ng'}/:path*`, // Proxy to Backend
       }
     ]
   }

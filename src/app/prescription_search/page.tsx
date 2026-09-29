@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from '@/app/lib/config';
 
 interface Pharmacy {
   pharmacy: string;
@@ -55,7 +56,7 @@ const PrescriptionSearch = () => {
     setPharmacies(null);
 
     try {
-      const url = `https://gelataskia.prescribe.ng/web/search_prescription_item?q=${encodeURIComponent(
+      const url = `${API_BASE_URL}/web/search_prescription_item?q=${encodeURIComponent(
         //const url = `http://127.0.0.1:5002/web/search_prescription_item?q=${encodeURIComponent(
         searchQuery
       )}&lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}`;
